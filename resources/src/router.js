@@ -61,6 +61,30 @@ const routes = [
                         component: () =>
                             import(/* webpackChunkName: "barcode" */"./views/app/pages/products/barcode")
                     },
+
+                    // categories
+                    {
+                        name: "categories",
+                        path: "Categories",
+                        component: () =>
+                            import(/* webpackChunkName: "Categories" */"./views/app/pages/settings/categorie")
+                    },
+
+                    // brands
+                    {
+                        name: "brands",
+                        path: "Brands",
+                        component: () =>
+                            import(/* webpackChunkName: "Brands" */"./views/app/pages/settings/brands")
+                    },
+
+                    // units
+                    {
+                        name: "units",
+                        path: "Units",
+                        component: () =>
+                            import(/* webpackChunkName: "units" */"./views/app/pages/settings/units")
+                    },
                 ]
             },
 
@@ -430,36 +454,12 @@ const routes = [
                         ]
                     },
 
-                    // categories
-                    {
-                        name: "categories",
-                        path: "Categories",
-                        component: () =>
-                            import(/* webpackChunkName: "Categories" */"./views/app/pages/settings/categorie")
-                    },
-
-                    // brands
-                    {
-                        name: "brands",
-                        path: "Brands",
-                        component: () =>
-                            import(/* webpackChunkName: "Brands" */"./views/app/pages/settings/brands")
-                    },
-
                     // currencies
                     {
                         name: "currencies",
                         path: "Currencies",
                         component: () =>
                             import(/* webpackChunkName: "Currencies" */"./views/app/pages/settings/currencies")
-                    },
-
-                    // units
-                    {
-                        name: "units",
-                        path: "Units",
-                        component: () =>
-                            import(/* webpackChunkName: "units" */"./views/app/pages/settings/units")
                     },
 
                     // Backup

@@ -65,20 +65,20 @@ class ProvidersController extends BaseController
 
         request()->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'nullable',
             'phone' => 'required',
-            'country' => 'required',
-            'city' => 'required',
-            'adresse' => 'required',
+            'country' => 'nullable',
+            'city' => 'nullable',
+            'adresse' => 'nullable',
         ]);
         Provider::create([
             'name' => $request['name'],
             'code' => $this->getNumberOrder(),
-            'adresse' => $request['adresse'],
+            'adresse' => $request['adresse'] ?? 'N/A',
             'phone' => $request['phone'],
-            'email' => $request['email'],
-            'country' => $request['country'],
-            'city' => $request['city'],
+            'email' => $request['email'] ?? 'N/A',
+            'country' => $request['country'] ?? 'N/A',
+            'city' => $request['city'] ?? 'N/A',
         ]);
         return response()->json(['success' => true]);
 
@@ -88,7 +88,7 @@ class ProvidersController extends BaseController
 
     public function show($id){
         //
-        
+
         }
 
     //----------- Update Supplier-------\\
@@ -99,20 +99,20 @@ class ProvidersController extends BaseController
 
         request()->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'nullable',
             'phone' => 'required',
-            'country' => 'required',
-            'city' => 'required',
-            'adresse' => 'required',
+            'country' => 'nullable',
+            'city' => 'nullable',
+            'adresse' => 'nullable',
         ]);
 
         Provider::whereId($id)->update([
             'name' => $request['name'],
-            'adresse' => $request['adresse'],
+            'adresse' => $request['adresse'] ?? 'N/A',
             'phone' => $request['phone'],
-            'email' => $request['email'],
-            'country' => $request['country'],
-            'city' => $request['city'],
+            'email' => $request['email'] ?? 'N/A',
+            'country' => $request['country'] ?? 'N/A',
+            'city' => $request['city'] ?? 'N/A',
         ]);
         return response()->json(['success' => true]);
 

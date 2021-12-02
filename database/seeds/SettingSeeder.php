@@ -16,18 +16,18 @@ class SettingSeeder extends Seeder
         DB::table('settings')->insert(
             array(
                 'id' => 1,
-                'email' => 'admin@example.com',
+                'email' => 'admin@admin.com',
                 'currency_id' => 1,
                 'client_id' => 1,
                 'warehouse_id' => Null,
-                'CompanyName' => 'Stocky',
-                'CompanyPhone' => '6315996770',
-                'CompanyAdress' => '3618 Abia Martin Drive',
-                'footer' => 'Stocky - Ultimate Inventory With POS',
-                'developed_by' => 'Stocky',
+                'CompanyName' => 'PosFly',
+                'CompanyPhone' => '0123456789',
+                'CompanyAdress' => 'Mirpur-10, Dhaka-BD.',
+                'footer' => 'PosFly - Ultimate Inventory With POS',
+                'developed_by' => 'Cyber 32',
                 'logo' => 'logo-default.png',
             )
-            
+
         );
     }
 }

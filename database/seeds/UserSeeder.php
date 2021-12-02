@@ -16,11 +16,11 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             array(
                 'id' => 1,
-                'firstname' => 'William',
-                'lastname' => 'Castillo',
-                'username' => 'William Castillo',
-                'email' => 'admin@example.com',
-                'password' => '$2y$10$IFj6SwqC0Sxrsiv4YkCt.OJv1UV4mZrWuyLoRG7qt47mseP9mJ58u',
+                'firstname' => 'Cyber',
+                'lastname' => '32',
+                'username' => 'cyber32',
+                'email' => 'admin@admin.com',
+                'password' => '$2y$10$ZPsWuR1eeBlIDyeC6VYCLuZFlOh7fpT6Inww.9KPFNlPTe.Mu7Yhu',
                 'avatar' => 'no_avatar.png',
                 'phone' => '0123456789',
                 'role_id' => 1,

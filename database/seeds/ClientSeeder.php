@@ -20,12 +20,12 @@ class ClientSeeder extends Seeder
                 'name'   => 'walk-in-customer',
                 'code' => 1,
                 'email' => 'walk-in-customer@example.com',
-                'country' => 'bangladesh',
-                'city' => 'dhaka',
-                'phone' => '123456780',
-                'adresse' => 'N45 , Dhaka',
+                'country' => 'Bangladesh',
+                'city' => 'Dhaka',
+                'phone' => '0123456789',
+                'adresse' => 'Mirpur-10 , Dhaka-BD.',
             )
-            
+
         );
     }
 }

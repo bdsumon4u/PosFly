@@ -14,9 +14,9 @@
         @on-search="onSearch"
         :search-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
+        placeholder: $t('Search_this_table'),
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -165,7 +165,7 @@
             <b-col md="6" sm="12">
               <validation-provider
                 name="Email customer"
-                :rules="{ required: true}"
+                :rules="{ required: false}"
                 v-slot="validationContext"
               >
                 <b-form-group :label="$t('Email')">
@@ -209,7 +209,7 @@
             <b-col md="6" sm="12">
               <validation-provider
                 name="Country customer"
-                :rules="{ required: true}"
+                :rules="{ required: false}"
                 v-slot="validationContext"
               >
                 <b-form-group :label="$t('Country')">
@@ -228,7 +228,7 @@
             <b-col md="6" sm="12">
               <validation-provider
                 name="City Customer"
-                :rules="{ required: true}"
+                :rules="{ required: false}"
                 v-slot="validationContext"
               >
                 <b-form-group :label="$t('City')">
@@ -247,7 +247,7 @@
             <b-col md="6" sm="12">
               <validation-provider
                 name="Adress customer"
-                :rules="{ required: true}"
+                :rules="{ required: false}"
                 v-slot="validationContext"
               >
                 <b-form-group :label="$t('Adress')">

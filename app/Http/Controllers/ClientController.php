@@ -66,14 +66,14 @@ class ClientController extends BaseController
 
         $this->validate($request, [
             'name' => 'required',
-            'adresse' => 'required',
-            'phone' => 'required',
+            'adresse' => 'nullable',
+            'phone' => 'nullable',
             'email' => 'required|unique:clients',
-            'email' => Rule::unique('clients')->where(function ($query) {
+            'email' => ['nullable', Rule::unique('clients')->where(function ($query) {
                 return $query->where('deleted_at', '=', null);
-            }),
-            'country' => 'required',
-            'city' => 'required',
+            })],
+            'country' => 'nullable',
+            'city' => 'nullable',
         ]
 
         , [
@@ -84,11 +84,11 @@ class ClientController extends BaseController
         Client::create([
             'name' => $request['name'],
             'code' => $this->getNumberOrder(),
-            'adresse' => $request['adresse'],
+            'adresse' => $request['adresse'] ?? 'N/A',
             'phone' => $request['phone'],
-            'email' => $request['email'],
-            'country' => $request['country'],
-            'city' => $request['city'],
+            'email' => $request['email'] ?? 'N/A',
+            'country' => $request['country'] ?? 'N/A',
+            'city' => $request['city'] ?? 'N/A',
         ]);
         return response()->json(['success' => true]);
     }
@@ -97,7 +97,7 @@ class ClientController extends BaseController
 
     public function show($id){
         //
-        
+
     }
 
     //------------- Update Customer -------------\\
@@ -106,17 +106,17 @@ class ClientController extends BaseController
     {
         $this->authorizeForUser($request->user('api'), 'update', Client::class);
         $this->validate($request, [
-            
+
             'email' => 'required|unique:clients',
-            'email' => Rule::unique('clients')->ignore($id)->where(function ($query) {
+            'email' => ['nullable', Rule::unique('clients')->ignore($id)->where(function ($query) {
                 return $query->where('deleted_at', '=', null);
-            }),
+            })],
 
             'name' => 'required',
-            'adresse' => 'required',
+            'adresse' => 'nullable',
             'phone' => 'required',
-            'country' => 'required',
-            'city' => 'required',
+            'country' => 'nullable',
+            'city' => 'nullable',
         ]
 
         , [
@@ -126,11 +126,11 @@ class ClientController extends BaseController
 
         Client::whereId($id)->update([
             'name' => $request['name'],
-            'adresse' => $request['adresse'],
+            'adresse' => $request['adresse'] ?? 'N/A',
             'phone' => $request['phone'],
-            'email' => $request['email'],
-            'country' => $request['country'],
-            'city' => $request['city'],
+            'email' => $request['email'] ?? 'N/A',
+            'country' => $request['country'] ?? 'N/A',
+            'city' => $request['city'] ?? 'N/A',
         ]);
         return response()->json(['success' => true]);
 
@@ -225,7 +225,7 @@ class ClientController extends BaseController
             } else {
                 return null;
             }
-           
+
             $rules = array('email' => 'required|email|unique:clients');
             //-- Create New Client
             foreach ($data as $key => $value) {
@@ -233,7 +233,7 @@ class ClientController extends BaseController
 
                 $validator = Validator::make($input, $rules);
                 if (!$validator->fails()) {
-                    
+
                     Client::create([
                         'name' => $value['name'] == '' ? null : $value['name'],
                         'code' => $this->getNumberOrder(),

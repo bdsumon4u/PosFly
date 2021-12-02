@@ -600,6 +600,16 @@
               <span class="item-name">{{$t('Updates')}}</span>
             </router-link>
           </li> -->
+
+            <li class="nav-item">
+                <div class="dark-mode">
+                    <div class="mr-2">Dark Mode</div>
+                    <label class="switch switch-primary mr-3 mt-2" v-b-popover.hover.left="'Dark Mode'">
+                        <input type="checkbox" @click="changeThemeMode" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </li>
         </ul>
 
         <ul
@@ -769,6 +779,7 @@ export default {
 
   methods: {
     ...mapActions([
+        "changeThemeMode",
       "changeSecondarySidebarProperties",
       "changeSecondarySidebarPropertiesViaMenuItem",
       "changeSecondarySidebarPropertiesViaOverlay",
@@ -839,6 +850,11 @@ export default {
 };
 </script>
 
-<style lang="" scoped>
+<style scoped>
+.dark-mode {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+}
 </style>
 

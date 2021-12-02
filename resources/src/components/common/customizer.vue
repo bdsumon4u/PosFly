@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="false">
     <div class="customizer" :class="{ open: isOpen }">
       <div class="handle" @click="isOpen = !isOpen">
         <i class="i-Gear spin"></i>
@@ -139,7 +139,7 @@ export default {
         "hn",
         "vn"
       ],
-      
+
     };
   },
 
@@ -160,7 +160,7 @@ export default {
       this.$store.dispatch("language/setLanguage", locale);
       Fire.$emit("ChangeLanguage");
     },
-   
+
   },
 };
 </script>

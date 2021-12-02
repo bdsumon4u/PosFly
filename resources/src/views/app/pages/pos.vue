@@ -169,7 +169,7 @@
                             :reduce="label => label.value"
                             :placeholder="$t('Choose_Customer')"
                             class="w-100"
-                            :options="clients.map(clients => ({label: clients.name, value: clients.id}))"
+                            :options="clients.map(client => ({label: client.name + ' :-: ' + client.phone, value: client.id}))"
                           />
                           <b-input-group-append>
                             <b-button variant="primary" @click="New_Client()">
@@ -535,14 +535,14 @@
                <!-- Product -->
                 <b-col md="12" class="mt-2 mb-2">
                   <h6>{{$t('ProductName')}}</h6>
-                 
+
                   <div id="autocomplete" class="autocomplete">
-                    <input 
+                    <input
                      :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @keyup="search()" 
+                      @keyup="search()"
                       @focus="handleFocus"
                       @blur="handleBlur"
-                      v-model="search_input"  
+                      v-model="search_input"
                       class="autocomplete-input" />
                     <ul class="autocomplete-result-list" v-show="focused">
                       <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
@@ -1248,7 +1248,7 @@ export default {
           GrandTotal: "",
           paid_amount: ""
         },
-        
+
         details: [],
         setting: {
           logo: "",
@@ -1516,7 +1516,7 @@ export default {
             }else{
               this.CreatePOS();
             }
-       
+
         }
       });
     },
@@ -1845,7 +1845,7 @@ export default {
         this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
       } else {
 
-        
+
         axios
           .post("pos/CreatePOS", {
             client_id: this.sale.client_id,
@@ -2106,7 +2106,7 @@ export default {
             this.$t("Warning")
           );
           this.payment.amount = 0;
-        } 
+        }
         else if (this.payment.amount > this.GrandTotal) {
           this.makeToast(
             "warning",
@@ -2123,7 +2123,7 @@ export default {
     Verified_Received_Amount() {
       if (isNaN(this.payment.received_amount)) {
         this.payment.received_amount = 0;
-      } 
+      }
     },
 
     //-----------------------------------Delete Detail Product ------------------------------\\
@@ -2221,7 +2221,7 @@ export default {
 
     },
 
-   
+
 
     //---------------------------------- Check if Product Exist in Order List ---------------------\\
 

@@ -22,7 +22,7 @@
                 ></i>
                 <!-- Grid menu Dropdown -->
 
-                <div class="dropdown">
+                <div class="dropdown" v-if="false">
                   <b-dropdown
                     id="dropdown"
                     text="Dropdown Button"

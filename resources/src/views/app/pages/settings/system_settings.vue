@@ -161,6 +161,7 @@
                               :options="
                                   [
                                   {label: 'English', value: 'en'},
+                                  {label: 'Bengali', value: 'bn'},
                                   {label: 'French', value: 'fr'},
                                   {label: 'Arabic', value: 'ar'},
                                   {label: 'Turkish', value: 'tur'},

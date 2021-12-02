@@ -15,7 +15,7 @@
     <div style="margin: auto"></div>
 
     <div class="header-part-right">
-      <router-link 
+      <router-link
         v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
         class="btn btn-outline-primary tn-sm btn-rounded"
         to="/app/pos"
@@ -26,7 +26,7 @@
       <i class="i-Full-Screen header-icon d-none d-sm-inline-block" @click="handleFullScreen"></i>
       <!-- Grid menu Dropdown -->
 
-      <div class="dropdown">
+      <div v-if="false" class="dropdown">
         <b-dropdown
           id="dropdown"
           text="Dropdown Button"
@@ -120,7 +120,7 @@
       <!-- Notificaiton -->
       <div class="dropdown">
         <b-dropdown
-          id="dropdown-1" 
+          id="dropdown-1"
           text="Dropdown Button"
           class="m-md-2 badge-top-container d-none  d-sm-inline-block"
           toggle-class="text-decoration-none"
@@ -151,7 +151,7 @@
                </router-link>
               </div>
             </div>
-           
+
           </vue-perfect-scrollbar>
         </b-dropdown>
       </div>
@@ -213,7 +213,7 @@ export default {
   },
 
   data() {
-  
+
     return {
       langs: [
         "en",
@@ -231,7 +231,7 @@ export default {
         "hn",
         "vn"
       ],
-      
+
       isDisplay: true,
       isStyle: true,
       isSearchOpen: false,
@@ -239,12 +239,12 @@ export default {
       isMegaMenuOpen: false,
       is_Load:false,
       // alerts:0,
-     
+
     };
   },
- 
+
    computed: {
-     
+
      ...mapGetters([
        "currentUser",
       "getSideBarToggleProperties",
@@ -256,7 +256,7 @@ export default {
   },
 
   methods: {
-    
+
     ...mapActions([
       "changeSecondarySidebarProperties",
       "changeSidebarProperties",

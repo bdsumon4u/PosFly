@@ -17,7 +17,7 @@
     <div class="header-part-right">
       <router-link
         v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
-        class="btn btn-outline-primary tn-sm btn-rounded"
+        class="btn btn-outline-primary btn-sm px-2 btn-rounded-md"
         to="/app/pos"
       >
       <span class="ul-btn__text ml-1">POS</span>
@@ -122,7 +122,7 @@
         <b-dropdown
           id="dropdown-1"
           text="Dropdown Button"
-          class="m-md-2 badge-top-container d-none  d-sm-inline-block"
+          class="m-md-2 badge-top-container"
           toggle-class="text-decoration-none"
           no-caret
           variant="link"

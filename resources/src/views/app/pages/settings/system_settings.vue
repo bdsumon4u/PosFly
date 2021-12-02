@@ -108,8 +108,7 @@
                     </validation-provider>
                   </b-col>
 
-                  <!-- developed by -->
-                  <b-col lg="4" md="4" sm="12">
+                  <!-- <b-col lg="4" md="4" sm="12">
                     <validation-provider
                       name="developed by"
                       :rules="{ required: true}"
@@ -129,7 +128,6 @@
                     </validation-provider>
                   </b-col>
 
-                   <!-- Footer -->
                   <b-col lg="4" md="4" sm="12">
                     <validation-provider
                       name="footer"
@@ -148,7 +146,7 @@
                         >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                       </b-form-group>
                     </validation-provider>
-                  </b-col>
+                  </b-col> -->
 
                    <!-- Default Language -->
                   <b-col lg="4" md="4" sm="12">
@@ -176,14 +174,14 @@
                                   {label: 'Traditional Chinese', value: 'tr_ch'},
                                   {label: 'Russian', value: 'ru'},
                                   {label: 'Vietnamese', value: 'vn'},
-                              ]"                     
+                              ]"
                       ></v-select>
                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                          </b-form-group>
                     </validation-provider>
                   </b-col>
 
-                  
+
                     <!-- Default Customer -->
                   <b-col lg="4" md="4" sm="12">
                     <b-form-group :label="$t('DefaultCustomer')">
@@ -276,7 +274,7 @@
                     </validation-provider>
                   </b-col>
 
-                 
+
 
                    <!-- Show Phone-->
                     <b-col md="4" class="mt-3 mb-3">
@@ -431,7 +429,7 @@
                     </b-form-group>
                   </validation-provider>
                 </b-col>
-                  
+
                    <!-- TWILIO_SID  -->
                   <b-col lg="6" md="6" sm="12">
                     <validation-provider
@@ -661,7 +659,7 @@ export default {
   },
   data() {
     return {
-      
+
       isLoading: true,
       data: new FormData(),
       settings: [],
@@ -825,7 +823,7 @@ export default {
     },
 
 
-  
+
     //---------------------------------- Update Settings ----------------\\
     Update_Settings() {
       NProgress.start();
@@ -861,7 +859,7 @@ export default {
           this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
           NProgress.done();
         });
-    }, 
+    },
 
 
       //---------------------------------- Update_Pos_Settings ----------------\\
@@ -877,7 +875,7 @@ export default {
           show_phone: this.pos_settings.show_phone,
           show_email: this.pos_settings.show_email,
           show_address: this.pos_settings.show_address,
-          show_customer: this.pos_settings.show_customer,      
+          show_customer: this.pos_settings.show_customer,
         })
         .then(response => {
           Fire.$emit("Event_Pos_Settings");
@@ -980,7 +978,7 @@ export default {
         })
         .catch(error => {
         });
-    },   
+    },
 
 
     //---------------------------------- Clear_Cache ----------------\\
@@ -1001,7 +999,7 @@ export default {
           NProgress.done();
           this.makeToast("danger", this.$t("Failed_to_clear_cache"), this.$t("Failed"));
         });
-    },   
+    },
 
      //---------------------------------- GET Payment_Gateway ----------------\\
     Get_Payment_Gateway() {
@@ -1036,7 +1034,7 @@ export default {
         });
     },
 
-    //---------------------------------- GET SMTP ----------------\\ 
+    //---------------------------------- GET SMTP ----------------\\
     Get_SMTP() {
       axios
         .get("getSMTP")
@@ -1048,7 +1046,7 @@ export default {
     },
 
 
- //---------------------------------- Get_pos_Settings ----------------\\ 
+ //---------------------------------- Get_pos_Settings ----------------\\
     get_pos_Settings() {
       axios
         .get("get_pos_Settings")
@@ -1059,7 +1057,7 @@ export default {
         });
     },
 
-   
+
   }, //end Methods
 
   //----------------------------- Created function-------------------
@@ -1068,7 +1066,7 @@ export default {
     this.Get_Settings();
 
     Fire.$on("Event_Smtp", () => {
-      this.Get_SMTP(); 
+      this.Get_SMTP();
     });
 
      Fire.$on("Event_payment", () => {

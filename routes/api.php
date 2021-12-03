@@ -269,6 +269,8 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::get('GetUserAuth', 'UserController@GetUserAuth');
     Route::get("/GetPermissions", "UserController@GetPermissions");
     Route::resource('users', 'UserController');
+    Route::put('tenants/Activated/{id}', 'TenantController@IsActivated');
+    Route::resource('tenants', 'TenantController');
     Route::put('users/Activated/{id}', 'UserController@IsActivated');
     Route::get('users/export/Excel', 'UserController@exportExcel');
     Route::get('users/Get_Info/Profile', 'UserController@GetInfoProfile');
@@ -282,14 +284,14 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::get('getRoleswithoutpaginate', 'PermissionsController@getRoleswithoutpaginate');
     Route::post('roles/delete/by_selection', 'PermissionsController@delete_by_selection');
 
-    
+
     //------------------------------- Settings ------------------------\\
-    //------------------------------------------------------------------\\    
+    //------------------------------------------------------------------\\
     Route::resource('settings', 'SettingsController');
 
     Route::put('pos_settings/{id}', 'SettingsController@update_pos_settings');
     Route::get('get_pos_Settings', 'SettingsController@get_pos_Settings');
-    
+
     Route::put('SMTP/{id}', 'SettingsController@updateSMTP');
     Route::post('SMTP', 'SettingsController@CreateSMTP');
     Route::get('getSettings', 'SettingsController@getSettings');
@@ -303,7 +305,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
     //------------------------------- Backup --------------------------\\
     //------------------------------------------------------------------\\
-    
+
     Route::get("GetBackup", "ReportController@GetBackup");
     Route::get("GenerateBackup", "ReportController@GenerateBackup");
     Route::delete("DeleteBackup/{name}", "ReportController@DeleteBackup");
@@ -324,5 +326,5 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::get('payment_Sale_PDF/{id}', 'PaymentSalesController@payment_sale');
     Route::get('Sales/Print_Invoice/{id}', 'SalesController@Print_Invoice_POS');
 
-    
+
     Route::get('Products/filter/{id}/{input}', 'ProductsController@Filter_Products');

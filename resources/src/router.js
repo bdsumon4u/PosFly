@@ -410,6 +410,14 @@ const routes = [
                         path: "Users",
                         component: () =>
                             import(/* webpackChunkName: "Users" */"./views/app/pages/people/users")
+                    },
+
+                    // Tenants
+                    {
+                        name: "tenant",
+                        path: "tenants",
+                        component: () =>
+                            import(/* webpackChunkName: "Users" */"./views/app/pages/people/tenants")
                     }
                 ]
             },

@@ -28,6 +28,7 @@
     "/js/bundle/detail_sale_return.js": "/js/bundle/detail_sale_return.js",
     "/js/bundle/detail_supplier_report.js": "/js/bundle/detail_supplier_report.js",
     "/js/bundle/edit_adjustment.js": "/js/bundle/edit_adjustment.js",
+    "/js/bundle/edit_expense.js": "/js/bundle/edit_expense.js",
     "/js/bundle/edit_permission.js": "/js/bundle/edit_permission.js",
     "/js/bundle/edit_product.js": "/js/bundle/edit_product.js",
     "/js/bundle/edit_purchase.js": "/js/bundle/edit_purchase.js",
@@ -69,6 +70,7 @@
     "/js/bundle/sales_report.js": "/js/bundle/sales_report.js",
     "/js/bundle/settings.js": "/js/bundle/settings.js",
     "/js/bundle/store_adjustment.js": "/js/bundle/store_adjustment.js",
+    "/js/bundle/store_expense.js": "/js/bundle/store_expense.js",
     "/js/bundle/store_permission.js": "/js/bundle/store_permission.js",
     "/js/bundle/store_product.js": "/js/bundle/store_product.js",
     "/js/bundle/store_purchase.js": "/js/bundle/store_purchase.js",
@@ -86,7 +88,5 @@
     "/js/bundle/vendors~largeSidebar.js": "/js/bundle/vendors~largeSidebar.js",
     "/js/bundle/vendors~largeSidebar~pos.js": "/js/bundle/vendors~largeSidebar~pos.js",
     "/js/bundle/vendors~vue-perfect-scrollbar.js": "/js/bundle/vendors~vue-perfect-scrollbar.js",
-    "/js/bundle/warehouse_report.js": "/js/bundle/warehouse_report.js",
-    "/js/bundle/edit_expense.js": "/js/bundle/edit_expense.js",
-    "/js/bundle/store_expense.js": "/js/bundle/store_expense.js"
+    "/js/bundle/warehouse_report.js": "/js/bundle/warehouse_report.js"
 }

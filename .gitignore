@@ -9,6 +9,7 @@
 /node_modules
 /public/storage
 /storage/*.key
+/storage/tenant*
 /storage/framework/sessions
 /vendor
 .env

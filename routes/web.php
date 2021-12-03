@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,9 +25,7 @@ Route::get('password/find/{token}', 'PasswordResetController@find');
 
 //------------------------------------------------------------------\\
 
-$installed = Storage::disk('public')->exists('installed');
-
-if ($installed === false) {
+Route::group(['middleware' => [\App\Http\Middleware\CheckIfInstalled::class.':false']], function () {
     Route::get('/setup', [
         'uses' => 'SetupController@viewCheck',
     ])->name('setup');
@@ -87,12 +86,7 @@ if ($installed === false) {
     Route::get('setup/lastStep', function () {
         return redirect('/setup', 301);
     });
-
-} else {
-    Route::any('/setup/{vue}', function () {
-        abort(403);
-    });
-}
+});
 
 //------------------------------------------------------------------\\
 
@@ -108,22 +102,19 @@ Route::group(['middleware' => ['auth', 'Is_Active']], function () {
     });
 
 
-    Route::get('/{vue?}',
-        function () {
-            $installed = Storage::disk('public')->exists('installed');
-            if ($installed === false) {
-                return redirect('/setup');
-            } else {
-                return view('layouts.master');
-            }
-        })->where('vue', '^(?!setup|update|password).*$');
+    Route::get('/{vue?}', function () {
+        $installed = Storage::disk('public')->exists('installed');
+        if ($installed === false) {
+            return redirect('/setup');
+        } else {
+            return view('layouts.master');
+        }
+    })->where('vue', '^(?!setup|update|password).*$');
+});
 
-
-    });
-    
-    Auth::routes([
-        'register' => false,
-    ]);
+Auth::routes([
+    'register' => false,
+]);
 
 
 //------------------------------------------------------------------\\

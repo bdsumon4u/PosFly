@@ -59,19 +59,7 @@ class BrandsController extends Controller
         ]);
 
         \DB::transaction(function () use ($request) {
-
-            if ($request->hasFile('image')) {
-
-                $image = $request->file('image');
-                $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
-
-                $image_resize = Image::make($image->getRealPath());
-                $image_resize->resize(200, 200);
-                $image_resize->save(public_path('/images/brands/' . $filename));
-
-            } else {
-                $filename = 'no-image.png';
-            }
+            $filename = $this->imageName($request);
 
             $Brand = new Brand;
 
@@ -90,63 +78,64 @@ class BrandsController extends Controller
 
      public function show($id){
         //
-    
+
     }
 
      //---------------- UPDATE Brand -------------\\
 
      public function update(Request $request, $id)
      {
- 
+
          $this->authorizeForUser($request->user('api'), 'update', Brand::class);
- 
+
          request()->validate([
              'name' => 'required',
          ]);
          \DB::transaction(function () use ($request, $id) {
-             $Brand = Brand::findOrFail($id);
-             $currentImage = $Brand->image;
- 
+             $brand = Brand::findOrFail($id);
+
              // dd($request->image);
-             if ($currentImage && $request->image != $currentImage) {
-                 $image = $request->file('image');
-                 $path = public_path() . '/images/brands';
-                 $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
- 
-                 $image_resize = Image::make($image->getRealPath());
-                 $image_resize->resize(200, 200);
-                 $image_resize->save(public_path('/images/brands/' . $filename));
- 
-                 $BrandImage = $path . '/' . $currentImage;
-                 if (file_exists($BrandImage)) {
-                     if ($currentImage != 'no-image.png') {
-                         @unlink($BrandImage);
-                     }
-                 }
-             } else if (!$currentImage && $request->image !='null'){
-                 $image = $request->file('image');
-                 $path = public_path() . '/images/brands';
-                 $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
- 
-                 $image_resize = Image::make($image->getRealPath());
-                 $image_resize->resize(200, 200);
-                 $image_resize->save(public_path('/images/brands/' . $filename));
-             }
- 
-             else {
-                 $filename = $currentImage?$currentImage:'no-image.png';
-             }
- 
+             $filename = $this->imageName($request, $brand);
+
              Brand::whereId($id)->update([
                  'name' => $request['name'],
                  'description' => $request['description'],
                  'image' => $filename,
              ]);
- 
+
          }, 10);
- 
+
          return response()->json(['success' => true]);
      }
+
+    public function imageName($request, $brand = null)
+    {
+        if ($brand && $request->image == $brand->image) {
+            dump('hb');
+            return $brand->image;
+        }
+
+        $dir = ($tenant = tenant('id')) ? ('tenant' . $tenant . '/') : '';
+        $default = '/images/brands/no-image.png';
+        $prefix = '/images/'.$dir.'brands/';
+        if (!$image = $request->file('image')) {
+            return $default;
+        }
+
+        $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
+
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(200, 200);
+        $image_resize->save(public_path($prefix . $filename));
+
+        if ($brand && file_exists(public_path($brand->image))) {
+            if ($brand->image != $default) {
+                @unlink(public_path($brand->image));
+            }
+        }
+
+        return $prefix . $filename;
+    }
 
     //------------ Delete Brand -----------\\
 

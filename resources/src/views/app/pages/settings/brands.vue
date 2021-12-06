@@ -15,9 +15,9 @@
         @on-search="onSearch"
         :search-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
+        placeholder: $t('Search_this_table'),
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -55,7 +55,7 @@
               height="50"
               width="50"
               fluid
-              :src="'/images/brands/' + props.row.image"
+              :src="props.row.image"
               alt="image"
             ></b-img>
           </span>

@@ -641,7 +641,7 @@
                   @click="Products_by_Brands(brand.id)"
                   :class="{ 'brand-Active' : brand.id === brand_id}"
                 >
-                  <img alt :src="'/images/brands/'+brand.image">
+                  <img alt :src="brand.image">
                   <div class="flex-grow-1 d-bock">
                     <div
                       class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"

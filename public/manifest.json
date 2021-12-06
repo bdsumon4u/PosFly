@@ -1,0 +1,19 @@
+{
+  "name": "BongoPos",
+  "short_name": "bPOS",
+  "start_url": "/",
+  "background_color": "#6777ef",
+  "description": "Ultimate Inventory With POS",
+  "display": "standalone",
+  "theme_color": "#6777ef",
+  "orientation": "any",
+  "status_bar": "black",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

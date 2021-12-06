@@ -152,9 +152,9 @@ class SetupController extends Controller
                     File::copy(storage_path('../' . $file), storage_path($file));
                 }
 
-                File::makeDirectory(public_path('tenant'.$tenant->id.'/avatar'));
-                File::makeDirectory(public_path('tenant'.$tenant->id.'/brands'));
-                File::makeDirectory(public_path('tenant'.$tenant->id.'/products'));
+                File::makeDirectory(public_path('avatar'));
+                File::makeDirectory(public_path('brands'));
+                File::makeDirectory(public_path('products'));
                 Storage::disk('public')->put('installed', 'Contents');
             } catch (\Exception $e) {
                 return $e->getMessage();

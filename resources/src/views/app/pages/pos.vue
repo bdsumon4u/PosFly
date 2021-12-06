@@ -565,7 +565,7 @@
                   class="card o-hidden bd-highlight m-1"
                 >
                   <div class="list-thumb d-flex">
-                    <img alt :src="'/images/products/'+product.image">
+                    <img alt :src="product.image">
                   </div>
                   <div class="flex-grow-1 d-bock">
                     <div

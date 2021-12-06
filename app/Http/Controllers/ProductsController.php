@@ -152,19 +152,21 @@ class ProductsController extends BaseController
                 $Product->stock_alert = $request['stock_alert'] ? $request['stock_alert'] : 0;
                 $Product->is_variant = $request['is_variant'] == 'true' ? 1 : 0;
 
+                $dir = ($tenant = tenant('id')) ? ('tenant' . $tenant . '/') : '';
+                $default = '/images/products/no-image.png';
+                $prefix = '/images/'.$dir.'products/';
                 if ($request['images']) {
                     $files = $request['images'];
                     foreach ($files as $file) {
                         $fileData = ImageResize::createFromString(base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file['path'])));
                         $fileData->resize(200, 200);
-                        $name = rand(11111111, 99999999) . $file['name'];
-                        $path = public_path() . '/images/products/';
-                        $success = file_put_contents($path . $name, $fileData);
-                        $images[] = $name;
+                        $name = rand(11111111, 99999999) . str_replace(',', '', $file['name']);
+                        $success = file_put_contents(public_path($prefix . $name), $fileData);
+                        $images[] = $prefix . $name;
                     }
                     $filename = implode(",", $images);
                 } else {
-                    $filename = 'no-image.png';
+                    $filename = $default;
                 }
 
                 $Product->image = $filename;
@@ -413,26 +415,26 @@ class ProductsController extends BaseController
                     }
                 }
 
+                $dir = ($tenant = tenant('id')) ? ('tenant' . $tenant . '/') : '';
+                $default = '/images/products/no-image.png';
+                $prefix = '/images/'.$dir.'products/';
                 if ($request['images'] === null) {
-
                     if ($Product->image !== null) {
                         foreach (explode(',', $Product->image) as $img) {
-                            $pathIMG = public_path() . '/images/products/' . $img;
-                            if (file_exists($pathIMG)) {
-                                if ($img != 'no-image.png') {
-                                    @unlink($pathIMG);
+                            if (file_exists(public_path($img))) {
+                                if ($img != $default) {
+                                    @unlink(public_path($img));
                                 }
                             }
                         }
                     }
-                    $filename = 'no-image.png';
+                    $filename = $default;
                 } else {
                     if ($Product->image !== null) {
                         foreach (explode(',', $Product->image) as $img) {
-                            $pathIMG = public_path() . '/images/products/' . $img;
-                            if (file_exists($pathIMG)) {
-                                if ($img != 'no-image.png') {
-                                    @unlink($pathIMG);
+                            if (file_exists(public_path($img))) {
+                                if ($img != $default) {
+                                    @unlink(public_path($img));
                                 }
                             }
                         }
@@ -441,9 +443,11 @@ class ProductsController extends BaseController
                     foreach ($files as $file) {
                         $fileData = ImageResize::createFromString(base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file['path'])));
                         $fileData->resize(200, 200);
-                        $name = rand(11111111, 99999999) . $file['name'];
-                        $path = public_path() . '/images/products/';
-                        $success = file_put_contents($path . $name, $fileData);
+                        $name = str_replace(',', '', $file['name']);
+                        if (!str_starts_with($name, $prefix)) {
+                            $name = $prefix . rand(11111111, 99999999) . $name;
+                        }
+                        $success = file_put_contents(public_path($name), $fileData);
                         $images[] = $name;
                     }
                     $filename = implode(",", $images);
@@ -479,11 +483,11 @@ class ProductsController extends BaseController
             $Product->deleted_at = Carbon::now();
             $Product->save();
 
+            $default = '/images/products/no-image.png';
             foreach (explode(',', $Product->image) as $img) {
-                $pathIMG = public_path() . '/images/products/' . $img;
-                if (file_exists($pathIMG)) {
-                    if ($img != 'no-image.png') {
-                        @unlink($pathIMG);
+                if (file_exists(public_path($img))) {
+                    if ($img != $default) {
+                        @unlink(public_path($img));
                     }
                 }
             }
@@ -509,6 +513,8 @@ class ProductsController extends BaseController
         $this->authorizeForUser($request->user('api'), 'delete', Product::class);
 
         \DB::transaction(function () use ($request) {
+            $default = '/images/products/no-image.png';
+
             $selectedIds = $request->selectedIds;
             foreach ($selectedIds as $product_id) {
 
@@ -517,10 +523,9 @@ class ProductsController extends BaseController
                 $Product->save();
 
                 foreach (explode(',', $Product->image) as $img) {
-                    $pathIMG = public_path() . '/images/products/' . $img;
-                    if (file_exists($pathIMG)) {
-                        if ($img != 'no-image.png') {
-                            @unlink($pathIMG);
+                    if (file_exists(public_path($img))) {
+                        if ($img != $default) {
+                            @unlink(public_path($img));
                         }
                     }
                 }
@@ -927,13 +932,14 @@ class ProductsController extends BaseController
         $item['TaxNet'] = $Product->TaxNet;
         $item['note'] = $Product->note ? $Product->note : '';
         $item['images'] = [];
-        if ($Product->image != '' && $Product->image != 'no-image.png') {
+
+        $default = '/images/products/no-image.png';
+        if ($Product->image != '' && $Product->image != $default) {
             foreach (explode(',', $Product->image) as $img) {
-                $path = public_path() . '/images/products/' . $img;
-                if (file_exists($path)) {
+                if (file_exists(public_path($img))) {
                     $itemImg['name'] = $img;
-                    $type = pathinfo($path, PATHINFO_EXTENSION);
-                    $data = file_get_contents($path);
+                    $type = pathinfo(public_path($img), PATHINFO_EXTENSION);
+                    $data = file_get_contents(public_path($img));
                     $itemImg['path'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
                     $item['images'][] = $itemImg;
@@ -968,7 +974,7 @@ class ProductsController extends BaseController
                               ->where('deleted_at', null)
                               ->get();
 
-        
+
         // $product_units[] = Unit::where('id', $Product->unit_id)->where('deleted_at', null)->first();
         // $product_units_child = Unit::where('base_unit', $Product->unit_id)->where('deleted_at', null)->get();
 

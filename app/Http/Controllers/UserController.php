@@ -51,7 +51,7 @@ class UserController extends BaseController
 
         //Multiple Filter
         $Filtred = $helpers->filter($users, $columns, $param, $request)
-        // Search With Multiple Param
+            // Search With Multiple Param
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
                     return $query->where('username', 'LIKE', "%{$request->search}%")
@@ -131,18 +131,7 @@ class UserController extends BaseController
             'email.unique' => 'This Email already taken.',
         ]);
         \DB::transaction(function () use ($request) {
-            if ($request->hasFile('avatar')) {
-
-                $image = $request->file('avatar');
-                $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
-
-                $image_resize = Image::make($image->getRealPath());
-                $image_resize->resize(128, 128);
-                $image_resize->save(public_path('/images/avatar/' . $filename));
-
-            } else {
-                $filename = 'no_avatar.png';
-            }
+            $filename = $this->avatarName($request);
 
             $User = new User;
             $User->firstname = $request['firstname'];
@@ -159,7 +148,7 @@ class UserController extends BaseController
             $role_user->user_id = $User->id;
             $role_user->role_id = $request['role'];
             $role_user->save();
-    
+
         }, 10);
 
         return response()->json(['success' => true]);
@@ -169,15 +158,15 @@ class UserController extends BaseController
 
     public function show($id){
         //
-        
-        }
+
+    }
 
     //------------- UPDATE  USER ---------\\
 
     public function update(Request $request, $id)
     {
         $this->authorizeForUser($request->user('api'), 'update', User::class);
-        
+
         $this->validate($request, [
             'email' => 'required|email|unique:users',
             'email' => Rule::unique('users')->ignore($id),
@@ -200,26 +189,7 @@ class UserController extends BaseController
                 $pass = $user->password;
             }
 
-            $currentAvatar = $user->avatar;
-            if ($request->avatar != $currentAvatar) {
-
-                $image = $request->file('avatar');
-                $path = public_path() . '/images/avatar';
-                $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
-
-                $image_resize = Image::make($image->getRealPath());
-                $image_resize->resize(128, 128);
-                $image_resize->save(public_path('/images/avatar/' . $filename));
-
-                $userPhoto = $path . '/' . $currentAvatar;
-                if (file_exists($userPhoto)) {
-                    if ($user->avatar != 'no_avatar.png') {
-                        @unlink($userPhoto);
-                    }
-                }
-            } else {
-                $filename = $currentAvatar;
-            }
+            $filename = $this->avatarName($request, $user);
 
             User::whereId($id)->update([
                 'firstname' => $request['firstname'],
@@ -239,7 +209,7 @@ class UserController extends BaseController
             ]);
 
         }, 10);
-        
+
         return response()->json(['success' => true]);
 
     }
@@ -272,27 +242,7 @@ class UserController extends BaseController
             $pass = $user->password;
         }
 
-        $currentAvatar = $user->avatar;
-        if ($request->avatar != $currentAvatar) {
-
-            $image = $request->file('avatar');
-            $path = public_path() . '/images/avatar';
-            $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
-
-            $image_resize = Image::make($image->getRealPath());
-            $image_resize->resize(128, 128);
-            $image_resize->save(public_path('/images/avatar/' . $filename));
-
-            $userPhoto = $path . '/' . $currentAvatar;
-
-            if (file_exists($userPhoto)) {
-                if ($user->avatar != 'no_avatar.png') {
-                    @unlink($userPhoto);
-                }
-            }
-        } else {
-            $filename = $currentAvatar;
-        }
+        $filename = $this->avatarName($request, $user);
 
         User::whereId($id)->update([
             'firstname' => $request['firstname'],
@@ -307,6 +257,34 @@ class UserController extends BaseController
 
         return response()->json(['avatar' => $filename, 'user' => $request['username']]);
 
+    }
+
+    public function avatarName($request, $user = null)
+    {
+        if ($user && $request->avatar == $user->avatar) {
+            return $user->avatar;
+        }
+
+        $dir = ($tenant = tenant('id')) ? ('tenant' . $tenant . '/') : '';
+        $default = '/images/avatar/no_avatar.png';
+        $prefix = '/images/'.$dir.'avatar/';
+        if (!$image = $request->file('avatar')) {
+            return $default;
+        }
+
+        $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
+
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(128, 128);
+        $image_resize->save(public_path($prefix . $filename));
+
+        if ($user && file_exists(public_path($user->avatar))) {
+            if ($user->avatar != $default) {
+                @unlink(public_path($user->avatar));
+            }
+        }
+
+        return $prefix . $filename;
     }
 
     //----------- IsActivated (Update Statut User) -------\\

@@ -151,6 +151,10 @@ class SetupController extends Controller
                 foreach (['oauth-private.key', 'oauth-public.key'] as $file) {
                     File::copy(storage_path('../' . $file), storage_path($file));
                 }
+
+                File::makeDirectory(public_path('tenant'.$tenant->id.'/avatar'));
+                File::makeDirectory(public_path('tenant'.$tenant->id.'/brands'));
+                File::makeDirectory(public_path('tenant'.$tenant->id.'/products'));
                 Storage::disk('public')->put('installed', 'Contents');
             } catch (\Exception $e) {
                 return $e->getMessage();

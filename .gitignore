@@ -1,6 +1,7 @@
 /bootstrap/cache/*
 /public/hot
 /public/js/bundle
+/public/images/tenant*
 /public/images/avatar
 /public/images/brands
 /public/images/products

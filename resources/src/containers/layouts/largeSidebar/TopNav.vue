@@ -169,7 +169,7 @@
         >
           <template slot="button-content" >
             <img
-              :src="'/images/avatar/'+currentUser.avatar"
+              :src="currentUser.avatar"
               id="userDropdown"
               alt
               data-toggle="dropdown"

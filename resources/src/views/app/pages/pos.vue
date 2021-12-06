@@ -166,11 +166,19 @@
                             :class="{'is-invalid': !!errors.length}"
                             :state="errors[0] ? false : (valid ? true : null)"
                             v-model="sale.client_id"
-                            :reduce="label => label.value"
+                            label="name"
+                            :reduce="label => label.name"
                             :placeholder="$t('Choose_Customer')"
                             class="w-100"
-                            :options="clients.map(client => ({label: client.name + ' :-: ' + client.phone, value: client.id}))"
-                          />
+                            :options="clients"
+                            :filter="clientSearch"
+                          >
+                              <template #option="{ name, phone }">
+                                  {{ name }}
+                                  <br />
+                                  <cite>{{ phone }}</cite>
+                              </template>
+                          </v-select>
                           <b-input-group-append>
                             <b-button variant="primary" @click="New_Client()">
                               <span>
@@ -1053,7 +1061,7 @@
                 <b-col md="6" sm="12">
                   <validation-provider
                     name="Email customer"
-                    :rules="{ required: true}"
+                    :rules="{ required: false}"
                     v-slot="validationContext"
                   >
                     <b-form-group :label="$t('Email')">
@@ -1091,7 +1099,7 @@
                 <b-col md="6" sm="12">
                   <validation-provider
                     name="Country customer"
-                    :rules="{ required: true}"
+                    :rules="{ required: false}"
                     v-slot="validationContext"
                   >
                     <b-form-group :label="$t('Country')">
@@ -1112,7 +1120,7 @@
                 <b-col md="6" sm="12">
                   <validation-provider
                     name="City Customer"
-                    :rules="{ required: true}"
+                    :rules="{ required: false}"
                     v-slot="validationContext"
                   >
                     <b-form-group :label="$t('City')">
@@ -1131,7 +1139,7 @@
                 <b-col md="6" sm="12">
                   <validation-provider
                     name="Adress customer"
-                    :rules="{ required: true}"
+                    :rules="{ required: false}"
                     v-slot="validationContext"
                   >
                     <b-form-group :label="$t('Adress')">
@@ -1166,6 +1174,7 @@ import { mapActions, mapGetters } from "vuex";
 import vueEasyPrint from "vue-easy-print";
 import VueBarcode from "vue-barcode";
 import FlagIcon from "vue-flag-icon";
+import Fuse from 'fuse.js';
 import Util from "./../../../utils";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -1331,6 +1340,15 @@ export default {
     logoutUser() {
       this.$store.dispatch("logout");
     },
+      clientSearch(options, search) {
+          const fuse = new Fuse(options, {
+              keys: ['title', 'phone',],
+              shouldSort: true,
+          })
+          return search.length
+              ? fuse.search(search).map(({ item }) => item)
+              : fuse.list
+      },
 
     async loadStripe_payment() {
       this.stripe = await loadStripe(`${this.stripe_key}`);

@@ -147,15 +147,15 @@ class SetupController extends Controller
 
         if ($tenant = tenant()) {
             try {
-                File::makeDirectory(storage_path());
+                File::ensureDirectoryExists(storage_path());
                 foreach (['oauth-private.key', 'oauth-public.key'] as $file) {
                     File::copy(storage_path('../' . $file), storage_path($file));
                 }
 
-                File::makeDirectory(public_path('logo'));
-                File::makeDirectory(public_path('avatar'));
-                File::makeDirectory(public_path('brands'));
-                File::makeDirectory(public_path('products'));
+                $prefix = 'images' . DIRECTORY_SEPARATOR .config('tenancy.filesystem.suffix_base') . $tenant->getTenantKey();
+                foreach (['logo', 'avatar', 'brands', 'products'] as $dir) {
+                    File::ensureDirectoryExists(public_path($prefix . DIRECTORY_SEPARATOR . $dir), 0777, true);
+                }
                 Storage::disk('public')->put('installed', 'Contents');
             } catch (\Exception $e) {
                 return $e->getMessage();

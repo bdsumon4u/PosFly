@@ -1,9 +1,6 @@
 /public/hot
 /public/js/bundle
 /public/images/tenant*
-/public/images/avatar
-/public/images/brands
-/public/images/products
 /public/images/vendor
 /public/js/main.js
 /node_modules

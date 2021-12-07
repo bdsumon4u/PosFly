@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'username' => 'cyber32',
                 'email' => 'admin@admin.com',
                 'password' => '$2y$10$ZPsWuR1eeBlIDyeC6VYCLuZFlOh7fpT6Inww.9KPFNlPTe.Mu7Yhu',
-                'avatar' => 'no_avatar.png',
+                'avatar' => '/images/avatar/no_avatar.png',
                 'phone' => '0123456789',
                 'role_id' => 1,
                 'statut' => 1,

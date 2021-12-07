@@ -20,12 +20,12 @@ class SettingSeeder extends Seeder
                 'currency_id' => 1,
                 'client_id' => 1,
                 'warehouse_id' => Null,
-                'CompanyName' => 'PosFly',
+                'CompanyName' => config('app.name', 'PosFly'),
                 'CompanyPhone' => '0123456789',
                 'CompanyAdress' => 'Mirpur-10, Dhaka-BD.',
-                'footer' => 'PosFly - Ultimate Inventory With POS',
+                'footer' => config('app.name', 'PosFly').' - Ultimate Inventory With POS',
                 'developed_by' => 'Cyber 32',
-                'logo' => 'logo-default.png',
+                'logo' => '/images/logo.png',
             )
 
         );

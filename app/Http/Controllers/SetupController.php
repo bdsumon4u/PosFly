@@ -152,6 +152,7 @@ class SetupController extends Controller
                     File::copy(storage_path('../' . $file), storage_path($file));
                 }
 
+                File::makeDirectory(public_path('logo'));
                 File::makeDirectory(public_path('avatar'));
                 File::makeDirectory(public_path('brands'));
                 File::makeDirectory(public_path('products'));

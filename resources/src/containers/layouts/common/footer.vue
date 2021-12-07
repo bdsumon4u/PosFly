@@ -12,7 +12,7 @@
         class="footer-bottom border-top pt-3 d-flex flex-column flex-sm-row align-items-center"
       >
         <div class="d-flex align-items-center">
-          <img class="logo" :src="'/images/'+currentUser.logo" alt width="60" height="60">
+          <img class="logo" :src="currentUser.logo" alt width="60" height="60">
           <div>
             <div>
               <p class="m-0">&copy; 2021 {{$t('developed_by')}} {{currentUser.developed_by}}</p>
@@ -25,7 +25,7 @@
       <!-- fotter end -->
     </div>
   </div>
-</template> 
+</template>
 <script>
 import { mapGetters, mapActions } from "vuex";
 
@@ -45,4 +45,4 @@ export default {
 
 
 <style lang="scss" scoped>
-</style> 
+</style>

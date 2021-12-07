@@ -23,27 +23,8 @@ class SettingsController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'update', Setting::class);
 
-        $setting = Setting::findOrFail($id);
-        $currentAvatar = $setting->logo;
-        if ($request->logo != $currentAvatar) {
+        $filename = $this->logoName($request, Setting::findOrFail($id));
 
-            $image = $request->file('logo');
-            $path = public_path() . '/images';
-            $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
-
-            $image_resize = Image::make($image->getRealPath());
-            $image_resize->resize(80, 80);
-            $image_resize->save(public_path('/images/' . $filename));
-
-            $userPhoto = $path . '/' . $currentAvatar;
-            if (file_exists($userPhoto)) {
-                if ($setting->logo != 'logo-default.png') {
-                    @unlink($userPhoto);
-                }
-            }
-        } else {
-            $filename = $currentAvatar;
-        }
         if ($request['currency'] != 'null') {
             $currency = $request['currency'];
         } else {
@@ -84,6 +65,34 @@ class SettingsController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function logoName($request, $settings)
+    {
+        if ($request->logo == $settings->logo) {
+            return $settings->logo;
+        }
+
+        $dir = ($tenant = tenant('id')) ? ('tenant' . $tenant . '/') : '';
+        $default = '/images/logo.png';
+        $prefix = '/images/'.$dir.'logo/';
+        if (!$image = $request->file('logo')) {
+            return $default;
+        }
+
+        $filename = rand(11111111, 99999999) . $image->getClientOriginalName();
+
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(80, 80);
+        $image_resize->save(public_path($prefix . $filename));
+
+        if (file_exists(public_path($settings->logo))) {
+            if ($settings->logo != $default) {
+                @unlink(public_path($settings->logo));
+            }
+        }
+
+        return $prefix . $filename;
+    }
+
       //-------------- Update  Payment Gateway ---------------\\
 
       public function Update_payment_gateway(Request $request)
@@ -115,19 +124,19 @@ class SettingsController extends Controller
        public function sms_config(Request $request)
        {
            $this->authorizeForUser($request->user('api'), 'update', Setting::class);
- 
-           
+
+
              $this->setEnvironmentValue([
                  'TWILIO_SID' => $request['TWILIO_SID'] !== null?'"' . $request['TWILIO_SID'] . '"':'"' . env('TWILIO_SID') . '"',
                  'TWILIO_TOKEN' => $request['TWILIO_TOKEN'] !== null?'"' . $request['TWILIO_TOKEN'] . '"':'"' . env('TWILIO_TOKEN') . '"',
                  'TWILIO_FROM' => $request['TWILIO_FROM'] !== null?'"' . $request['TWILIO_FROM'] . '"':'"' . env('TWILIO_FROM') . '"',
              ]);
- 
+
              Artisan::call('config:cache');
              Artisan::call('config:clear');
- 
+
          return response()->json(['success' => true]);
- 
+
        }
 
     //-------------- Get_sms_config ---------------\\
@@ -145,7 +154,7 @@ class SettingsController extends Controller
 
         return response()->json(['sms' => $item], 200);
     }
- 
+
 
     //-------------- Get Payment Gateway ---------------\\
 
@@ -162,8 +171,8 @@ class SettingsController extends Controller
         return response()->json(['gateway' => $item], 200);
     }
 
-    
-  
+
+
 
 
     //-------------- Update  SMTP ---------------\\
@@ -190,7 +199,7 @@ class SettingsController extends Controller
      public function update_pos_settings(Request $request, $id)
      {
         $this->authorizeForUser($request->user('api'), 'update', Setting::class);
- 
+
         request()->validate([
             'note_customer' => 'required',
         ]);
@@ -205,9 +214,9 @@ class SettingsController extends Controller
              'show_phone'     => $request['show_phone'],
              'show_address'   => $request['show_address'],
          ]);
- 
+
          return response()->json(['success' => true]);
- 
+
      }
 
 
@@ -216,13 +225,13 @@ class SettingsController extends Controller
      public function get_pos_Settings(Request $request)
      {
          $this->authorizeForUser($request->user('api'), 'view', Setting::class);
- 
+
          $PosSetting = PosSetting::where('deleted_at', '=', null)->first();
 
          return response()->json([
              'pos_settings' => $PosSetting
             ], 200);
-    
+
     }
 
     //-------------- Get All Settings ---------------\\
@@ -280,7 +289,7 @@ class SettingsController extends Controller
             return response()->json([
                 'settings' => $item ,
                 'currencies' => $Currencies,
-                'clients' => $clients , 
+                'clients' => $clients ,
                 'warehouses' => $warehouses
             ], 200);
         } else {
@@ -313,7 +322,7 @@ class SettingsController extends Controller
         Artisan::call('route:clear');
     }
 
-   
+
     //-------------- Set Environment Value ---------------\\
 
     public function setEnvironmentValue(array $values)
@@ -323,29 +332,29 @@ class SettingsController extends Controller
         $str .= "\r\n";
         if (count($values) > 0) {
             foreach ($values as $envKey => $envValue) {
-    
+
                 $keyPosition = strpos($str, "$envKey=");
                 $endOfLinePosition = strpos($str, "\n", $keyPosition);
                 $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
-    
+
                 if (is_bool($keyPosition) && $keyPosition === false) {
                     // variable doesnot exist
                     $str .= "$envKey=$envValue";
                     $str .= "\r\n";
                 } else {
-                    // variable exist                    
+                    // variable exist
                     $str = str_replace($oldLine, "$envKey=$envValue", $str);
-                }            
+                }
             }
         }
-    
+
         $str = substr($str, 0, -1);
         if (!file_put_contents($envFile, $str)) {
             return false;
         }
-    
-        app()->loadEnvironmentFrom($envFile);    
-    
+
+        app()->loadEnvironmentFrom($envFile);
+
         return true;
     }
 

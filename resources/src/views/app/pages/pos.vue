@@ -545,13 +545,17 @@
                   <h6>{{$t('ProductName')}}</h6>
 
                   <div id="autocomplete" class="autocomplete">
-                    <input
-                     :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @keyup="search()"
-                      @focus="handleFocus"
-                      @blur="handleBlur"
-                      v-model="search_input"
-                      class="autocomplete-input" />
+                    <div class="d-flex">
+                        <input
+                            :placeholder="$t('Scan_Search_Product_by_Code_Name')"
+                            @keyup="search()"
+                            @focus="handleFocus"
+                            @blur="handleBlur"
+                            :value='search_input'
+                            @input='evt => search_input = evt.target.value'
+                            class="autocomplete-input s-inp" />
+                        <button type="button" class="s-btn" @click.prevent="search()"></button>
+                    </div>
                     <ul class="autocomplete-result-list" v-show="focused">
                       <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
                     </ul>
@@ -2372,5 +2376,18 @@ export default {
   font-size: 14px;
   /* text-transform: uppercase; */
   /* height: 50px; */
+}
+
+.s-inp {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.s-btn {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    outline: none;
+    border: 1px solid #dedede;
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+) no-repeat 10px;
+    width: 46px;
 }
 </style>

@@ -92,6 +92,9 @@ Route::group(['middleware' => [\App\Http\Middleware\CheckIfInstalled::class.':fa
 Route::get('offline', function () {
     return view('offline');
 });
+Route::get('pay-bill', function () {
+    return view('pay-bill');
+})->name('pay-bill');
 Route::group(['middleware' => ['auth', 'Is_Active']], function () {
 
     Route::get('/login', function () {
@@ -111,7 +114,7 @@ Route::group(['middleware' => ['auth', 'Is_Active']], function () {
         } else {
             return view('layouts.master');
         }
-    })->where('vue', '^(?!setup|update|password|offline).*$');
+    })->where('vue', '^(?!setup|update|password|offline|pay-bill).*$');
 });
 
 Auth::routes([

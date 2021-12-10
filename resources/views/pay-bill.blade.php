@@ -57,11 +57,10 @@
 <div class="error_body">
     <div
         class="container error_container d-flex justify-content-center align-items-center flex-column w-100 h-100 p-5 text-center">
-        <h2 class="error_message text-center mb-3">Boo! You don't have an internet connection</h2>
+        <h2 class="error_message text-center mb-3">Boo! It seems like you haven't paid your monthly bill.</h2>
         <p class="error_paragraph text-center mb-5">
-            Please check your network connection and try again.
+            Please pay your monthly bill and try again.
         </p>
-        <a href="/" class="btn btn-primary error_btn">Back to Home Page</a>
     </div>
 </div>
 </body>

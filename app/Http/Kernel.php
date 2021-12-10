@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\InitializeTenancyByDomainOrSubdomain::class,
+        \App\Http\Middleware\CheckTenantStatus::class,
     ];
 
     /**

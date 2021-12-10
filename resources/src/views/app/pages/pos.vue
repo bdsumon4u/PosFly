@@ -2,9 +2,9 @@
   <div class="pos_page">
     <div class="container-fluid p-0 app-admin-wrap layout-sidebar-large clearfix" id="pos">
       <div v-if="isLoading" class="loading_page spinner spinner-primary mr-3"></div>
-      <b-row v-if="!isLoading">
+      <b-row class="m-0" v-if="!isLoading">
         <!-- Card Left Panel Details Sale-->
-        <b-col md="5">
+        <b-col class="p-0" md="5">
           <b-card no-body class="card-order">
             <div class="main-header">
               <div class="logo">
@@ -523,8 +523,8 @@
         </b-col>
 
         <!-- Card right Of Products -->
-        <b-col md="7">
-          <b-card class="list-grid">
+        <b-col class="p-0" md="7">
+          <b-card class="list-grid" style="overflow: auto">
             <b-row>
               <b-col md="6">
                 <button v-b-toggle.sidebar-category class="btn btn-outline-info mt-1 btn-block">
@@ -612,333 +612,334 @@
             </b-row>
           </b-card>
         </b-col>
+      </b-row>
+        <div>
+            <!-- Sidebar Brand -->
+            <b-sidebar id="sidebar-brand" :title="$t('ListofBrand')" bg-variant="white" right shadow>
+                <div class="px-3 py-2">
+                    <b-row>
+                        <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
+                            <div
+                                @click="GetAllBrands()"
+                                :class="{ 'brand-Active' : brand_id == ''}"
+                                class="card o-hidden bd-highlight m-1"
+                            >
+                                <div class="list-thumb d-flex">
+                                    <img alt :src="'/images/no-image.png'">
+                                </div>
+                                <div class="flex-grow-1 d-bock">
+                                    <div
+                                        class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                                    >
+                                        <div class="item-title">{{$t('All_Brand')}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="card o-hidden bd-highlight m-1"
+                                v-for="brand in paginated_Brands"
+                                :key="brand.id"
+                                @click="Products_by_Brands(brand.id)"
+                                :class="{ 'brand-Active' : brand.id === brand_id}"
+                            >
+                                <img alt :src="brand.image">
+                                <div class="flex-grow-1 d-bock">
+                                    <div
+                                        class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                                    >
+                                        <div class="item-title">{{brand.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </b-row>
 
-        <!-- Sidebar Brand -->
-        <b-sidebar id="sidebar-brand" :title="$t('ListofBrand')" bg-variant="white" right shadow>
-          <div class="px-3 py-2">
-            <b-row>
-              <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
-                <div
-                  @click="GetAllBrands()"
-                  :class="{ 'brand-Active' : brand_id == ''}"
-                  class="card o-hidden bd-highlight m-1"
-                >
-                  <div class="list-thumb d-flex">
-                    <img alt :src="'/images/no-image.png'">
-                  </div>
-                  <div class="flex-grow-1 d-bock">
-                    <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
-                      <div class="item-title">{{$t('All_Brand')}}</div>
-                    </div>
-                  </div>
+                    <b-row>
+                        <b-col md="12" class="mt-4">
+                            <b-pagination
+                                @change="BrandonPageChanged"
+                                :total-rows="brand_totalRows"
+                                :per-page="brand_perPage"
+                                v-model="brand_currentPage"
+                                class="my-0 gull-pagination align-items-center"
+                                align="center"
+                                first-text
+                                last-text
+                            >
+                                <p class="list-arrow m-0" slot="prev-text">
+                                    <i class="i-Arrow-Left text-40"></i>
+                                </p>
+                                <p class="list-arrow m-0" slot="next-text">
+                                    <i class="i-Arrow-Right text-40"></i>
+                                </p>
+                            </b-pagination>
+                        </b-col>
+                    </b-row>
                 </div>
-                <div
-                  class="card o-hidden bd-highlight m-1"
-                  v-for="brand in paginated_Brands"
-                  :key="brand.id"
-                  @click="Products_by_Brands(brand.id)"
-                  :class="{ 'brand-Active' : brand.id === brand_id}"
-                >
-                  <img alt :src="brand.image">
-                  <div class="flex-grow-1 d-bock">
-                    <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
-                      <div class="item-title">{{brand.name}}</div>
-                    </div>
-                  </div>
+            </b-sidebar>
+
+            <!-- Sidebar category -->
+            <b-sidebar
+                id="sidebar-category"
+                :title="$t('ListofCategory')"
+                bg-variant="white"
+                right
+                shadow
+            >
+                <div class="px-3 py-2">
+                    <b-row>
+                        <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
+                            <div
+                                @click="getAllCategory()"
+                                :class="{ 'brand-Active' : category_id == ''}"
+                                class="card o-hidden bd-highlight m-1"
+                            >
+                                <div class="list-thumb d-flex">
+                                    <img alt :src="'/images/no-image.png'">
+                                </div>
+                                <div class="flex-grow-1 d-bock">
+                                    <div
+                                        class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                                    >
+                                        <div class="item-title">{{$t('All_Category')}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="card o-hidden bd-highlight m-1"
+                                v-for="category in paginated_Category"
+                                :key="category.id"
+                                @click="Products_by_Category(category.id)"
+                                :class="{ 'brand-Active' : category.id === category_id}"
+                            >
+                                <img alt :src="'/images/no-image.png'">
+                                <div class="flex-grow-1 d-bock">
+                                    <div
+                                        class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                                    >
+                                        <div class="item-title">{{category.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </b-row>
+
+                    <b-row>
+                        <b-col md="12" class="mt-4">
+                            <b-pagination
+                                @change="Category_onPageChanged"
+                                :total-rows="category_totalRows"
+                                :per-page="category_perPage"
+                                v-model="category_currentPage"
+                                class="my-0 gull-pagination align-items-center"
+                                align="center"
+                                first-text
+                                last-text
+                            >
+                                <p class="list-arrow m-0" slot="prev-text">
+                                    <i class="i-Arrow-Left text-40"></i>
+                                </p>
+                                <p class="list-arrow m-0" slot="next-text">
+                                    <i class="i-Arrow-Right text-40"></i>
+                                </p>
+                            </b-pagination>
+                        </b-col>
+                    </b-row>
                 </div>
-              </div>
-            </b-row>
+            </b-sidebar>
 
-            <b-row>
-              <b-col md="12" class="mt-4">
-                <b-pagination
-                  @change="BrandonPageChanged"
-                  :total-rows="brand_totalRows"
-                  :per-page="brand_perPage"
-                  v-model="brand_currentPage"
-                  class="my-0 gull-pagination align-items-center"
-                  align="center"
-                  first-text
-                  last-text
-                >
-                  <p class="list-arrow m-0" slot="prev-text">
-                    <i class="i-Arrow-Left text-40"></i>
-                  </p>
-                  <p class="list-arrow m-0" slot="next-text">
-                    <i class="i-Arrow-Right text-40"></i>
-                  </p>
-                </b-pagination>
-              </b-col>
-            </b-row>
-          </div>
-        </b-sidebar>
+            <!-- Modal Show Invoice POS-->
+            <b-modal hide-footer size="sm" scrollable id="Show_invoice" :title="$t('Invoice_POS')">
+                <div id="invoice-POS">
+                    <div style="max-width:400px;margin:0px auto">
+                        <div class="info">
+                            <h2 class="text-center">{{invoice_pos.setting.CompanyName}}</h2>
+                            <p>
+                                <span>{{$t('date')}} : {{invoice_pos.sale.date}} <br></span>
+                                <span v-show="pos_settings.show_address">{{$t('Adress')}} : {{invoice_pos.setting.CompanyAdress}} <br></span>
+                                <span v-show="pos_settings.show_email">{{$t('Email')}} : {{invoice_pos.setting.email}} <br></span>
+                                <span v-show="pos_settings.show_phone">{{$t('Phone')}} : {{invoice_pos.setting.CompanyPhone}} <br></span>
+                                <span v-show="pos_settings.show_customer">{{$t('Customer')}} : {{invoice_pos.sale.client_name}} <br></span>
+                            </p>
+                        </div>
 
-        <!-- Sidebar category -->
-        <b-sidebar
-          id="sidebar-category"
-          :title="$t('ListofCategory')"
-          bg-variant="white"
-          right
-          shadow
-        >
-          <div class="px-3 py-2">
-            <b-row>
-              <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
-                <div
-                  @click="getAllCategory()"
-                  :class="{ 'brand-Active' : category_id == ''}"
-                  class="card o-hidden bd-highlight m-1"
-                >
-                  <div class="list-thumb d-flex">
-                    <img alt :src="'/images/no-image.png'">
-                  </div>
-                  <div class="flex-grow-1 d-bock">
-                    <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
-                      <div class="item-title">{{$t('All_Category')}}</div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="card o-hidden bd-highlight m-1"
-                  v-for="category in paginated_Category"
-                  :key="category.id"
-                  @click="Products_by_Category(category.id)"
-                  :class="{ 'brand-Active' : category.id === category_id}"
-                >
-                  <img alt :src="'/images/no-image.png'">
-                  <div class="flex-grow-1 d-bock">
-                    <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
-                      <div class="item-title">{{category.name}}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </b-row>
-
-            <b-row>
-              <b-col md="12" class="mt-4">
-                <b-pagination
-                  @change="Category_onPageChanged"
-                  :total-rows="category_totalRows"
-                  :per-page="category_perPage"
-                  v-model="category_currentPage"
-                  class="my-0 gull-pagination align-items-center"
-                  align="center"
-                  first-text
-                  last-text
-                >
-                  <p class="list-arrow m-0" slot="prev-text">
-                    <i class="i-Arrow-Left text-40"></i>
-                  </p>
-                  <p class="list-arrow m-0" slot="next-text">
-                    <i class="i-Arrow-Right text-40"></i>
-                  </p>
-                </b-pagination>
-              </b-col>
-            </b-row>
-          </div>
-        </b-sidebar>
-
-        <!-- Modal Show Invoice POS-->
-        <b-modal hide-footer size="sm" scrollable id="Show_invoice" :title="$t('Invoice_POS')">
-          <div id="invoice-POS">
-            <div style="max-width:400px;margin:0px auto">
-              <div class="info">
-                <h2 class="text-center">{{invoice_pos.setting.CompanyName}}</h2>
-                <p>
-                  <span>{{$t('date')}} : {{invoice_pos.sale.date}} <br></span>
-                  <span v-show="pos_settings.show_address">{{$t('Adress')}} : {{invoice_pos.setting.CompanyAdress}} <br></span>
-                  <span v-show="pos_settings.show_email">{{$t('Email')}} : {{invoice_pos.setting.email}} <br></span>
-                  <span v-show="pos_settings.show_phone">{{$t('Phone')}} : {{invoice_pos.setting.CompanyPhone}} <br></span>
-                  <span v-show="pos_settings.show_customer">{{$t('Customer')}} : {{invoice_pos.sale.client_name}} <br></span>
-                </p>
-              </div>
-
-              <table class="table_data">
-                <tbody>
-                  <tr v-for="detail_invoice in invoice_pos.details">
-                    <td colspan="3">
+                        <table class="table_data">
+                            <tbody>
+                            <tr v-for="detail_invoice in invoice_pos.details">
+                                <td colspan="3">
                       <span>
                         {{detail_invoice.name}}
                         <br>
                         {{formatNumber(detail_invoice.quantity,2)}} {{detail_invoice.unit_sale}} x {{formatNumber(detail_invoice.total/detail_invoice.quantity,2)}}
                       </span>
-                    </td>
-                    <td
-                      style="text-align:right;vertical-align:bottom"
-                    >{{formatNumber(detail_invoice.total,2)}}</td>
-                  </tr>
+                                </td>
+                                <td
+                                    style="text-align:right;vertical-align:bottom"
+                                >{{formatNumber(detail_invoice.total,2)}}</td>
+                            </tr>
 
-                  <tr style="margin-top:10px">
-                    <td colspan="3" class="total">{{$t('OrderTax')}}</td>
-                    <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
-                  </tr>
+                            <tr style="margin-top:10px">
+                                <td colspan="3" class="total">{{$t('OrderTax')}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
+                            </tr>
 
-                  <tr style="margin-top:10px">
-                    <td colspan="3" class="total">{{$t('Discount')}}</td>
-                    <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.discount ,2)}}</td>
-                  </tr>
+                            <tr style="margin-top:10px">
+                                <td colspan="3" class="total">{{$t('Discount')}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.discount ,2)}}</td>
+                            </tr>
 
-                  <tr style="margin-top:10px">
-                    <td colspan="3" class="total">{{$t('Total')}}</td>
-                    <td
-                      style="text-align:right;"
-                      class="total"
-                    >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
-                  </tr>
+                            <tr style="margin-top:10px">
+                                <td colspan="3" class="total">{{$t('Total')}}</td>
+                                <td
+                                    style="text-align:right;"
+                                    class="total"
+                                >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
+                            </tr>
 
-                  <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
-                    <td colspan="3" class="total">{{$t('Paid')}}</td>
-                    <td
-                      style="text-align:right;"
-                      class="total"
-                    >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.paid_amount ,2)}}</td>
-                  </tr>
+                            <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
+                                <td colspan="3" class="total">{{$t('Paid')}}</td>
+                                <td
+                                    style="text-align:right;"
+                                    class="total"
+                                >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.paid_amount ,2)}}</td>
+                            </tr>
 
-                  <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
-                    <td colspan="3" class="total">{{$t('Due')}}</td>
-                    <td
-                      style="text-align:right;"
-                      class="total"
-                    >{{invoice_pos.symbol}} {{parseFloat(invoice_pos.sale.GrandTotal - invoice_pos.sale.paid_amount).toFixed(2)}}</td>
-                  </tr>
-                </tbody>
-              </table>
+                            <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
+                                <td colspan="3" class="total">{{$t('Due')}}</td>
+                                <td
+                                    style="text-align:right;"
+                                    class="total"
+                                >{{invoice_pos.symbol}} {{parseFloat(invoice_pos.sale.GrandTotal - invoice_pos.sale.paid_amount).toFixed(2)}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
-              <table
-                class="change mt-3"
-                style=" font-size: 10px;"
-                v-show="invoice_pos.sale.paid_amount > 0"
-              >
-                <thead>
-                  <tr style="background: #eee; ">
-                    <th style="text-align: left;" colspan="1">{{$t('PayeBy')}}:</th>
-                    <th style="text-align: center;" colspan="2">{{$t('Amount')}}:</th>
-                    <th style="text-align: right;" colspan="1">{{$t('Change')}}:</th>
-                  </tr>
-                </thead>
+                        <table
+                            class="change mt-3"
+                            style=" font-size: 10px;"
+                            v-show="invoice_pos.sale.paid_amount > 0"
+                        >
+                            <thead>
+                            <tr style="background: #eee; ">
+                                <th style="text-align: left;" colspan="1">{{$t('PayeBy')}}:</th>
+                                <th style="text-align: center;" colspan="2">{{$t('Amount')}}:</th>
+                                <th style="text-align: right;" colspan="1">{{$t('Change')}}:</th>
+                            </tr>
+                            </thead>
 
-                <tbody>
-                  <tr v-for="payment_pos in payments">
-                    <td style="text-align: left;" colspan="1">{{payment_pos.Reglement}}</td>
-                    <td
-                      style="text-align: center;"
-                      colspan="2"
-                    >{{formatNumber(payment_pos.montant ,2)}}</td>
-                    <td
-                      style="text-align: right;"
-                      colspan="1"
-                    >{{formatNumber(payment_pos.change ,2)}}</td>
-                  </tr>
-                </tbody>
-              </table>
+                            <tbody>
+                            <tr v-for="payment_pos in payments">
+                                <td style="text-align: left;" colspan="1">{{payment_pos.Reglement}}</td>
+                                <td
+                                    style="text-align: center;"
+                                    colspan="2"
+                                >{{formatNumber(payment_pos.montant ,2)}}</td>
+                                <td
+                                    style="text-align: right;"
+                                    colspan="1"
+                                >{{formatNumber(payment_pos.change ,2)}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
-              <div id="legalcopy" class="ml-2">
-                <p class="legal" v-show="pos_settings.show_note">
-                  <strong>{{pos_settings.note_customer}}</strong>
-                </p>
-                <div id="bar" v-show="pos_settings.show_barcode">
-                  <barcode
-                    class="barcode"
-                    :format="barcodeFormat"
-                    :value="invoice_pos.sale.Ref"
-                    textmargin="0"
-                    fontoptions="bold"
-                    fontSize="15"
-                    height="25"
-                    width="1"
-                  ></barcode>
+                        <div id="legalcopy" class="ml-2">
+                            <p class="legal" v-show="pos_settings.show_note">
+                                <strong>{{pos_settings.note_customer}}</strong>
+                            </p>
+                            <div id="bar" v-show="pos_settings.show_barcode">
+                                <barcode
+                                    class="barcode"
+                                    :format="barcodeFormat"
+                                    :value="invoice_pos.sale.Ref"
+                                    textmargin="0"
+                                    fontoptions="bold"
+                                    fontSize="15"
+                                    height="25"
+                                    width="1"
+                                ></barcode>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <button @click="print_pos()" class="btn btn-outline-primary">
-            <i class="i-Billing"></i>
-            {{$t('print')}}
-          </button>
-        </b-modal>
+                <button @click="print_pos()" class="btn btn-outline-primary">
+                    <i class="i-Billing"></i>
+                    {{$t('print')}}
+                </button>
+            </b-modal>
 
-        <!-- Modal Add Payment-->
-        <validation-observer ref="Add_payment">
-          <b-modal hide-footer size="lg" id="Add_Payment" :title="$t('AddPayment')">
-            <b-form @submit.prevent="Submit_Payment">
-              <b-row>
-                <b-col md="6">
-                  <b-row>
-                    <!-- Received  Amount  -->
-                    <b-col lg="12" md="12" sm="12">
-                      <validation-provider
-                        name="Received Amount"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
-                        <b-form-group :label="$t('Received_Amount')">
-                          <b-form-input
-                            @keyup="Verified_Received_Amount(payment.received_amount)"
-                            label="Received_Amount"
-                            :placeholder="$t('Received_Amount')"
-                            v-model.number="payment.received_amount"
-                            :state="getValidationState(validationContext)"
-                            aria-describedby="Received_Amount-feedback"
-                          ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Received_Amount-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                        </b-form-group>
-                      </validation-provider>
-                    </b-col>
+            <!-- Modal Add Payment-->
+            <validation-observer ref="Add_payment">
+                <b-modal hide-footer size="lg" id="Add_Payment" :title="$t('AddPayment')">
+                    <b-form @submit.prevent="Submit_Payment">
+                        <b-row>
+                            <b-col md="6">
+                                <b-row>
+                                    <!-- Received  Amount  -->
+                                    <b-col lg="12" md="12" sm="12">
+                                        <validation-provider
+                                            name="Received Amount"
+                                            :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                                            v-slot="validationContext"
+                                        >
+                                            <b-form-group :label="$t('Received_Amount')">
+                                                <b-form-input
+                                                    @keyup="Verified_Received_Amount(payment.received_amount)"
+                                                    label="Received_Amount"
+                                                    :placeholder="$t('Received_Amount')"
+                                                    v-model.number="payment.received_amount"
+                                                    :state="getValidationState(validationContext)"
+                                                    aria-describedby="Received_Amount-feedback"
+                                                ></b-form-input>
+                                                <b-form-invalid-feedback
+                                                    id="Received_Amount-feedback"
+                                                >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                            </b-form-group>
+                                        </validation-provider>
+                                    </b-col>
 
-                    <!-- Paying  Amount  -->
-                    <b-col lg="12" md="12" sm="12">
-                      <validation-provider
-                        name="Paying Amount"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
-                        <b-form-group :label="$t('Paying_Amount')">
-                          <b-form-input
-                            label="Paying_Amount"
-                            @keyup="Verified_paidAmount(payment.amount)"
-                            :placeholder="$t('Paying_Amount')"
-                            v-model.number="payment.amount"
-                            :state="getValidationState(validationContext)"
-                            aria-describedby="Paying_Amount-feedback"
-                          ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Paying_Amount-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                        </b-form-group>
-                      </validation-provider>
-                    </b-col>
+                                    <!-- Paying  Amount  -->
+                                    <b-col lg="12" md="12" sm="12">
+                                        <validation-provider
+                                            name="Paying Amount"
+                                            :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                                            v-slot="validationContext"
+                                        >
+                                            <b-form-group :label="$t('Paying_Amount')">
+                                                <b-form-input
+                                                    label="Paying_Amount"
+                                                    @keyup="Verified_paidAmount(payment.amount)"
+                                                    :placeholder="$t('Paying_Amount')"
+                                                    v-model.number="payment.amount"
+                                                    :state="getValidationState(validationContext)"
+                                                    aria-describedby="Paying_Amount-feedback"
+                                                ></b-form-input>
+                                                <b-form-invalid-feedback
+                                                    id="Paying_Amount-feedback"
+                                                >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                            </b-form-group>
+                                        </validation-provider>
+                                    </b-col>
 
-                    <!-- change  Amount  -->
-                    <b-col lg="12" md="12" sm="12">
-                      <label>{{$t('Change')}} :</label>
-                      <p
-                        class="change_amount"
-                      >{{parseFloat(payment.received_amount - payment.amount).toFixed(2)}}</p>
-                    </b-col>
+                                    <!-- change  Amount  -->
+                                    <b-col lg="12" md="12" sm="12">
+                                        <label>{{$t('Change')}} :</label>
+                                        <p
+                                            class="change_amount"
+                                        >{{parseFloat(payment.received_amount - payment.amount).toFixed(2)}}</p>
+                                    </b-col>
 
-                    <!-- Payment choice -->
-                    <b-col lg="12" md="12" sm="12">
-                      <validation-provider name="Payment choice" :rules="{ required: true}">
-                        <b-form-group slot-scope="{ valid, errors }" :label="$t('Paymentchoice')">
-                          <v-select
-                            :class="{'is-invalid': !!errors.length}"
-                            :state="errors[0] ? false : (valid ? true : null)"
-                            v-model="payment.Reglement"
-                            @input="Selected_PaymentMethod"
-                            :reduce="label => label.value"
-                            :placeholder="$t('PleaseSelect')"
-                            :options="
+                                    <!-- Payment choice -->
+                                    <b-col lg="12" md="12" sm="12">
+                                        <validation-provider name="Payment choice" :rules="{ required: true}">
+                                            <b-form-group slot-scope="{ valid, errors }" :label="$t('Paymentchoice')">
+                                                <v-select
+                                                    :class="{'is-invalid': !!errors.length}"
+                                                    :state="errors[0] ? false : (valid ? true : null)"
+                                                    v-model="payment.Reglement"
+                                                    @input="Selected_PaymentMethod"
+                                                    :reduce="label => label.value"
+                                                    :placeholder="$t('PleaseSelect')"
+                                                    :options="
                               [
                               {label: 'Cash', value: 'Cash'},
                               {label: 'credit card', value: 'credit card'},
@@ -947,223 +948,223 @@
                               {label: 'bank transfer', value: 'bank transfer'},
                               {label: 'other', value: 'other'},
                               ]"
-                          ></v-select>
-                          <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                        </b-form-group>
-                      </validation-provider>
-                    </b-col>
+                                                ></v-select>
+                                                <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                                            </b-form-group>
+                                        </validation-provider>
+                                    </b-col>
 
-                    <b-col md="12" v-if="payment.Reglement == 'credit card'">
-                      <form id="payment-form">
-                        <label
-                          for="card-element"
-                          class="leading-7 text-sm text-gray-600"
-                        >{{$t('Credit_Card_Info')}}</label>
-                        <div id="card-element">
-                          <!-- Elements will create input elements here -->
-                        </div>
-                        <!-- We'll put the error messages in this element -->
-                        <div id="card-errors" class="is-invalid" role="alert"></div>
-                      </form>
-                    </b-col>
+                                    <b-col md="12" v-if="payment.Reglement == 'credit card'">
+                                        <form id="payment-form">
+                                            <label
+                                                for="card-element"
+                                                class="leading-7 text-sm text-gray-600"
+                                            >{{$t('Credit_Card_Info')}}</label>
+                                            <div id="card-element">
+                                                <!-- Elements will create input elements here -->
+                                            </div>
+                                            <!-- We'll put the error messages in this element -->
+                                            <div id="card-errors" class="is-invalid" role="alert"></div>
+                                        </form>
+                                    </b-col>
 
-                    <!-- Note -->
-                    <b-col lg="12" md="12" sm="12" class="mt-2">
-                      <b-form-group :label="$t('Note')">
-                        <b-form-textarea
-                          id="textarea"
-                          v-model="payment.notes"
-                          rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
-                      </b-form-group>
-                    </b-col>
-                  </b-row>
-                </b-col>
+                                    <!-- Note -->
+                                    <b-col lg="12" md="12" sm="12" class="mt-2">
+                                        <b-form-group :label="$t('Note')">
+                                            <b-form-textarea
+                                                id="textarea"
+                                                v-model="payment.notes"
+                                                rows="3"
+                                                max-rows="6"
+                                            ></b-form-textarea>
+                                        </b-form-group>
+                                    </b-col>
+                                </b-row>
+                            </b-col>
 
-                <b-col md="6">
-                  <b-card>
-                    <b-list-group>
-                      <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        {{$t('TotalProducts')}}
-                        <b-badge variant="primary" pill>{{details.length}}</b-badge>
-                      </b-list-group-item>
+                            <b-col md="6">
+                                <b-card>
+                                    <b-list-group>
+                                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                            {{$t('TotalProducts')}}
+                                            <b-badge variant="primary" pill>{{details.length}}</b-badge>
+                                        </b-list-group-item>
 
-                      <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        {{$t('OrderTax')}}
-                        <span
-                          class="font-weight-bold"
-                        >{{currentUser.currency}} {{sale.TaxNet.toFixed(2)}} ({{sale.tax_rate}} %)</span>
-                      </b-list-group-item>
-                      <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        {{$t('Discount')}}
-                        <span
-                          class="font-weight-bold"
-                        >{{currentUser.currency}} {{sale.discount.toFixed(2)}}</span>
-                      </b-list-group-item>
+                                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                            {{$t('OrderTax')}}
+                                            <span
+                                                class="font-weight-bold"
+                                            >{{currentUser.currency}} {{sale.TaxNet.toFixed(2)}} ({{sale.tax_rate}} %)</span>
+                                        </b-list-group-item>
+                                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                            {{$t('Discount')}}
+                                            <span
+                                                class="font-weight-bold"
+                                            >{{currentUser.currency}} {{sale.discount.toFixed(2)}}</span>
+                                        </b-list-group-item>
 
-                      <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        {{$t('Shipping')}}
-                        <span
-                          class="font-weight-bold"
-                        >{{currentUser.currency}} {{sale.shipping.toFixed(2)}}</span>
-                      </b-list-group-item>
+                                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                            {{$t('Shipping')}}
+                                            <span
+                                                class="font-weight-bold"
+                                            >{{currentUser.currency}} {{sale.shipping.toFixed(2)}}</span>
+                                        </b-list-group-item>
 
-                      <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        {{$t('Total')}}
-                        <span
-                          class="font-weight-bold"
-                        >{{currentUser.currency}} {{GrandTotal.toFixed(2)}}</span>
-                      </b-list-group-item>
-                    </b-list-group>
-                  </b-card>
-                </b-col>
+                                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                            {{$t('Total')}}
+                                            <span
+                                                class="font-weight-bold"
+                                            >{{currentUser.currency}} {{GrandTotal.toFixed(2)}}</span>
+                                        </b-list-group-item>
+                                    </b-list-group>
+                                </b-card>
+                            </b-col>
 
-                <b-col md="12" class="mt-3">
-                  <b-button
-                    variant="primary"
-                    type="submit"
-                    :disabled="paymentProcessing"
-                  >{{$t('submit')}}</b-button>
-                  <div v-once class="typo__p" v-if="paymentProcessing">
-                    <div class="spinner sm spinner-primary mt-3"></div>
-                  </div>
-                </b-col>
-              </b-row>
-            </b-form>
-          </b-modal>
-        </validation-observer>
+                            <b-col md="12" class="mt-3">
+                                <b-button
+                                    variant="primary"
+                                    type="submit"
+                                    :disabled="paymentProcessing"
+                                >{{$t('submit')}}</b-button>
+                                <div v-once class="typo__p" v-if="paymentProcessing">
+                                    <div class="spinner sm spinner-primary mt-3"></div>
+                                </div>
+                            </b-col>
+                        </b-row>
+                    </b-form>
+                </b-modal>
+            </validation-observer>
 
-        <validation-observer ref="Create_Customer">
-          <b-modal hide-footer size="lg" id="New_Customer" :title="$t('Add')">
-            <b-form @submit.prevent="Submit_Customer">
-              <b-row>
-                <!-- Customer Name -->
-                <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Name Customer"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('CustomerName')">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="name-feedback"
-                        label="name"
-                        v-model="client.name"
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="name-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
+            <validation-observer ref="Create_Customer">
+                <b-modal hide-footer size="lg" id="New_Customer" :title="$t('Add')">
+                    <b-form @submit.prevent="Submit_Customer">
+                        <b-row>
+                            <!-- Customer Name -->
+                            <b-col md="6" sm="12">
+                                <validation-provider
+                                    name="Name Customer"
+                                    :rules="{ required: true}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-group :label="$t('CustomerName')">
+                                        <b-form-input
+                                            :state="getValidationState(validationContext)"
+                                            aria-describedby="name-feedback"
+                                            label="name"
+                                            v-model="client.name"
+                                        ></b-form-input>
+                                        <b-form-invalid-feedback id="name-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                    </b-form-group>
+                                </validation-provider>
+                            </b-col>
 
-                <!-- Customer Email -->
-                <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Email customer"
-                    :rules="{ required: false}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('Email')">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="Email-feedback"
-                        label="Email"
-                        v-model="client.email"
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="Email-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
+                            <!-- Customer Email -->
+                            <b-col md="6" sm="12">
+                                <validation-provider
+                                    name="Email customer"
+                                    :rules="{ required: false}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-group :label="$t('Email')">
+                                        <b-form-input
+                                            :state="getValidationState(validationContext)"
+                                            aria-describedby="Email-feedback"
+                                            label="Email"
+                                            v-model="client.email"
+                                        ></b-form-input>
+                                        <b-form-invalid-feedback id="Email-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                    </b-form-group>
+                                </validation-provider>
+                            </b-col>
 
-                <!-- Customer Phone -->
-                <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Phone Customer"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('Phone')">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="Phone-feedback"
-                        label="Phone"
-                        v-model="client.phone"
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="Phone-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
+                            <!-- Customer Phone -->
+                            <b-col md="6" sm="12">
+                                <validation-provider
+                                    name="Phone Customer"
+                                    :rules="{ required: true}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-group :label="$t('Phone')">
+                                        <b-form-input
+                                            :state="getValidationState(validationContext)"
+                                            aria-describedby="Phone-feedback"
+                                            label="Phone"
+                                            v-model="client.phone"
+                                        ></b-form-input>
+                                        <b-form-invalid-feedback id="Phone-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                    </b-form-group>
+                                </validation-provider>
+                            </b-col>
 
-                <!-- Customer Country -->
-                <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Country customer"
-                    :rules="{ required: false}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('Country')">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="Country-feedback"
-                        label="Country"
-                        v-model="client.country"
-                      ></b-form-input>
-                      <b-form-invalid-feedback
-                        id="Country-feedback"
-                      >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
+                            <!-- Customer Country -->
+                            <b-col md="6" sm="12">
+                                <validation-provider
+                                    name="Country customer"
+                                    :rules="{ required: false}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-group :label="$t('Country')">
+                                        <b-form-input
+                                            :state="getValidationState(validationContext)"
+                                            aria-describedby="Country-feedback"
+                                            label="Country"
+                                            v-model="client.country"
+                                        ></b-form-input>
+                                        <b-form-invalid-feedback
+                                            id="Country-feedback"
+                                        >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                    </b-form-group>
+                                </validation-provider>
+                            </b-col>
 
-                <!-- Customer City -->
-                <b-col md="6" sm="12">
-                  <validation-provider
-                    name="City Customer"
-                    :rules="{ required: false}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('City')">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="City-feedback"
-                        label="City"
-                        v-model="client.city"
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="City-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
+                            <!-- Customer City -->
+                            <b-col md="6" sm="12">
+                                <validation-provider
+                                    name="City Customer"
+                                    :rules="{ required: false}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-group :label="$t('City')">
+                                        <b-form-input
+                                            :state="getValidationState(validationContext)"
+                                            aria-describedby="City-feedback"
+                                            label="City"
+                                            v-model="client.city"
+                                        ></b-form-input>
+                                        <b-form-invalid-feedback id="City-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                    </b-form-group>
+                                </validation-provider>
+                            </b-col>
 
-                <!-- Customer Adress -->
-                <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Adress customer"
-                    :rules="{ required: false}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('Adress')">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="Adress-feedback"
-                        label="Adress"
-                        v-model="client.adresse"
-                      ></b-form-input>
-                      <b-form-invalid-feedback
-                        id="Adress-feedback"
-                      >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
+                            <!-- Customer Adress -->
+                            <b-col md="6" sm="12">
+                                <validation-provider
+                                    name="Adress customer"
+                                    :rules="{ required: false}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-group :label="$t('Adress')">
+                                        <b-form-input
+                                            :state="getValidationState(validationContext)"
+                                            aria-describedby="Adress-feedback"
+                                            label="Adress"
+                                            v-model="client.adresse"
+                                        ></b-form-input>
+                                        <b-form-invalid-feedback
+                                            id="Adress-feedback"
+                                        >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                                    </b-form-group>
+                                </validation-provider>
+                            </b-col>
 
-                <b-col md="12" class="mt-3">
-                  <b-button variant="primary" type="submit">{{$t('submit')}}</b-button>
-                </b-col>
-              </b-row>
-            </b-form>
-          </b-modal>
-        </validation-observer>
-      </b-row>
+                            <b-col md="12" class="mt-3">
+                                <b-button variant="primary" type="submit">{{$t('submit')}}</b-button>
+                            </b-col>
+                        </b-row>
+                    </b-form>
+                </b-modal>
+            </validation-observer>
+        </div>
     </div>
   </div>
 </template>

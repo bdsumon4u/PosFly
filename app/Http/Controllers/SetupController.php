@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\TestDbController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class SetupController extends Controller
@@ -144,25 +143,6 @@ class SetupController extends Controller
     public function lastStep(Request $request)
     {
         ini_set('max_execution_time', 600); //600 seconds = 10 minutes
-
-        if ($tenant = tenant()) {
-            try {
-                File::ensureDirectoryExists(storage_path());
-                foreach (['oauth-private.key', 'oauth-public.key'] as $file) {
-                    File::copy(storage_path('../' . $file), storage_path($file));
-                }
-
-                $prefix = 'images' . DIRECTORY_SEPARATOR .config('tenancy.filesystem.suffix_base') . $tenant->getTenantKey();
-                foreach (['logo', 'avatar', 'brands', 'products'] as $dir) {
-                    File::ensureDirectoryExists(public_path($prefix . DIRECTORY_SEPARATOR . $dir), 0777, true);
-                }
-                Storage::disk('public')->put('installed', 'Contents');
-            } catch (\Exception $e) {
-                return $e->getMessage();
-            }
-
-            return view('setup.finishedSetup');
-        }
 
         try {
             $this->changeEnv([

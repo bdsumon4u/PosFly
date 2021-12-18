@@ -6,7 +6,10 @@
        </router-link>
     </div>
 
-    <div @click="sideBarToggle" class="menu-toggle">
+    <div v-if="getSideBarToggleProperties.isSideNavOpen" @click="sideBarToggle" class="menu-toggle" style="font-size: 30px;">
+        &times;
+    </div>
+    <div v-else @click="sideBarToggle" class="menu-toggle">
       <div></div>
       <div></div>
       <div></div>

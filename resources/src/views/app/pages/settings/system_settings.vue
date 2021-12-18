@@ -148,7 +148,7 @@
                     </validation-provider>
                   </b-col> -->
 
-                   <!-- Default Language -->
+                   <!-- Default Language
                   <b-col lg="4" md="4" sm="12">
                     <validation-provider name="DefaultLanguage" :rules="{ required: true}">
                     <b-form-group slot-scope="{ valid, errors }" :label="$t('DefaultLanguage')">
@@ -180,7 +180,7 @@
                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                          </b-form-group>
                     </validation-provider>
-                  </b-col>
+                  </b-col> -->
 
 
                     <!-- Default Customer -->

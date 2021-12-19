@@ -167,7 +167,7 @@
                             :state="errors[0] ? false : (valid ? true : null)"
                             v-model="sale.client_id"
                             label="name"
-                            :reduce="label => label.name"
+                            :reduce="label => label.id"
                             :placeholder="$t('Choose_Customer')"
                             class="w-100"
                             :options="clients"
@@ -1349,7 +1349,7 @@ export default {
     },
       clientSearch(options, search) {
           const fuse = new Fuse(options, {
-              keys: ['title', 'phone',],
+              keys: ['title', 'phone', 'id'],
               shouldSort: true,
           })
           return search.length

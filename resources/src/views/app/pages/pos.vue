@@ -946,11 +946,13 @@
                                                     :options="
                               [
                               {label: 'Cash', value: 'Cash'},
-                              {label: 'credit card', value: 'credit card'},
-                              {label: 'cheque', value: 'cheque'},
-                              {label: 'Western Union', value: 'Western Union'},
-                              {label: 'bank transfer', value: 'bank transfer'},
-                              {label: 'other', value: 'other'},
+                              {label: 'Cheque', value: 'Cheque'},
+                              {label: 'bKash', value: 'bKash'},
+                              {label: 'Nagad', value: 'Nagad'},
+                              {label: 'Rocket', value: 'Rocket'},
+                              {label: 'Credit Card', value: 'Credit Card'},
+                              {label: 'Bank Transfer', value: 'Bank Transfer'},
+                              {label: 'Other', value: 'Other'},
                               ]"
                                                 ></v-select>
                                                 <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>

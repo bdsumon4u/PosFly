@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -42,6 +43,7 @@ class InstallTenant implements ShouldQueue
         try {
             $this->tenant->run(function () {
                 File::ensureDirectoryExists(storage_path());
+                File::ensureDirectoryExists(storage_path('/app/public/backup'));
                 foreach (['oauth-private.key', 'oauth-public.key'] as $file) {
                     File::copy(storage_path('../' . $file), storage_path($file));
                 }

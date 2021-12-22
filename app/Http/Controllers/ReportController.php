@@ -434,7 +434,7 @@ class ReportController extends BaseController
             }
 
         }
-       
+
         //calcul profit
         $product_sale_data = Sale::join('sale_details' , 'sales.id', '=', 'sale_details.sale_id')
             ->select(DB::raw('sale_details.product_id , sum(sale_details.quantity) as sold_qty , sum(sale_details.total) as sold_amount'))
@@ -458,7 +458,7 @@ class ReportController extends BaseController
             $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)->get();
 
             $purchased_qty = 0;
-            $purchased_amount = 0;   
+            $purchased_amount = 0;
             $sold_qty = $product_sale->sold_qty;
             $product_revenue += $product_sale->sold_amount;
 
@@ -506,7 +506,7 @@ class ReportController extends BaseController
             }
         })
         ->get(DB::raw('SUM(GrandTotal)  As sum'))
-        ->first()->sum; 
+        ->first()->sum;
 
         $data['revenue'] = $data['today_sales'] - $data['return_sales'];
 
@@ -1737,8 +1737,8 @@ class ReportController extends BaseController
                 }
             })
             ->get(DB::raw('SUM(GrandTotal)  As sum'))
-            ->first()->sum; 
-        
+            ->first()->sum;
+
         $item['today_purchases'] = Purchase::where('deleted_at', '=', null)
             ->whereBetween('date', array($request->from, $request->to))
             ->where(function ($query) use ($view_records) {
@@ -1748,7 +1748,7 @@ class ReportController extends BaseController
             })
             ->get(DB::raw('SUM(GrandTotal)  As sum'))
             ->first()->sum;
-    
+
         $item['purchases_return'] = PurchaseReturn::where('deleted_at', '=', null)
             ->whereBetween('date', array($request->from, $request->to))
             ->where(function ($query) use ($view_records) {
@@ -1758,7 +1758,7 @@ class ReportController extends BaseController
             })
             ->get(DB::raw('SUM(GrandTotal)  As sum'))
             ->first()->sum;
-        
+
 
         //calcul profit
         $product_sale_data = Sale::join('sale_details' , 'sales.id', '=', 'sale_details.sale_id')
@@ -1783,7 +1783,7 @@ class ReportController extends BaseController
         $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)->get();
 
         $purchased_qty = 0;
-        $purchased_amount = 0;   
+        $purchased_amount = 0;
         $sold_qty = $product_sale->sold_qty;
         $product_revenue += $product_sale->sold_amount;
 
@@ -1867,7 +1867,14 @@ class ReportController extends BaseController
 
         $this->authorizeForUser($request->user('api'), 'backup', User::class);
 
-        Artisan::call('database:backup');
+        if ($tenant = tenant()) {
+            Artisan::call('tenants:run', [
+                'commandname' => 'database:backup',
+                '--tenants' => $tenant->id,
+            ]);
+        } else {
+            Artisan::call('database:backup');
+        }
 
         return response()->json('Generate complete success');
     }

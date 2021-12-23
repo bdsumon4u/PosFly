@@ -46,10 +46,15 @@
         <b-row>
           <!-- date  -->
           <b-col md="12">
-            <b-form-group :label="$t('date')">
-              <b-form-input type="date" v-model="Filter_date"></b-form-input>
+            <b-form-group :label="$t('From Date')">
+              <b-form-input type="date" v-model="From_date"></b-form-input>
             </b-form-group>
           </b-col>
+            <b-col md="12">
+                <b-form-group :label="$t('To Date')">
+                    <b-form-input type="date" v-model="To_date"></b-form-input>
+                </b-form-group>
+            </b-col>
 
           <!-- Reference -->
           <b-col md="12">
@@ -154,7 +159,8 @@ export default {
       Filter_Ref: "",
       Filter_return: "",
       Filter_Reg: "",
-      Filter_date: "",
+      From_date: "",
+      To_date: "",
       payments: [],
       suppliers: [],
       purchase_returns: []
@@ -258,7 +264,8 @@ export default {
       this.Filter_Ref = "";
       this.Filter_return = "";
       this.Filter_Reg = "";
-      this.Filter_date = "";
+      this.From_date = "";
+      this.To_date = "";
       this.Payments_Purchase_returns(this.serverParams.page);
     },
 
@@ -331,8 +338,10 @@ export default {
             page +
             "&Ref=" +
             this.Filter_Ref +
-            "&date=" +
-             this.Filter_date +
+            "&from_date=" +
+             this.From_date +
+            "&to_date=" +
+            this.To_date +
             "&provider_id=" +
             this.Filter_supplier +
             "&purchase_return_id=" +

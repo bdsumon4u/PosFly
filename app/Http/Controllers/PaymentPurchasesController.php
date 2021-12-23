@@ -75,6 +75,8 @@ class PaymentPurchasesController extends BaseController
                                 $q->where('name', 'LIKE', "%{$request->search}%");
                             });
                         });
+                })->when($request->filled('from_date') && $request->filled('to_date'), function ($query) use (&$request) {
+                    return $query->whereBetween('date', [$request->from_date, $request->to_date]);
                 });
             });
 
@@ -113,13 +115,13 @@ class PaymentPurchasesController extends BaseController
     public function store(Request $request)
     {
         $this->authorizeForUser($request->user('api'), 'create', PaymentPurchase::class);
-        
+
         if($request['montant'] > 0){
             \DB::transaction(function () use ($request) {
                 $role = Auth::user()->roles()->first();
                 $view_records = Role::findOrFail($role->id)->inRole('record_view');
                 $purchase = Purchase::findOrFail($request['purchase_id']);
-        
+
                 // Check If User Has Permission view All Records
                 if (!$view_records) {
                     // Check If User->id === purchase->id
@@ -163,7 +165,7 @@ class PaymentPurchasesController extends BaseController
 
     public function show($id){
         //
-        
+
         }
 
     //----------- Update Payment Purchases --------------\\
@@ -171,12 +173,12 @@ class PaymentPurchasesController extends BaseController
     public function update(Request $request, $id)
     {
         $this->authorizeForUser($request->user('api'), 'update', PaymentPurchase::class);
-        
+
         \DB::transaction(function () use ($id, $request) {
             $role = Auth::user()->roles()->first();
             $view_records = Role::findOrFail($role->id)->inRole('record_view');
             $payment = PaymentPurchase::findOrFail($id);
-    
+
             // Check If User Has Permission view All Records
             if (!$view_records) {
                 // Check If User->id === payment->id
@@ -218,12 +220,12 @@ class PaymentPurchasesController extends BaseController
     public function destroy(Request $request, $id)
     {
         $this->authorizeForUser($request->user('api'), 'delete', PaymentPurchase::class);
-        
+
         \DB::transaction(function () use ($id, $request) {
             $role = Auth::user()->roles()->first();
             $view_records = Role::findOrFail($role->id)->inRole('record_view');
             $payment = PaymentPurchase::findOrFail($id);
-    
+
             // Check If User Has Permission view All Records
             if (!$view_records) {
                 // Check If User->id === payment->id
@@ -336,16 +338,16 @@ class PaymentPurchasesController extends BaseController
          $receiverNumber = $payment['purchase']['provider']->phone;
          $message = "Dear" .' '.$payment['purchase']['provider']->name." \n We are contacting you in regard to a Payment #".$payment['purchase']->Ref.' '.$url.' '. "that has been created on your account. \n We look forward to conducting future business with you.";
          try {
-   
+
              $account_sid = env("TWILIO_SID");
              $auth_token = env("TWILIO_TOKEN");
              $twilio_number = env("TWILIO_FROM");
-   
+
              $client = new Client_Twilio($account_sid, $auth_token);
              $client->messages->create($receiverNumber, [
-                 'from' => $twilio_number, 
+                 'from' => $twilio_number,
                  'body' => $message]);
-     
+
          } catch (Exception $e) {
              return response()->json(['message' => $e->getMessage()], 500);
          }

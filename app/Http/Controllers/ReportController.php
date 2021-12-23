@@ -948,8 +948,8 @@ class ReportController extends BaseController
         $dir = $request->SortType;
         $helpers = new helpers();
         // Filter fields With Params to retrieve
-        $param = array(0 => 'like', 1 => 'like', 2 => '=', 3 => 'like' , 4 => '=');
-        $columns = array(0 => 'Ref', 1 => 'statut', 2 => 'client_id', 3 => 'payment_statut' , 4 => 'date');
+        $param = array(0 => 'like', 1 => 'like', 2 => '=', 3 => 'like');
+        $columns = array(0 => 'Ref', 1 => 'statut', 2 => 'client_id', 3 => 'payment_statut');
         $data = array();
 
         $Sales = Sale::select('sales.*')
@@ -969,6 +969,8 @@ class ReportController extends BaseController
                         ->orWhere('sales.GrandTotal', $request->search)
                         ->orWhere('sales.payment_statut', 'like', "$request->search")
                         ->orWhere('clients.name', 'LIKE', "%{$request->search}%");
+                })->when($request->filled('from_date') && $request->filled('to_date'), function ($query) use (&$request) {
+                    return $query->whereBetween('date', [$request->from_date, $request->to_date]);
                 });
             });
 

@@ -38,8 +38,8 @@ class PaymentSaleReturnsController extends BaseController
         $role = Auth::user()->roles()->first();
         $view_records = Role::findOrFail($role->id)->inRole('record_view');
         // Filter fields With Params to retriever
-        $param = array(0 => 'like', 1 => '=', 2 => 'like' , 3 => '=');
-        $columns = array(0 => 'Ref', 1 => 'sale_return_id', 2 => 'Reglement' , 3 => 'date');
+        $param = array(0 => 'like', 1 => '=', 2 => 'like');
+        $columns = array(0 => 'Ref', 1 => 'sale_return_id', 2 => 'Reglement');
         $data = array();
 
         // Check If User Has Permission View  All Records
@@ -76,6 +76,8 @@ class PaymentSaleReturnsController extends BaseController
                                 $q->where('name', 'LIKE', "%{$request->search}%");
                             });
                         });
+                })->when($request->filled('from_date') && $request->filled('to_date'), function ($query) use (&$request) {
+                    return $query->whereBetween('date', [$request->from_date, $request->to_date]);
                 });
             });
 
@@ -113,13 +115,13 @@ class PaymentSaleReturnsController extends BaseController
     public function store(Request $request)
     {
         $this->authorizeForUser($request->user('api'), 'create', PaymentSaleReturns::class);
-        
+
         if($request['montant'] > 0){
             \DB::transaction(function () use ($request) {
                 $role = Auth::user()->roles()->first();
                 $view_records = Role::findOrFail($role->id)->inRole('record_view');
                 $SaleReturn = SaleReturn::findOrFail($request['sale_return_id']);
-        
+
                 // Check If User Has Permission view All Records
                 if (!$view_records) {
                     // Check If User->id === Sale Return->id
@@ -163,22 +165,22 @@ class PaymentSaleReturnsController extends BaseController
 
     public function show($id){
         //
-        
+
         }
 
     //----------- Update Payment Sale Return --------------\\
 
     public function update(Request $request, $id)
     {
-       
+
         $this->authorizeForUser($request->user('api'), 'update', PaymentSaleReturns::class);
 
         \DB::transaction(function () use ($id, $request) {
             $role = Auth::user()->roles()->first();
             $view_records = Role::findOrFail($role->id)->inRole('record_view');
             $payment = PaymentSaleReturns::findOrFail($id);
-            
-    
+
+
             // Check If User Has Permission view All Records
             if (!$view_records) {
                 // Check If User->id === payment->id
@@ -205,12 +207,12 @@ class PaymentSaleReturnsController extends BaseController
                 'change' => $request['change'],
                 'notes' => $request['notes'],
             ]);
-    
+
             $SaleReturn->update([
                 'paid_amount' => $new_total_paid,
                 'payment_statut' => $payment_statut,
             ]);
-         
+
         }, 10);
 
         return response()->json(['success' => true, 'message' => 'Payment Update successfully'], 200);
@@ -221,12 +223,12 @@ class PaymentSaleReturnsController extends BaseController
     public function destroy(Request $request, $id)
     {
         $this->authorizeForUser($request->user('api'), 'delete', PaymentSaleReturns::class);
-        
+
         \DB::transaction(function () use ($id, $request) {
             $role = Auth::user()->roles()->first();
             $view_records = Role::findOrFail($role->id)->inRole('record_view');
             $payment = PaymentSaleReturns::findOrFail($id);
-    
+
             // Check If User Has Permission view All Records
             if (!$view_records) {
                 // Check If User->id === payment->id
@@ -295,7 +297,7 @@ class PaymentSaleReturnsController extends BaseController
 
     public function payment_return(Request $request, $id)
     {
-       
+
         $payment = PaymentSaleReturns::with('SaleReturn', 'SaleReturn.client')->findOrFail($id);
 
         $payment_data['return_Ref'] = $payment['SaleReturn']->Ref;
@@ -340,16 +342,16 @@ class PaymentSaleReturnsController extends BaseController
          $receiverNumber = $payment['SaleReturn']['client']->phone;
          $message = "Dear" .' '.$payment['SaleReturn']['client']->name." \n We are contacting you in regard to a Payment #".$payment['SaleReturn']->Ref.' '.$url.' '. "that has been created on your account. \n We look forward to conducting future business with you.";
          try {
-   
+
              $account_sid = env("TWILIO_SID");
              $auth_token = env("TWILIO_TOKEN");
              $twilio_number = env("TWILIO_FROM");
-   
+
              $client = new Client_Twilio($account_sid, $auth_token);
              $client->messages->create($receiverNumber, [
-                 'from' => $twilio_number, 
+                 'from' => $twilio_number,
                  'body' => $message]);
-     
+
          } catch (Exception $e) {
              return response()->json(['message' => $e->getMessage()], 500);
          }

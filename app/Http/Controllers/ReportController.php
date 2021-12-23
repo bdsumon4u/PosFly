@@ -871,8 +871,8 @@ class ReportController extends BaseController
         $dir = $request->SortType;
         $helpers = new helpers();
         // Filter fields With Params to retrieve
-        $param = array(0 => 'like', 1 => 'like', 2 => '=', 3 => 'like' , 4 => '=');
-        $columns = array(0 => 'Ref', 1 => 'statut', 2 => 'provider_id', 3 => 'payment_statut' , 4 => 'date');
+        $param = array(0 => 'like', 1 => 'like', 2 => '=', 3 => 'like');
+        $columns = array(0 => 'Ref', 1 => 'statut', 2 => 'provider_id', 3 => 'payment_statut');
         $data = array();
         $total = 0;
 
@@ -887,12 +887,14 @@ class ReportController extends BaseController
         $Filtred = $helpers->filter($Purchases, $columns, $param, $request)
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
-                return $query->when($request->filled('search'), function ($query) use ($request) {
+                return $query->when($request->filled('search'), function ($query) use (&$request) {
                     return $query->where('purchases.Ref', 'LIKE', "%{$request->search}%")
                         ->orWhere('purchases.statut', 'LIKE', "%{$request->search}%")
                         ->orWhere('purchases.GrandTotal', $request->search)
                         ->orWhere('purchases.payment_statut', 'like', "$request->search")
                         ->orWhere('providers.name', 'LIKE', "%{$request->search}%");
+                })->when($request->filled('from_date') && $request->filled('to_date'), function ($query) use (&$request) {
+                    return $query->whereBetween('date', [$request->from_date, $request->to_date]);
                 });
             });
 

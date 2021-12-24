@@ -943,17 +943,7 @@
                                                     @input="Selected_PaymentMethod"
                                                     :reduce="label => label.value"
                                                     :placeholder="$t('PleaseSelect')"
-                                                    :options="
-                              [
-                              {label: 'Cash', value: 'Cash'},
-                              {label: 'Cheque', value: 'Cheque'},
-                              {label: 'bKash', value: 'bKash'},
-                              {label: 'Nagad', value: 'Nagad'},
-                              {label: 'Rocket', value: 'Rocket'},
-                              {label: 'Credit Card', value: 'Credit Card'},
-                              {label: 'Bank Transfer', value: 'Bank Transfer'},
-                              {label: 'Other', value: 'Other'},
-                              ]"
+                                                    :options="pMethods"
                                                 ></v-select>
                                                 <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                                             </b-form-group>

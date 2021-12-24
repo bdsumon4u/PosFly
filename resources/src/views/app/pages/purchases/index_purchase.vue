@@ -16,7 +16,7 @@
         placeholder: $t('Search_this_table'),
         enabled: true,
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -426,15 +426,7 @@
                     @input="Selected_PaymentMethod"
                     :reduce="label => label.value"
                     :placeholder="$t('PleaseSelect')"
-                    :options="
-                          [
-                          {label: 'Cash', value: 'Cash'},
-                          {label: 'credit card', value: 'credit card'},
-                          {label: 'cheque', value: 'cheque'},
-                          {label: 'Western Union', value: 'Western Union'},
-                          {label: 'bank transfer', value: 'bank transfer'},
-                          {label: 'other', value: 'other'},
-                          ]"
+                    :options="pMethods"
                   ></v-select>
                   <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </b-form-group>
@@ -713,7 +705,7 @@ export default {
           this.$t("Warning")
         );
         this.facture.montant = 0;
-      } 
+      }
       else if (this.facture.montant > this.due) {
         this.makeToast(
           "warning",
@@ -729,7 +721,7 @@ export default {
     Verified_Received_Amount() {
       if (isNaN(this.facture.received_amount)) {
         this.facture.received_amount = 0;
-      } 
+      }
     },
 
 
@@ -810,7 +802,7 @@ export default {
       // Start the progress bar.
       NProgress.start();
       NProgress.set(0.1);
-     
+
        axios
         .get("Purchase_PDF/" + id, {
           responseType: "blob", // important
@@ -839,7 +831,7 @@ export default {
       // Start the progress bar.
       NProgress.start();
       NProgress.set(0.1);
-     
+
        axios
         .get("Payment_Purchase_PDF/" + id, {
           responseType: "blob", // important
@@ -1239,7 +1231,7 @@ export default {
       this.paymentProcessing = true;
       NProgress.start();
       NProgress.set(0.1);
-     
+
         axios
           .put("payment/purchase/" + this.facture.id, {
             purchase_id: this.purchase.id,
@@ -1265,7 +1257,7 @@ export default {
           });
     },
 
-  
+
 
     //------------------------------------ Remove Payment -------------------------------\\
     Remove_Payment(id) {

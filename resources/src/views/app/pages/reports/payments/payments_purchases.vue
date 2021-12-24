@@ -95,15 +95,7 @@
                 v-model="Filter_Reg"
                 :reduce="label => label.value"
                 :placeholder="$t('PleaseSelect')"
-                :options="
-                          [
-                          {label: 'Cash', value: 'Cash'},
-                          {label: 'cheque', value: 'cheque'},
-                          {label: 'Western Union', value: 'Western Union'},
-                          {label: 'bank transfer', value: 'bank transfer'},
-                          {label: 'credit card', value: 'credit card'},
-                          {label: 'other', value: 'other'},
-                          ]"
+                :options="pMethods"
               ></v-select>
             </b-form-group>
           </b-col>

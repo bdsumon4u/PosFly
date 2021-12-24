@@ -16,7 +16,7 @@
         placeholder: $t('Search_this_table'),
         enabled: true,
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -432,15 +432,7 @@
                     :disabled="EditPaiementMode && payment.Reglement == 'credit card'"
                     :reduce="label => label.value"
                     :placeholder="$t('PleaseSelect')"
-                    :options="
-                          [
-                          {label: 'Cash', value: 'Cash'},
-                          {label: 'credit card', value: 'credit card'},
-                          {label: 'cheque', value: 'cheque'},
-                          {label: 'Western Union', value: 'Western Union'},
-                          {label: 'bank transfer', value: 'bank transfer'},
-                          {label: 'other', value: 'other'},
-                          ]"
+                    :options="pMethods"
                   ></v-select>
                   <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </b-form-group>
@@ -864,7 +856,7 @@ export default {
           this.$t("Warning")
         );
         this.payment.montant = 0;
-      } 
+      }
       else if (this.payment.montant > this.due) {
         this.makeToast(
           "warning",
@@ -880,7 +872,7 @@ export default {
     Verified_Received_Amount() {
       if (isNaN(this.payment.received_amount)) {
         this.payment.received_amount = 0;
-      } 
+      }
     },
 
 
@@ -1049,7 +1041,7 @@ export default {
       // Start the progress bar.
       NProgress.start();
       NProgress.set(0.1);
-     
+
       axios
         .get("payment_Sale_PDF/" + id, {
           responseType: "blob", // important

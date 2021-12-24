@@ -77,12 +77,21 @@ window.Fire = new Vue();
 
 import Breadcumb from "./components/breadcumb";
 import { i18n } from "./plugins/i18n";
+import {pMethods} from "./mayment-methods";
 
 Vue.component("breadcumb", Breadcumb);
 
 Vue.config.productionTip = true;
 Vue.config.silent = true;
 Vue.config.devtools = false;
+
+Vue.mixin({
+    computed: {
+        pMethods() {
+            return pMethods
+        },
+    }
+})
 
 new Vue({
   store,

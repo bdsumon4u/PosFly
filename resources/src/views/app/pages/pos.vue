@@ -1264,7 +1264,7 @@ export default {
           CompanyPhone: ""
         }
       },
-
+      default_client_id: "",
       sale: {
         warehouse_id: "",
         client_id: "",
@@ -2162,6 +2162,7 @@ export default {
         Reglement: "",
         notes: "",
       };
+      this.sale.client_id = this.default_client_id;
       this.sale.tax_rate = 0;
       this.sale.TaxNet = 0;
       this.sale.shipping = 0;
@@ -2329,6 +2330,7 @@ export default {
           // this.pos_settings = response.data.pos_settings;
           this.sale.warehouse_id = response.data.defaultWarehouse;
           this.sale.client_id = response.data.defaultClient;
+          this.default_client_id = this.sale.client_id;
           this.getProducts();
           if (response.data.defaultWarehouse != "") {
             this.Get_Products_By_Warehouse(response.data.defaultWarehouse);

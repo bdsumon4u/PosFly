@@ -227,7 +227,7 @@ export default {
       NProgress.start();
       NProgress.set(0.1);
       let id = this.$route.params.id;
-     
+
        axios
         .get(`Sale_PDF/${id}`, {
           responseType: "blob", // important
@@ -255,6 +255,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

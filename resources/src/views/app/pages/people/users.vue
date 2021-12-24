@@ -14,7 +14,7 @@
         @on-search="onSearch"
         :search-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
+        placeholder: $t('Search_this_table'),
       }"
         :pagination-options="{
         enabled: true,
@@ -505,6 +505,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });
@@ -690,7 +691,7 @@ export default {
       self.data.append("phone", self.user.phone);
       self.data.append("role", self.user.role_id);
       self.data.append("avatar", self.user.avatar);
-     
+
       axios
         .post("users", self.data)
         .then(response => {

@@ -64,18 +64,18 @@
                     </b-form-group>
                   </validation-provider>
                 </b-col>
-               
+
                 <!-- Product -->
                 <b-col md="12" class="mb-5">
                   <h6>{{$t('ProductName')}}</h6>
-                 
+
                   <div id="autocomplete" class="autocomplete">
-                    <input 
+                    <input
                      :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @keyup="search()" 
+                      @keyup="search()"
                       @focus="handleFocus"
                       @blur="handleBlur"
-                      v-model="search_input"  
+                      v-model="search_input"
                       class="autocomplete-input" />
                     <ul class="autocomplete-result-list" v-show="focused">
                       <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
@@ -517,7 +517,7 @@ export default {
       this.focused = false
     },
 
-    
+
     //------------- Submit Validation Update Transfer
     Submit_Transfer() {
       this.$refs.Edit_transfer.validate().then(success => {
@@ -619,6 +619,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });
@@ -661,7 +662,7 @@ export default {
 
     },
 
-       
+
 
     // get Result Value Search Product
     getResultValue(result) {

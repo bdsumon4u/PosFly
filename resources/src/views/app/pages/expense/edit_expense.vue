@@ -57,7 +57,7 @@
                         v-model="expense.category_id"
                         :reduce="label => label.value"
                         :placeholder="$t('Choose_Category')"
-                        :options="expense_Category.map(expense_Category => 
+                        :options="expense_Category.map(expense_Category =>
                         ({label: expense_Category.name, value: expense_Category.id}))"
                       />
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
@@ -164,6 +164,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

@@ -14,9 +14,9 @@
         @on-search="onSearch"
         :search-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
+        placeholder: $t('Search_this_table'),
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -103,7 +103,7 @@
                 ></textarea>
               </b-form-group>
             </b-col>
-           
+
             <b-col md="12" class="mt-3">
               <b-button variant="primary" type="submit"  :disabled="SubmitProcessing">{{$t('submit')}}</b-button>
                 <div v-once class="typo__p" v-if="SubmitProcessing">
@@ -205,6 +205,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

@@ -1678,7 +1678,7 @@
                 </b-col>
               </b-row>
               <!-- End row -->
-              
+
                <b-col md="12">
                 <b-button variant="primary" type="submit"  :disabled="SubmitProcessing">{{$t('submit')}}</b-button>
                   <div v-once class="typo__p" v-if="SubmitProcessing">
@@ -1738,6 +1738,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

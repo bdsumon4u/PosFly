@@ -89,6 +89,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });
@@ -111,7 +112,7 @@ export default {
               this.$t("We_have_emailed_your_password_reset_link"),
               this.$t("Success")
             );
-       
+
           } else if (!result.data.status) {
             this.makeToast(
               "danger",

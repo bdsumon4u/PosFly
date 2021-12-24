@@ -217,7 +217,7 @@ export default {
       NProgress.start();
       NProgress.set(0.1);
       let id = this.$route.params.id;
-    
+
        axios
         .get(`Return_Purchase_PDF/${id}`, {
           responseType: "blob", // important
@@ -310,7 +310,7 @@ export default {
     },
 
      //---------SMS notification
-     
+
      Return_SMS() {
       // Start the progress bar.
       NProgress.start();
@@ -340,6 +340,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

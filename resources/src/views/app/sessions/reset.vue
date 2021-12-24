@@ -8,7 +8,7 @@
               <div class="auth-logo text-center mb-30">
                 <img :src="'/images/logo.png'" alt>
               </div>
-              
+
               <h1 class="mb-3 text-18">{{$t('Reset_Password')}}</h1>
               <validation-observer ref="Reset_password">
                 <b-form @submit.prevent="Submit_Reset">
@@ -132,6 +132,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

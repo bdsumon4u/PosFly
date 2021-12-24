@@ -27,14 +27,14 @@
          <!-- Product -->
                 <b-col md="12" class="mb-3">
                   <h6>{{$t('ProductName')}}</h6>
-                 
+
                   <div id="autocomplete" class="autocomplete">
-                    <input 
+                    <input
                      :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @keyup="search()" 
+                      @keyup="search()"
                       @focus="handleFocus"
                       @blur="handleBlur"
-                      v-model="search_input"  
+                      v-model="search_input"
                       class="autocomplete-input" />
                     <ul class="autocomplete-result-list" v-show="focused">
                       <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
@@ -117,8 +117,8 @@
             {{$t('print')}}
           </button>
         </b-col>
-      
-   
+
+
             <b-col md="12">
               <div class="barcode-row" v-if="ShowCard" id="print_barcode_label">
                 <div :class="class_type_page" v-for ="(k, i) in total_a4" :key="i">
@@ -155,7 +155,7 @@
             </b-col>
           </b-row>
           </div>
-      
+
 </template>
 
 <script>
@@ -185,7 +185,7 @@ export default {
       total_a4:'',
       class_sheet:'',
       class_type_page:'',
-      rest:'',     
+      rest:'',
       warehouses: [],
       submitStatus: null,
       products: [],
@@ -241,7 +241,7 @@ export default {
         this.class_sheet = 'style10';
        this.class_type_page = 'barcode_non_a4';
       }
-     
+
       this.Per_Page();
     },
 
@@ -252,7 +252,7 @@ export default {
         if (!success) {
           return;
         } else {
-         
+
           this.showBarcode();
           // this.Per_Page();
         }
@@ -271,7 +271,7 @@ export default {
     handleBlur() {
       this.focused = false
     },
-    
+
 
    // Search Products
     search(){
@@ -287,7 +287,7 @@ export default {
       }
       if (this.barcode.warehouse_id != "" &&  this.barcode.warehouse_id != null) {
          this.timer = setTimeout(() => {
-        
+
          this.product_filter = this.products.filter(product => {
             return (
                 product.name.toLowerCase().startsWith(this.search_input.toLowerCase()) ||
@@ -332,6 +332,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });
@@ -368,7 +369,7 @@ export default {
       a.document.close();
       a.print();
     },
-   
+
     //-------------------------------------- Show Barcode -------------------------\\
     showBarcode() {
       this.Per_Page();

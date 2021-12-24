@@ -220,7 +220,7 @@ export default {
             "Content-Type": "application/json"
           }
         })
-     
+
         .then(response => {
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
@@ -324,7 +324,7 @@ export default {
     },
 
      //---------SMS notification
-     
+
      Purchase_SMS() {
       // Start the progress bar.
       NProgress.start();
@@ -354,6 +354,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });

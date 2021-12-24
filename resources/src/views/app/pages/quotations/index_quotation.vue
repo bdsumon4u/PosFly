@@ -15,9 +15,9 @@
         @on-search="onSearch"
         :search-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
+        placeholder: $t('Search_this_table'),
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -268,7 +268,7 @@ export default {
     ...mapGetters(["currentUserPermissions", "currentUser"]),
     columns() {
       return [
-        
+
         {
           label: this.$t("date"),
           field: "date",
@@ -378,6 +378,7 @@ export default {
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
+        autoHideDelay: 1000,
         variant: variant,
         solid: true
       });
@@ -560,7 +561,7 @@ export default {
         });
     },
 
-   
+
 
     //-------------------------------------------- Delete Quotation -------------------------\\
     Remove_Quotation(id) {

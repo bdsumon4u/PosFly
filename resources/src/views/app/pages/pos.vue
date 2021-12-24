@@ -1349,7 +1349,7 @@ export default {
     },
       clientSearch(options, search) {
           const fuse = new Fuse(options, {
-              keys: ['title', 'phone', 'id'],
+              keys: ['name', 'phone', 'id'],
               shouldSort: true,
           })
           return search.length

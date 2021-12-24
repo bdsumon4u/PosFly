@@ -63,7 +63,10 @@ class AdjustmentController extends BaseController
                 });
             });
         $totalRows = $Filtred->count();
-        $Adjustments = $Filtred->offset($offSet)
+        $Adjustments = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -618,7 +621,7 @@ class AdjustmentController extends BaseController
                     ->where('warehouse_id', $Adjustment_data->warehouse_id)
                     ->where('product_variant_id', '=', null)
                     ->first();
-                    
+
                     $data['id'] = $detail->id;
                     $data['detail_id'] = $detail_id += 1;
                     $data['quantity'] = $detail->quantity;

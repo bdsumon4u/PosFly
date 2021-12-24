@@ -47,7 +47,10 @@ class ClientController extends BaseController
                 });
             });
         $totalRows = $Filtred->count();
-        $clients = $Filtred->offset($offSet)
+        $clients = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();

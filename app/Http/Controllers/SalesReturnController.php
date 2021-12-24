@@ -94,7 +94,10 @@ class SalesReturnController extends BaseController
             });
 
         $totalRows = $Filtred->count();
-        $SaleReturn = $Filtred->offset($offSet)
+        $SaleReturn = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -318,7 +321,7 @@ class SalesReturnController extends BaseController
 
             // Update Data with New request
             foreach ($new_return_details as $key => $product_detail) {
-               
+
                 if($product_detail['no_unit'] !== 0){
                     $unit_prod = Unit::where('id', $product_detail['sale_unit_id'])->first();
 
@@ -514,13 +517,13 @@ class SalesReturnController extends BaseController
                        ->first();
                        $unit = Unit::where('id', $product_unit_sale_id['unitSale']->id)->first();
                    }
-   
+
                    if ($current_SaleReturn->statut == "received") {
                        if ($value['product_variant_id'] !== null) {
                            $product_warehouse = product_warehouse::where('deleted_at', '=', null)->where('warehouse_id', $current_SaleReturn->warehouse_id)
                                ->where('product_id', $value['product_id'])->where('product_variant_id', $value['product_variant_id'])
                                ->first();
-   
+
                            if ($unit && $product_warehouse) {
                                if ($unit->operator == '/') {
                                    $product_warehouse->qte -= $value['quantity'] / $unit->operator_value;
@@ -529,12 +532,12 @@ class SalesReturnController extends BaseController
                                }
                                $product_warehouse->save();
                            }
-   
+
                        } else {
                            $product_warehouse = product_warehouse::where('deleted_at', '=', null)->where('warehouse_id', $current_SaleReturn->warehouse_id)
                                ->where('product_id', $value['product_id'])
                                ->first();
-   
+
                            if ($unit && $product_warehouse) {
                                if ($unit->operator == '/') {
                                    $product_warehouse->qte -= $value['quantity'] / $unit->operator_value;
@@ -545,7 +548,7 @@ class SalesReturnController extends BaseController
                            }
                        }
                    }
-   
+
                }
 
                 $current_SaleReturn->details()->delete();
@@ -680,14 +683,14 @@ class SalesReturnController extends BaseController
                 ->first();
                 $unit = Unit::where('id', $product_unit_sale_id['unitSale']->id)->first();
             }
-            
+
             if ($detail->product_variant_id) {
 
                 $productsVariants = ProductVariant::where('product_id', $detail->product_id)
                     ->where('id', $detail->product_variant_id)->first();
 
                 $data['code'] = $productsVariants->name . '-' . $detail['product']['code'];
-               
+
             } else {
                 $data['code'] = $detail['product']['code'];
             }
@@ -988,16 +991,16 @@ class SalesReturnController extends BaseController
          $receiverNumber = $SaleReturn['client']->phone;
          $message = "Dear" .' '.$SaleReturn['client']->name." \n We are contacting you in regard to a Sale Return #".$SaleReturn->Ref.' '.$url.' '. "that has been created on your account. \n We look forward to conducting future business with you.";
          try {
-   
+
              $account_sid = env("TWILIO_SID");
              $auth_token = env("TWILIO_TOKEN");
              $twilio_number = env("TWILIO_FROM");
-   
+
              $client = new Client_Twilio($account_sid, $auth_token);
              $client->messages->create($receiverNumber, [
-                 'from' => $twilio_number, 
+                 'from' => $twilio_number,
                  'body' => $message]);
-     
+
          } catch (Exception $e) {
              return response()->json(['message' => $e->getMessage()], 500);
          }

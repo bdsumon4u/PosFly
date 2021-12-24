@@ -595,7 +595,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $clients->count();
-        $clients = $clients->offset($offSet)
+        $clients = $clients
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -707,7 +710,10 @@ class ReportController extends BaseController
             ->where('client_id', $request->id);
 
         $totalRows = $sales->count();
-        $sales = $sales->offset($offSet)
+        $sales = $sales
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -761,7 +767,10 @@ class ReportController extends BaseController
             );
 
         $totalRows = $payments->count();
-        $payments = $payments->offset($offSet)
+        $payments = $payments
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('payment_sales.id', 'desc')
             ->get();
@@ -797,7 +806,10 @@ class ReportController extends BaseController
                 }
             });
         $totalRows = $Quotations->count();
-        $Quotations = $Quotations->offset($offSet)
+        $Quotations = $Quotations
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -834,7 +846,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $SaleReturn->count();
-        $SaleReturn = $SaleReturn->offset($offSet)
+        $SaleReturn = $SaleReturn
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -899,7 +914,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $Filtred->count();
-        $Purchases = $Filtred->offset($offSet)
+        $Purchases = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('purchases.' . $order, $dir)
             ->get();
@@ -975,7 +993,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $Filtred->count();
-        $Sales = $Filtred->offset($offSet)
+        $Sales = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('sales.' . $order, $dir)
             ->get();
@@ -1032,7 +1053,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $providers->count();
-        $providers = $providers->offset($offSet)
+        $providers = $providers
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -1095,7 +1119,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $purchases->count();
-        $purchases = $purchases->offset($offSet)
+        $purchases = $purchases
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -1150,7 +1177,10 @@ class ReportController extends BaseController
             );
 
         $totalRows = $payments->count();
-        $payments = $payments->offset($offSet)
+        $payments = $payments
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('payment_purchases.id', 'desc')
             ->get();
@@ -1188,7 +1218,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $PurchaseReturn->count();
-        $PurchaseReturn = $PurchaseReturn->offset($offSet)
+        $PurchaseReturn = $PurchaseReturn
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -1324,7 +1357,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $sales->count();
-        $sales = $sales->offset($offSet)
+        $sales = $sales
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -1390,7 +1426,10 @@ class ReportController extends BaseController
                 });
             });
         $totalRows = $Quotations->count();
-        $Quotations = $Quotations->offset($offSet)
+        $Quotations = $Quotations
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -1456,7 +1495,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $SaleReturn->count();
-        $SaleReturn = $SaleReturn->offset($offSet)
+        $SaleReturn = $SaleReturn
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -1524,7 +1566,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $PurchaseReturn->count();
-        $PurchaseReturn = $PurchaseReturn->offset($offSet)
+        $PurchaseReturn = $PurchaseReturn
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();
@@ -1591,7 +1636,10 @@ class ReportController extends BaseController
             });
 
         $totalRows = $Expenses->count();
-        $Expenses = $Expenses->offset($offSet)
+        $Expenses = $Expenses
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy('id', 'desc')
             ->get();

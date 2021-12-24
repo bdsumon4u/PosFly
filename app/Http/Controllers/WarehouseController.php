@@ -41,7 +41,10 @@ class WarehouseController extends Controller
                 });
             });
         $totalRows = $warehouses->count();
-        $warehouses = $warehouses->offset($offSet)
+        $warehouses = $warehouses
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -114,7 +117,7 @@ class WarehouseController extends Controller
 
     public function show($id){
         //
-        
+
         }
 
     //-----------Update Warehouse --------------\\

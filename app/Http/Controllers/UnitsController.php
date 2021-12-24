@@ -34,7 +34,10 @@ class UnitsController extends BaseController
                 });
             });
         $totalRows = $Units->count();
-        $Units = $Units->offset($offSet)
+        $Units = $Units
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -184,7 +187,7 @@ class UnitsController extends BaseController
         $units = Unit::where('base_unit', $product_unit_id->unit_id)
                         ->orWhere('id', $product_unit_id->unit_id)
                         ->get();
-        
+
         return response()->json($units);
     }
 

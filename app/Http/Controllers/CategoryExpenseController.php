@@ -41,7 +41,10 @@ class CategoryExpenseController extends BaseController
             });
 
         $totalRows = $ExpenseCategory->count();
-        $ExpenseCategory = $ExpenseCategory->offset($offSet)
+        $ExpenseCategory = $ExpenseCategory
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -76,7 +79,7 @@ class CategoryExpenseController extends BaseController
 
     public function show($id){
     //
-    
+
     }
 
     //-------------- Update Category ---------------\\

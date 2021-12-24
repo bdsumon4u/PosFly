@@ -94,7 +94,10 @@ class PurchasesReturnController extends BaseController
             });
 
         $totalRows = $Filtred->count();
-        $PurchaseReturn = $Filtred->offset($offSet)
+        $PurchaseReturn = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -181,7 +184,7 @@ class PurchasesReturnController extends BaseController
                     'total' => $value['subtotal'],
                 ];
 
-            
+
                 if ($order->statut == "completed") {
                     if ($value['product_variant_id'] !== null) {
 
@@ -471,7 +474,7 @@ class PurchasesReturnController extends BaseController
                         }
                     }
                 }
-                
+
             }
             $current_PurchaseReturn->details()->delete();
             $current_PurchaseReturn->update([
@@ -520,16 +523,16 @@ class PurchasesReturnController extends BaseController
                        ->first();
                        $unit = Unit::where('id', $product_unit_purchase_id['unitPurchase']->id)->first();
                    }
-   
+
                    if ($current_PurchaseReturn->statut == "completed") {
                        if ($value['product_variant_id'] !== null) {
-   
+
                            $product_warehouse = product_warehouse::where('deleted_at', '=', null)
                                ->where('warehouse_id', $current_PurchaseReturn->warehouse_id)
                                ->where('product_id', $value['product_id'])
                                ->where('product_variant_id', $value['product_variant_id'])
                                ->first();
-   
+
                            if ($unit && $product_warehouse) {
                                if ($unit->operator == '/') {
                                    $product_warehouse->qte += $value['quantity'] / $unit->operator_value;
@@ -538,13 +541,13 @@ class PurchasesReturnController extends BaseController
                                }
                                $product_warehouse->save();
                            }
-   
+
                        } else {
                            $product_warehouse = product_warehouse::where('deleted_at', '=', null)
                                ->where('warehouse_id', $current_PurchaseReturn->warehouse_id)
                                ->where('product_id', $value['product_id'])
                                ->first();
-   
+
                            if ($unit && $product_warehouse) {
                                if ($unit->operator == '/') {
                                    $product_warehouse->qte += $value['quantity'] / $unit->operator_value;
@@ -555,7 +558,7 @@ class PurchasesReturnController extends BaseController
                            }
                        }
                    }
-                   
+
                }
                $current_PurchaseReturn->details()->delete();
                $current_PurchaseReturn->update([
@@ -718,7 +721,7 @@ class PurchasesReturnController extends BaseController
             } else {
                 $data['code'] = $detail['product']['code'];
             }
-            
+
             $data['quantity'] = $detail->quantity;
             $data['total'] = $detail->total;
             $data['name'] = $detail['product']['name'];
@@ -995,7 +998,7 @@ class PurchasesReturnController extends BaseController
             'warehouses' => $warehouses,
         ]);
 
-    } 
+    }
 
     //------------------ Send SMS ----------------------------------\\
 
@@ -1006,16 +1009,16 @@ class PurchasesReturnController extends BaseController
         $receiverNumber = $PurchaseReturn['provider']->phone;
         $message = "Dear" .' '.$PurchaseReturn['provider']->name." \n We are contacting you in regard to a purchase Return #".$PurchaseReturn->Ref.' '.$url.' '. "that has been created on your account. \n We look forward to conducting future business with you.";
         try {
-  
+
             $account_sid = env("TWILIO_SID");
             $auth_token = env("TWILIO_TOKEN");
             $twilio_number = env("TWILIO_FROM");
-  
+
             $client = new Client_Twilio($account_sid, $auth_token);
             $client->messages->create($receiverNumber, [
-                'from' => $twilio_number, 
+                'from' => $twilio_number,
                 'body' => $message]);
-    
+
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }

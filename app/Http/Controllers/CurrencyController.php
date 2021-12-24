@@ -34,7 +34,10 @@ class CurrencyController extends Controller
                 });
             });
         $totalRows = $currencies->count();
-        $currencies = $currencies->offset($offSet)
+        $currencies = $currencies
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -71,7 +74,7 @@ class CurrencyController extends Controller
 
     public function show($id){
         //
-        
+
         }
 
     //---------------- UPDATE Currency -------------\\

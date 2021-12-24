@@ -36,7 +36,10 @@ class PermissionsController extends BaseController
                 });
             });
         $totalRows = $roles->count();
-        $roles = $roles->offset($offSet)
+        $roles = $roles
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -102,7 +105,7 @@ class PermissionsController extends BaseController
 
     public function show($id){
         //
-        
+
         }
 
     //----------- Update Role --------------\\

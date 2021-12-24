@@ -73,7 +73,10 @@ class TransferController extends BaseController
             });
 
         $totalRows = $Filtred->count();
-        $transfers = $Filtred->offset($offSet)
+        $transfers = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -130,7 +133,7 @@ class TransferController extends BaseController
             $data = $request['details'];
 
             foreach ($data as $key => $value) {
-               
+
                 $unit = Unit::where('id', $value['purchase_unit_id'])->first();
 
                 if ($request->transfer['statut'] == "completed") {
@@ -583,8 +586,8 @@ class TransferController extends BaseController
                      ->where('id', $value['product_id'])
                      ->first();
                      $unit = Unit::where('id', $product_unit_purchase_id['unitPurchase']->id)->first();
-                 } 
- 
+                 }
+
                 if ($current_Transfer->statut == "completed") {
                     if ($value['product_variant_id'] !== null) {
 
@@ -678,7 +681,7 @@ class TransferController extends BaseController
                         }
                     }
                 }
-                   
+
             }
 
             $current_Transfer->details()->delete();
@@ -722,7 +725,7 @@ class TransferController extends BaseController
                     ->where('id', $value['product_id'])
                     ->first();
                     $unit = Unit::where('id', $product_unit_purchase_id['unitPurchase']->id)->first();
-                } 
+                }
 
                if ($current_Transfer->statut == "completed") {
                    if ($value['product_variant_id'] !== null) {
@@ -817,7 +820,7 @@ class TransferController extends BaseController
                        }
                    }
                }
-                  
+
            }
 
             $current_Transfer->details()->delete();
@@ -944,7 +947,7 @@ class TransferController extends BaseController
                 $item_product ? $data['del'] = 0 : $data['del'] = 1;
                 $data['product_variant_id'] = null;
                 $data['code'] = $detail['product']['code'];
-               
+
                 if ($unit && $unit->operator == '/') {
                     $data['stock'] = $item_product ? $item_product->qte * $unit->operator_value : 0;
                 } else if ($unit && $unit->operator == '*') {

@@ -68,7 +68,10 @@ class ExpensesController extends BaseController
                 });
             });
         $totalRows = $Filtred->count();
-        $Expenses = $Filtred->offset($offSet)
+        $Expenses = $Filtred
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -128,7 +131,7 @@ class ExpensesController extends BaseController
 
     public function show($id){
         //
-        
+
         }
 
     //-------------- Update  Expense -----------\\

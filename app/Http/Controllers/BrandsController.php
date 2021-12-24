@@ -36,7 +36,10 @@ class BrandsController extends Controller
                 });
             });
         $totalRows = $brands->count();
-        $brands = $brands->offset($offSet)
+        $brands = $brands
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();

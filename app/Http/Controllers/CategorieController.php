@@ -34,7 +34,10 @@ class CategorieController extends BaseController
                 });
             });
         $totalRows = $categories->count();
-        $categories = $categories->offset($offSet)
+        $categories = $categories
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
@@ -67,7 +70,7 @@ class CategorieController extends BaseController
 
     public function show($id){
         //
-    
+
     }
 
     //-------------- Update Category ---------------\\

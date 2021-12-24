@@ -256,8 +256,10 @@ class PosController extends BaseController
         $totalRows = $product_warehouse_data->count();
 
         $product_warehouse_data = $product_warehouse_data
-            ->offset($offSet)
-            ->limit(8)
+            ->when($perPage != -1, function ($q) use ($offSet) {
+                $q->offset($offSet);
+            })
+            ->limit($perPage)
             ->get();
 
         foreach ($product_warehouse_data as $product_warehouse) {

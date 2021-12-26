@@ -4,7 +4,7 @@
     <b-row>
       <!-- ICON BG -->
 
-      <b-col lg="3" md="6" sm="12">
+      <b-col v-if="currentUserPermissions && currentUserPermissions.includes('Revenue_see')" lg="3" md="6" sm="12">
         <b-card class="card-icon-bg card-icon-bg-primary o-hidden mb-30 text-center">
           <i class="i-Dollar"></i>
           <div class="content">
@@ -39,7 +39,7 @@
           </div>
         </b-card>
       </b-col>
-      <b-col lg="3" md="6" sm="12">
+      <b-col v-if="currentUserPermissions && currentUserPermissions.includes('Profit_see')" lg="3" md="6" sm="12">
         <b-card class="card-icon-bg card-icon-bg-primary o-hidden mb-30 text-center">
           <i class="i-Money-Bag"></i>
           <div class="content">
@@ -233,7 +233,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser", "currentUserPermissions"]),
     columns_sales() {
       return [
         {

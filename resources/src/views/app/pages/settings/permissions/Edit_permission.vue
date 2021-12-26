@@ -1401,178 +1401,59 @@
                   </b-card>
                 </b-col>
 
-                <!-- Reports -->
-                <b-col md="4">
-                  <b-card no-body class="ul-card__border-radius">
-                    <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button
-                        class="card-title mb-0"
-                        block
-                        href="#"
-                        v-b-toggle.panel-Reports
-                        variant="transparent"
-                      >{{$t('Reports')}}</b-button>
-                    </b-card-header>
-                    <b-collapse
-                      id="panel-Reports"
-                      :visible="true"
-                      accordion="my-accordion17"
-                      role="tabpanel"
-                    >
-                      <b-card-body>
-                        <b-card-text>
-                          <b-row>
-                            <!--Reports_payments_Sales  -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_payments_Sales"
-                                >
-                                <span>{{$t('Reports_payments_Sales')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Reports_payments_Purchases  -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_payments_Purchases"
-                                >
-                                <span>{{$t('Reports_payments_Purchases')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Reports_payments_Sale_Return-->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_payments_Sale_Returns"
-                                >
-                                <span>{{$t('Reports_payments_Sale_Return')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Reports_payments_Purchase_Return -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_payments_purchase_Return"
-                                >
-                                <span>{{$t('Reports_payments_Purchase_Return')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!-- Sales Reports -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_sales"
-                                >
-                                <span>{{$t('SalesReport')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Purchases Reports -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_purchase"
-                                >
-                                <span>{{$t('PurchasesReport')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!-- Customers Reports -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_customers"
-                                >
-                                <span>{{$t('CustomersReport')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Suppliers Reports -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_suppliers"
-                                >
-                                <span>{{$t('SuppliersReport')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Proft and Loss -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_profit"
-                                >
-                                <span>{{$t('ProfitandLoss')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                            <!--Product Quantity Alerts -->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Reports_quantity_alerts"
-                                >
-                                <span>{{$t('ProductQuantityAlerts')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-
-                            <!--Warehouse Stock Chart-->
-                            <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
-                                <input
-                                  type="checkbox"
-                                  checked
-                                  v-model="permissions"
-                                  value="Warehouse_report"
-                                >
-                                <span>{{$t('WarehouseStockChart')}}</span>
-                                <span class="checkmark"></span>
-                              </label>
-                            </b-col>
-                          </b-row>
-                        </b-card-text>
-                      </b-card-body>
-                    </b-collapse>
-                  </b-card>
-                </b-col>
-
+                  <!--Dashboard -->
+                  <b-col md="4">
+                      <b-card no-body class="ul-card__border-radius">
+                          <b-card-header header-tag="header" class="p-1" role="tab">
+                              <b-button
+                                  class="card-title mb-0"
+                                  block
+                                  href="#"
+                                  v-b-toggle.panel-Dashboard
+                                  variant="transparent"
+                              >{{$t('Dashboard')}}</b-button>
+                          </b-card-header>
+                          <b-collapse
+                              id="panel-Dashboard "
+                              :visible="true"
+                              accordion="my-accordion0"
+                              role="tabpanel"
+                          >
+                              <b-card-body>
+                                  <b-card-text>
+                                      <b-row>
+                                          <!--Revenue See -->
+                                          <b-col md="6">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Revenue_see"
+                                                  >
+                                                  <span>{{$t('Revenue_see')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Profit See -->
+                                          <b-col md="6">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Profit_see"
+                                                  >
+                                                  <span>{{$t('Profit_see')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                      </b-row>
+                                  </b-card-text>
+                              </b-card-body>
+                          </b-collapse>
+                      </b-card>
+                  </b-col>
                 <!-- Settings -->
                 <b-col md="4">
                   <b-card no-body class="ul-card__border-radius">
@@ -1676,6 +1557,178 @@
                     </b-collapse>
                   </b-card>
                 </b-col>
+                  <!-- Reports -->
+                  <b-col md="4">
+                      <b-card no-body class="ul-card__border-radius">
+                          <b-card-header header-tag="header" class="p-1" role="tab">
+                              <b-button
+                                  class="card-title mb-0"
+                                  block
+                                  href="#"
+                                  v-b-toggle.panel-Reports
+                                  variant="transparent"
+                              >{{$t('Reports')}}</b-button>
+                          </b-card-header>
+                          <b-collapse
+                              id="panel-Reports"
+                              :visible="true"
+                              accordion="my-accordion17"
+                              role="tabpanel"
+                          >
+                              <b-card-body>
+                                  <b-card-text>
+                                      <b-row>
+                                          <!--Reports_payments_Sales  -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_payments_Sales"
+                                                  >
+                                                  <span>{{$t('Reports_payments_Sales')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Reports_payments_Purchases  -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_payments_Purchases"
+                                                  >
+                                                  <span>{{$t('Reports_payments_Purchases')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Reports_payments_Sale_Return-->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_payments_Sale_Returns"
+                                                  >
+                                                  <span>{{$t('Reports_payments_Sale_Return')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Reports_payments_Purchase_Return -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_payments_purchase_Return"
+                                                  >
+                                                  <span>{{$t('Reports_payments_Purchase_Return')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!-- Sales Reports -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_sales"
+                                                  >
+                                                  <span>{{$t('SalesReport')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Purchases Reports -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_purchase"
+                                                  >
+                                                  <span>{{$t('PurchasesReport')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!-- Customers Reports -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_customers"
+                                                  >
+                                                  <span>{{$t('CustomersReport')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Suppliers Reports -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_suppliers"
+                                                  >
+                                                  <span>{{$t('SuppliersReport')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Proft and Loss -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_profit"
+                                                  >
+                                                  <span>{{$t('ProfitandLoss')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                          <!--Product Quantity Alerts -->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Reports_quantity_alerts"
+                                                  >
+                                                  <span>{{$t('ProductQuantityAlerts')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+
+                                          <!--Warehouse Stock Chart-->
+                                          <b-col md="12">
+                                              <label class="checkbox checkbox-outline-primary">
+                                                  <input
+                                                      type="checkbox"
+                                                      checked
+                                                      v-model="permissions"
+                                                      value="Warehouse_report"
+                                                  >
+                                                  <span>{{$t('WarehouseStockChart')}}</span>
+                                                  <span class="checkmark"></span>
+                                              </label>
+                                          </b-col>
+                                      </b-row>
+                                  </b-card-text>
+                              </b-card-body>
+                          </b-collapse>
+                      </b-card>
+                  </b-col>
+
               </b-row>
               <!-- End row -->
               <b-col md="12">

@@ -365,7 +365,15 @@ class PermissionsSeeder extends Seeder
 		[
 			'id'    => 89,
 			'name'  => 'Suppliers_import',
-		],)
+		],
+        [
+            'id'    => 90,
+            'name'  => 'Revenue_see',
+        ],
+        [
+            'id'    => 91,
+            'name'  => 'Profit_see',
+        ],)
 	);
     }
 }

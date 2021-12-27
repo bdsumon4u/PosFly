@@ -20,6 +20,7 @@ use App\Models\Warehouse;
 use App\utils\helpers;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe;
@@ -80,32 +81,23 @@ class PosController extends BaseController
                     'discount_method' => $value['discount_Method'],
                 ];
 
-                if ($value['product_variant_id'] !== null) {
-                    $product_warehouse = product_warehouse::where('warehouse_id', $order->warehouse_id)
-                        ->where('product_id', $value['product_id'])->where('product_variant_id', $value['product_variant_id'])
-                        ->first();
-
-                    if ($unit && $product_warehouse) {
-                        if ($unit->operator == '/') {
-                            $product_warehouse->qte -= $value['quantity'] / $unit->operator_value;
-                        } else {
-                            $product_warehouse->qte -= $value['quantity'] * $unit->operator_value;
+                $product_warehouse = product_warehouse::where('warehouse_id', $order->warehouse_id)
+                    ->where('product_id', $value['product_id'])
+                    ->where(function ($query) use (&$value) {
+                        if ($id = $value['product_variant_id']) {
+                            return $query->where('product_variant_id', $id);
                         }
-                        $product_warehouse->save();
-                    }
+                        return $query->whereNull('product_variant_id');
+                    })
+                    ->first();
 
-                } else {
-                    $product_warehouse = product_warehouse::where('warehouse_id', $order->warehouse_id)
-                        ->where('product_id', $value['product_id'])
-                        ->first();
-                    if ($unit && $product_warehouse) {
-                        if ($unit->operator == '/') {
-                            $product_warehouse->qte -= $value['quantity'] / $unit->operator_value;
-                        } else {
-                            $product_warehouse->qte -= $value['quantity'] * $unit->operator_value;
-                        }
-                        $product_warehouse->save();
+                if ($unit && $product_warehouse) {
+                    if ($unit->operator == '/') {
+                        $product_warehouse->qte -= $value['quantity'] / $unit->operator_value;
+                    } else {
+                        $product_warehouse->qte -= $value['quantity'] * $unit->operator_value;
                     }
+                    $product_warehouse->save();
                 }
             }
 

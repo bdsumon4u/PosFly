@@ -474,8 +474,8 @@ class ReportController extends BaseController
                 }
             }
 
-        $product_cost += $purchased_amount;
-     }
+            $product_cost += $purchased_amount;
+        }
 
         $data['Amount_EXP'] = Expense::where('deleted_at', '=', null)
         ->where('date', \Carbon\Carbon::today()->startOFDay())
@@ -1832,26 +1832,26 @@ class ReportController extends BaseController
 
         foreach($product_sale_data as $key => $product_sale){
 
-        $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)->get();
+            $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)->get();
 
-        $purchased_qty = 0;
-        $purchased_amount = 0;
-        $sold_qty = $product_sale->sold_qty;
-        $product_revenue += $product_sale->sold_amount;
+            $purchased_qty = 0;
+            $purchased_amount = 0;
+            $sold_qty = $product_sale->sold_qty;
+            $product_revenue += $product_sale->sold_amount;
 
-        foreach ($product_purchase_data as $key => $product_purchase) {
-            $purchased_qty += $product_purchase->quantity;
-            $purchased_amount += $product_purchase->total;
-            if($purchased_qty >= $sold_qty){
-                $qty_diff = $purchased_qty - $sold_qty;
-                $unit_cost = $product_purchase->total / $product_purchase->quantity;
-                $purchased_amount -= ($qty_diff * $unit_cost);
-                break;
+            foreach ($product_purchase_data as $key => $product_purchase) {
+                $purchased_qty += $product_purchase->quantity;
+                $purchased_amount += $product_purchase->total;
+                if($purchased_qty >= $sold_qty){
+                    $qty_diff = $purchased_qty - $sold_qty;
+                    $unit_cost = $product_purchase->total / $product_purchase->quantity;
+                    $purchased_amount -= ($qty_diff * $unit_cost);
+                    break;
 
+                }
             }
-        }
 
-        $product_cost += $purchased_amount;
+            $product_cost += $purchased_amount;
         }
 
 

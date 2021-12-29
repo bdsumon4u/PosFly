@@ -615,8 +615,9 @@ class ReportController extends BaseController
                 ->sum('GrandTotal');
 
             $item['total_paid'] = DB::table('sales')
-                ->leftjoin('payment_sales', 'sales.id', '=', 'payment_sales.sale_id')
+                ->join('payment_sales', 'sales.id', '=', 'payment_sales.sale_id')
                 ->where('sales.deleted_at', '=', null)
+                ->where('payment_sales.deleted_at', '=', null)
                 ->where('sales.client_id', $client->id)
                 ->sum('payment_sales.montant');
 
@@ -650,10 +651,11 @@ class ReportController extends BaseController
             ->sum('GrandTotal');
 
         $data['total_paid'] = DB::table('sales')
-            ->where('sales.deleted_at', '=', null)
             ->join('payment_sales', 'sales.id', '=', 'payment_sales.sale_id')
+            ->where('sales.deleted_at', '=', null)
             ->where('payment_sales.deleted_at', '=', null)
-            ->where('sales.client_id', $client->id)->sum('payment_sales.montant');
+            ->where('sales.client_id', $client->id)
+            ->sum('payment_sales.montant');
 
         $data['due'] = $data['total_amount'] - $data['total_paid'];
 

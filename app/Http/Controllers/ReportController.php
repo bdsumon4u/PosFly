@@ -437,7 +437,7 @@ class ReportController extends BaseController
 
         //calcul profit
         $product_sale_data = Sale::join('sale_details' , 'sales.id', '=', 'sale_details.sale_id')
-            ->select(DB::raw('sale_details.product_id , sum(sale_details.quantity) as sold_qty , sum(sale_details.total) as sold_amount'))
+            ->select(DB::raw('sale_details.product_id, sale_details.product_variant_id, sum(sale_details.quantity) as sold_qty , sum(sale_details.total) as sold_amount'))
             ->where('sales.deleted_at', '=', null)
             ->where(function ($query) use ($view_records) {
                 if (!$view_records) {
@@ -445,7 +445,7 @@ class ReportController extends BaseController
                 }
             })
             ->where('sales.date', \Carbon\Carbon::today())
-            ->groupBy('sale_details.product_id')
+            ->groupBy('sale_details.product_variant_id')
             ->get();
 
         $product_revenue = 0;
@@ -455,7 +455,9 @@ class ReportController extends BaseController
 
         foreach($product_sale_data as $key => $product_sale){
 
-            $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)->get();
+            $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)
+                ->where('product_variant_id', $product_sale->product_variant_id)
+                ->get();
 
             $purchased_qty = 0;
             $purchased_amount = 0;
@@ -1816,7 +1818,7 @@ class ReportController extends BaseController
 
         //calcul profit
         $product_sale_data = Sale::join('sale_details' , 'sales.id', '=', 'sale_details.sale_id')
-        ->select(DB::raw('sale_details.product_id , sum(sale_details.quantity) as sold_qty , sum(sale_details.total) as sold_amount'))
+        ->select(DB::raw('sale_details.product_id, sale_details.product_variant_id, sum(sale_details.quantity) as sold_qty , sum(sale_details.total) as sold_amount'))
         ->where('sales.deleted_at', '=', null)
         ->where(function ($query) use ($view_records) {
             if (!$view_records) {
@@ -1824,7 +1826,7 @@ class ReportController extends BaseController
             }
         })
         ->whereBetween('sales.date', array($request->from, $request->to))
-        ->groupBy('sale_details.product_id')
+        ->groupBy('sale_details.product_variant_id')
         ->get();
 
         $product_revenue = 0;
@@ -1834,7 +1836,9 @@ class ReportController extends BaseController
 
         foreach($product_sale_data as $key => $product_sale){
 
-            $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)->get();
+            $product_purchase_data = PurchaseDetail::where('product_id' , $product_sale->product_id)
+                ->where('product_variant_id', $product_sale->product_variant_id)
+                ->get();
 
             $purchased_qty = 0;
             $purchased_amount = 0;

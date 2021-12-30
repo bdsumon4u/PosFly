@@ -1,6 +1,6 @@
 {
-  "name": "BongoPos",
-  "short_name": "bPOS",
+  "name": "ERP Fixer",
+  "short_name": "ERP Fixer",
   "start_url": "/",
   "background_color": "#6777ef",
   "description": "Ultimate Inventory With POS",

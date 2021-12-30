@@ -20,10 +20,10 @@ class SettingSeeder extends Seeder
                 'currency_id' => 1,
                 'client_id' => 1,
                 'warehouse_id' => Null,
-                'CompanyName' => config('app.name', 'ERPFixer'),
+                'CompanyName' => config('app.name', 'ERP Fixer'),
                 'CompanyPhone' => '0123456789',
                 'CompanyAdress' => 'Mirpur-10, Dhaka-BD.',
-                'footer' => config('app.name', 'ERPFixer').' - Ultimate Inventory With POS',
+                'footer' => config('app.name', 'ERP Fixer').' - Ultimate Inventory With POS',
                 'developed_by' => 'Cyber 32',
                 'logo' => '/images/logo.png',
             )

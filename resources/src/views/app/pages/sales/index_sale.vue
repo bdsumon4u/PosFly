@@ -509,6 +509,11 @@
               </tr>
 
               <tr style="margin-top:10px">
+                  <td colspan="3" class="total">{{$t('Shipping')}}</td>
+                  <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.shipping ,2)}}</td>
+              </tr>
+
+              <tr style="margin-top:10px">
                 <td colspan="3" class="total">{{$t('Total')}}</td>
                 <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
               </tr>

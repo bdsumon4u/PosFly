@@ -402,7 +402,7 @@ export default {
     ShowAll: 'View all records of all Users',
     Discount: 'Discount',
     OrderTax: 'Order Tax',
-    Shipping: 'Shipping',
+    Shipping: 'Service Charge',
     CompanyName: 'Company Name',
     CompanyPhone: 'Company Phone',
     CompanyAdress: 'Company Address',

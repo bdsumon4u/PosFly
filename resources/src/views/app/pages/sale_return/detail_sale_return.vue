@@ -43,24 +43,27 @@
       <div class="invoice" id="print_Invoice">
         <div class="invoice-print">
           <b-row class="justify-content-md-center">
-            <h4 class="font-weight-bold">{{$t('ReturnDetail')}} : {{sale_return.Ref}}</h4>
+              <b-col>
+                  <img class="d-block mx-auto" :src="currentUser.logo" :alt="company.CompanyName">
+              </b-col>
+<!--            <h4 class="font-weight-bold">{{$t('ReturnDetail')}} : {{sale_return.Ref}}</h4>-->
           </b-row>
           <hr>
           <b-row class="mt-5">
             <b-col lg="4" md="4" sm="12" class="mb-4">
-              <h5 class="font-weight-bold">{{$t('Customer_Info')}}</h5>
+              <h5 class="font-weight-bold">{{$t('From')}}</h5>
+              <div>{{company.CompanyName}}</div>
+              <div>{{company.email}}</div>
+              <div>{{company.CompanyPhone}}</div>
+              <div>{{company.CompanyAdress}}</div>
+            </b-col>
+            <b-col lg="4" md="4" sm="12" class="mb-4">
+              <h5 class="font-weight-bold">{{$t('To')}}</h5>
 
               <div>{{sale_return.client_name}}</div>
               <div>{{sale_return.client_email}}</div>
               <div>{{sale_return.client_phone}}</div>
               <div>{{sale_return.client_adr}}</div>
-            </b-col>
-            <b-col lg="4" md="4" sm="12" class="mb-4">
-              <h5 class="font-weight-bold">{{$t('Company_Info')}}</h5>
-              <div>{{company.CompanyName}}</div>
-              <div>{{company.email}}</div>
-              <div>{{company.CompanyPhone}}</div>
-              <div>{{company.CompanyAdress}}</div>
             </b-col>
             <b-col lg="4" md="4" sm="12" class="mb-4">
               <h5 class="font-weight-bold">{{$t('Return_Info')}}</h5>
@@ -89,7 +92,7 @@
               </div>
             </b-col>
           </b-row>
-          <b-row class="mt-3">
+          <b-row class="">
             <b-col md="12">
               <h5 class="font-weight-bold">{{$t('Order_Summary')}}</h5>
               <div class="table-responsive">
@@ -119,7 +122,7 @@
                 </table>
               </div>
             </b-col>
-            <div class="offset-md-9 col-md-3 mt-4">
+            <div class="offset-md-8 col-md-4">
               <table class="table table-striped table-sm">
                 <tbody>
                   <tr>

@@ -57,7 +57,13 @@
         </div>
 
         <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'actions'">
+            <span v-if="props.column.field == 'Ref'">
+                <router-link title="Show" :to="'/app/quotations/detail/'+props.row.id">
+                    <i class="nav-icon i-Eye font-weight-bold mr-2"></i>
+                    {{props.row.Ref}}
+                </router-link>
+            </span>
+            <span v-else-if="props.column.field == 'actions'">
             <div>
               <b-dropdown
                 id="dropdown-left"

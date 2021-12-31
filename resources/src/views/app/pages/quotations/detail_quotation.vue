@@ -32,9 +32,9 @@
             <i class="i-Speach-Bubble"></i>
             SMS
           </button>
-          <button @click="Quote_PDF()" class="btn-sm btn btn-light ripple btn-icon m-1">
-            <i class="i-File-TXT"></i> PDF
-          </button>
+<!--          <button @click="Quote_PDF()" class="btn-sm btn btn-light ripple btn-icon m-1">-->
+<!--            <i class="i-File-TXT"></i> PDF-->
+<!--          </button>-->
           <button @click="print()" class="btn-sm btn btn-warning ripple btn-icon m-1">
             <i class="i-Billing"></i>
             {{$t('print')}}

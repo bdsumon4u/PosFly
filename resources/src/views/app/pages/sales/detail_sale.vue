@@ -23,10 +23,10 @@
             <i class="i-Speach-Bubble"></i>
             SMS
           </button>
-          <button @click="Sale_PDF()" class="btn btn-primary btn-icon ripple btn-sm">
-            <i class="i-File-TXT"></i>
-            PDF
-          </button>
+<!--          <button @click="Sale_PDF()" class="btn btn-primary btn-icon ripple btn-sm">-->
+<!--            <i class="i-File-TXT"></i>-->
+<!--            PDF-->
+<!--          </button>-->
           <button @click="print()" class="btn btn-warning btn-icon ripple btn-sm">
             <i class="i-Billing"></i>
             {{$t('print')}}

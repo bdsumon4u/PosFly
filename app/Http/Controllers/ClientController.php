@@ -193,7 +193,7 @@ class ClientController extends BaseController
 
     public function Get_Clients_Without_Paginate()
     {
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'phone']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'phone', 'email']);
         return response()->json($clients);
     }
 

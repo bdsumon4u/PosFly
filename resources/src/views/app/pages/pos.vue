@@ -1338,8 +1338,14 @@ export default {
       this.$store.dispatch("logout");
     },
       clientSearch(options, search) {
+          const keyword = search.toLowerCase();
+          return options.filter(option => {
+              return option['name'].toLowerCase().includes(keyword)
+                || option['phone'].includes(keyword)
+                  || option['email'].includes(keyword);
+          })
           const fuse = new Fuse(options, {
-              keys: ['name', 'phone', 'id'],
+              keys: ['name', 'phone', 'email', 'id'],
               shouldSort: true,
           })
           return search.length

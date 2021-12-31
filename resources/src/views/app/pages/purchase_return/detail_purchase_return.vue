@@ -23,9 +23,9 @@
             <i class="i-Speach-Bubble"></i>
             SMS
           </button>
-          <button @click="Return_PDF()" class="btn btn-primary btn-icon ripple btn-sm">
-            <i class="i-File-TXT"></i> PDF
-          </button>
+<!--          <button @click="Return_PDF()" class="btn btn-primary btn-icon ripple btn-sm">-->
+<!--            <i class="i-File-TXT"></i> PDF-->
+<!--          </button>-->
           <button @click="print()" class="btn btn-warning btn-icon ripple btn-sm">
             <i class="i-Billing"></i>
             {{$t('print')}}
@@ -43,7 +43,10 @@
       <div class="invoice" id="print_Invoice">
         <div class="invoice-print">
           <b-row class="justify-content-md-center">
-            <h4 class="font-weight-bold">{{$t('ReturnDetail')}} : {{purchase_return.Ref}}</h4>
+              <b-col>
+                  <img class="d-block mx-auto" :src="currentUser.logo" :alt="company.CompanyName">
+              </b-col>
+<!--            <h4 class="font-weight-bold">{{$t('ReturnDetail')}} : {{purchase_return.Ref}}</h4>-->
           </b-row>
           <hr>
           <b-row class="mt-5">
@@ -89,7 +92,7 @@
               </div>
             </b-col>
           </b-row>
-          <b-row class="mt-3">
+          <b-row class="">
             <b-col md="12">
               <h5 class="font-weight-bold">{{$t('Order_Summary')}}</h5>
               <div class="table-responsive">
@@ -119,7 +122,7 @@
                 </table>
               </div>
             </b-col>
-            <div class="offset-md-9 col-md-3 mt-4">
+            <div class="offset-md-8 col-md-4">
               <table class="table table-striped table-sm">
                 <tbody>
                   <tr>

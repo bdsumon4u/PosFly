@@ -1,18 +1,18 @@
 <template>
   <div class="main-header">
-    <div class="logo">
+      <div v-if="getSideBarToggleProperties.isSideNavOpen" @click="sideBarToggle" class="menu-toggle" style="font-size: 30px;">
+          &times;
+      </div>
+      <div v-else @click="sideBarToggle" class="menu-toggle">
+          <div></div>
+          <div></div>
+          <div></div>
+      </div>
+
+      <div class="logo">
        <router-link to="/app/dashboard">
         <img :src="currentUser.logo" alt width="60" height="60">
        </router-link>
-    </div>
-
-    <div v-if="getSideBarToggleProperties.isSideNavOpen" @click="sideBarToggle" class="menu-toggle" style="font-size: 30px;">
-        &times;
-    </div>
-    <div v-else @click="sideBarToggle" class="menu-toggle">
-      <div></div>
-      <div></div>
-      <div></div>
     </div>
 
     <div style="margin: auto"></div>

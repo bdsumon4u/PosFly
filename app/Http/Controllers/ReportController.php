@@ -248,6 +248,7 @@ class ReportController extends BaseController
             ->pluck('count', 'date');
 
         $Payment_Expense = Expense::where('date', '>=', $date_range)
+            ->where('deleted_at', '=', null)
             ->where(function ($query) use ($view_records) {
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
@@ -532,8 +533,8 @@ class ReportController extends BaseController
         ->get(DB::raw('SUM(GrandTotal)  As sum'))
         ->first()->sum;
 
-        $data['profit'] = $data['revenue'] + $data['purchases_return'] - $product_cost ;
-        // - $data['Amount_EXP'];
+        $data['profit'] = $data['revenue'] + $data['purchases_return'] - $product_cost
+         - $data['Amount_EXP'];
 
         $last_sales = [];
 
@@ -1781,6 +1782,7 @@ class ReportController extends BaseController
             )->first();
 
         $item['expenses'] = Expense::whereBetween('date', array($request->from, $request->to))
+            ->where('deleted_at', '=', null)
             ->select(
                 DB::raw('SUM(amount) AS sum')
             )->first();
@@ -1862,8 +1864,8 @@ class ReportController extends BaseController
 
 
         $item['revenue'] = $item['sales']['sum'] - $item['return_sales'];
-        $item['profit'] = $item['revenue'] + $item['purchases_return'] - $product_cost  ;
-        // - $item['expenses']['sum'];
+        $item['profit'] = $item['revenue'] + $item['purchases_return'] - $product_cost
+         - $item['expenses']['sum'];
         $item['payment_received'] = $item['paiement_sales']['sum'] + $item['PaymentPurchaseReturns']['sum'];
         $item['payment_sent'] = $item['paiement_purchases']['sum'] + $item['PaymentSaleReturns']['sum'] + $item['expenses']['sum'];
         $item['paiement_net'] = $item['payment_received'] - $item['payment_sent'];

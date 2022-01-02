@@ -91,6 +91,8 @@ class PurchasesController extends BaseController
                                 $q->where('name', 'LIKE', "%{$request->search}%");
                             });
                         });
+                })->when($request->filled('from_date') && $request->filled('to_date'), function ($query) use (&$request) {
+                    return $query->whereBetween('date', [$request->from_date, $request->to_date]);
                 });
             });
 

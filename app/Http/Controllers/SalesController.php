@@ -867,7 +867,9 @@ class SalesController extends BaseController
 
         $details = array();
         $helpers = new helpers();
-        $sale_data = Sale::with('details.product.unitSale')
+        $sale_data = Sale::query()
+            ->withSum('details', 'total')
+            ->with('details.product.unitSale')
             ->where('deleted_at', '=', null)
             ->findOrFail($id);
 
@@ -875,6 +877,7 @@ class SalesController extends BaseController
         $sale['client_phone'] = $sale_data['client']->phone;
         $sale['client_adr'] = $sale_data['client']->adresse;
         $sale['client_email'] = $sale_data['client']->email;
+        $sale['subtotal'] = $sale_data->details_sum_total;
         $sale['TaxNet'] = number_format($sale_data->TaxNet, 2, '.', '');
         $sale['discount'] = number_format($sale_data->discount, 2, '.', '');
         $sale['shipping'] = number_format($sale_data->shipping, 2, '.', '');
@@ -882,6 +885,8 @@ class SalesController extends BaseController
         $sale['Ref'] = $sale_data->Ref;
         $sale['date'] = $sale_data->date;
         $sale['GrandTotal'] = number_format($sale_data->GrandTotal, 2, '.', '');
+        $sale['PaidAmount'] = number_format($sale_data->paid_amount, 2, '.', '');
+        $sale['due'] = number_format($sale_data->GrandTotal - $sale_data->paid_amount, 2, '.', '');
         $sale['payment_status'] = $sale_data->payment_statut;
 
         $detail_id = 0;

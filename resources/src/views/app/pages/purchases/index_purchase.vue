@@ -109,10 +109,10 @@
                   {{$t('AddPayment')}}
                 </b-dropdown-item>
 
-<!--                <b-dropdown-item title="PDF" @click="Invoice_PDF(props.row , props.row.id)">-->
-<!--                  <i class="nav-icon i-File-TXT font-weight-bold mr-2"></i>-->
-<!--                  {{$t('DownloadPdf')}}-->
-<!--                </b-dropdown-item>-->
+                <b-dropdown-item title="PDF" @click="Invoice_PDF(props.row , props.row.id)">
+                  <i class="nav-icon i-File-TXT font-weight-bold mr-2"></i>
+                  {{$t('DownloadPdf')}}
+                </b-dropdown-item>
 
                 <b-dropdown-item title="Email" @click="Purchase_Email(props.row , props.row.id)">
                   <i class="nav-icon i-Envelope-2 font-weight-bold mr-2"></i>

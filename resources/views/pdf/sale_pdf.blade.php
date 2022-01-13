@@ -1,115 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <title>Sale _{{$sale['Ref']}}</title>
-      <link rel="stylesheet" href="{{asset('/css/pdf_style.css')}}" media="all" />
-   </head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Sale {{$sale['Ref']}}</title>
+    <link rel="stylesheet" href="{{url('/css/invoice_style.css')}}" media="all" />
+</head>
 
-   <body>
-      <header class="clearfix">
-         <div id="logo">
-         <img src="{{asset('/images/'.$setting['logo'])}}">
-         </div>
-         <div id="company">
-            <div><strong> Date: </strong>{{$sale['date']}}</div>
-            <div><strong> Number: </strong> {{$sale['Ref']}}</div>
-            <div><strong> Status: </strong> {{$sale['statut']}}</div>
-            <div><strong> Payment Status: </strong> {{$sale['payment_status']}}</div>
-         </div>
-         <div id="Title-heading">
-            Sale  {{$sale['Ref']}}
-         </div>
-         </div>
-      </header>
-      <main>
-         <div id="details" class="clearfix">
-            <div id="client">
-               <table class="table-sm">
-                  <thead>
-                     <tr>
-                        <th class="desc">Customer Info</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>
-                           <div><strong>Name:</strong> {{$sale['client_name']}}</div>
-                           <div><strong>Phone:</strong> {{$sale['client_phone']}}</div>
-                           <div><strong>Adress:</strong>   {{$sale['client_adr']}}</div>
-                           <div><strong>Email:</strong>  {{$sale['client_email']}}</div>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-            <div id="invoice">
-               <table class="table-sm">
-                  <thead>
-                     <tr>
-                        <th class="desc">Company Info</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>
-                           <div id="comp">{{$setting['CompanyName']}}</div>
-                           <div><strong>Adress:</strong>  {{$setting['CompanyAdress']}}</div>
-                           <div><strong>Phone:</strong>  {{$setting['CompanyPhone']}}</div>
-                           <div><strong>Email:</strong>  {{$setting['email']}}</div>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-         </div>
-         <div id="details_inv">
-            <table  class="table-sm">
-               <thead>
-                  <tr>
-                     <th>PRODUCT</th>
-                     <th>UNIT PRICE</th>
-                     <th>QUANTITY</th>
-                     <th>DISCOUNT</th>
-                     <th>TAX</th>
-                     <th>TOTAL</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach ($details as $detail)
-                  <tr>
-                     <td>{{$detail['code']}} ({{$detail['name']}})</td>
-                     <td>{{$detail['price']}} </td>
-                     <td>{{$detail['quantity']}}/{{$detail['unitSale']}}</td>
-                     <td>{{$detail['DiscountNet']}} </td>
-                     <td>{{$detail['taxe']}} </td>
-                     <td>{{$detail['total']}} </td>
-                  </tr>
-                  @endforeach
-               </tbody>
-            </table>
-         </div>
-         <div id="total">
-            <table>
-               <tr>
-                  <td>Order Tax</td>
-                  <td>{{$sale['TaxNet']}} </td>
-               </tr>
-               <tr>
-                  <td>Discount</td>
-                  <td>{{$sale['discount']}} </td>
-               </tr>
-               <tr>
-                  <td>Shipping</td>
-                  <td>{{$sale['shipping']}} </td>
-               </tr>
-               <tr>
-                  <td>Total</td>
-                  <td>{{$symbol}} {{$sale['GrandTotal']}} </td>
-               </tr>
-            </table>
-         </div>
-         <div id="signature">Signature</div>
-      </main>
-   </body>
+<body>
+<header>
+    <div class="clearfix">
+        <div style="float: left">
+            <img src="{{ url($setting['logo']) }}" />
+        </div>
+        <div style="float: right; margin-left: 10px; width: 250px;">
+            <div><strong>Date: </strong>{{$sale['date']}}</div>
+            <div><strong>Serial: </strong>{{$sale['Ref']}}</div>
+            <div><strong>Status: </strong><span style="text-transform: uppercase;">{{$sale['statut']}}</span></div>
+            <div><strong>Payment Status: </strong><span style="text-transform: uppercase;">{{$sale['payment_status']}}</span></div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div style="float: left; margin-right: 10px; width: 250px;">
+            <div><strong>FROM:</strong></div>
+            <div><strong>Company: </strong>{{$setting['CompanyName']}}</div>
+            <div><strong>Phone: </strong><a href="tel:{{$setting['CompanyPhone']}}">{{$setting['CompanyPhone']}}</a></div>
+            <div><strong>Email: </strong><a href="mailto:{{$setting['email']}}">{{$setting['email']}}</a></div>
+            <div><strong>Address: </strong>{{$setting['CompanyAdress']}}</div>
+        </div>
+        <div style="float: right; margin-left: 10px; width: 250px;">
+            <div><strong>TO:</strong></div>
+            <div><strong>Name: </strong>{{$sale['client_name']}}</div>
+            <div><strong>Phone: </strong><a href="tel:{{$sale['client_phone']}}">{{$sale['client_phone']}}</a></div>
+            <div><strong>Email: </strong><a href="mailto:{{$sale['client_email']}}">{{$sale['client_email']}}</a></div>
+            <div><strong>Address: </strong>{{$sale['client_adr']}}</div>
+        </div>
+    </div>
+</header>
+<main>
+    <table style="width: 100%;">
+        <thead>
+        <tr>
+            <th>PRODUCT</th>
+            <th class="text-right">PRICE</th>
+            <th class="text-right">QTY</th>
+            <th class="text-right">DISCOUNT</th>
+            <th class="text-right">TAX</th>
+            <th class="text-right">TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($details as $detail)
+            <tr>
+                <td>{{$detail['code']}} ({{$detail['name']}})</td>
+                <td class="text-right">{{$detail['price']}} </td>
+                <td class="text-right">{{$detail['quantity']}}/{{$detail['unitSale']}}</td>
+                <td class="text-right">{{$detail['DiscountNet']}} </td>
+                <td class="text-right">{{$detail['taxe']}} </td>
+                <td class="text-right">{{$detail['total']}} </td>
+            </tr>
+        @endforeach
+        <tr>
+            <td colspan="5" class="b-top text-right">Sub Total</td>
+            <td class="b-top text-right">{{$sale['subtotal']}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right">Order Tax</td>
+            <td class="text-right">+{{$sale['TaxNet']}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right">Shipping</td>
+            <td class="text-right">+{{$sale['shipping']}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right">Discount</td>
+            <td class="text-right">-{{$sale['discount']}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="grand text-right">TOTAL</td>
+            <td class="grand text-right">{{ $symbol }} {{$sale['GrandTotal']}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="grand text-right">PAID</td>
+            <td class="grand text-right">{{ $symbol }} {{$sale['PaidAmount']}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="grand text-right">DUE</td>
+            <td class="grand text-right">{{ $symbol }} {{$sale['due']}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">Thank you for being with us.</div>
+    </div>
+</main>
+</body>
 </html>

@@ -1,0 +1,82 @@
+@page {
+  margin: 0 0;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+  margin-bottom: 20px;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  padding: 10px 25px 0 25px;
+  position: relative;
+  margin: 0 auto;
+  color: #001028;
+  background: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+header {
+  padding: 10px 0;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 10px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th {
+  padding: 10px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+table td {
+  padding: 8px 16px;
+}
+table td.b-top {
+  border-top: 1px solid #C1CED9;
+}
+.text-right {
+  text-align: right;
+}
+
+table td.text-right,
+table td.text-right,
+table td.text-right {
+  font-size: 1em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1em;
+}

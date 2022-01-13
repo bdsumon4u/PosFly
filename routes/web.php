@@ -97,6 +97,8 @@ Route::get('pay-bill', function () {
 })->name('pay-bill');
 Route::group(['middleware' => ['auth', 'Is_Active']], function () {
 
+    Route::get('/sale-invoice/{id}', 'SalesController@Sale_PDF');
+    Route::get('/purchase-invoice/{id}', 'PurchasesController@Purchase_pdf');
     Route::get('/login', function () {
         $installed = Storage::disk('public')->exists('installed');
         if ($installed === false) {

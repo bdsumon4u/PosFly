@@ -66,12 +66,12 @@
                 <td class="b-top text-right">{{$sale['subtotal']}}</td>
             </tr>
             <tr>
-                <td colspan="5" class="text-right">Service Charge</td>
-                <td class="text-right">+{{$sale['shipping']}}</td>
-            </tr>
-            <tr>
                 <td colspan="5" class="text-right">Order Tax</td>
                 <td class="text-right">+{{$sale['TaxNet']}}</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-right">Service Charge</td>
+                <td class="text-right">+{{$sale['shipping']}}</td>
             </tr>
             <tr>
                 <td colspan="5" class="text-right">Discount</td>

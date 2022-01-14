@@ -764,6 +764,7 @@ class SalesController extends BaseController
         $item['client_phone'] = $sale['client']->phone;
         $item['GrandTotal'] = number_format($sale->GrandTotal, 2, '.', '');
         $item['paid_amount'] = number_format($sale->paid_amount, 2, '.', '');
+        $item['payment_status'] = strtoupper($sale->payment_statut);
         $item['due'] = number_format($sale->GrandTotal - $sale->paid_amount, 2, '.', '');
 
         foreach ($sale['details'] as $detail) {

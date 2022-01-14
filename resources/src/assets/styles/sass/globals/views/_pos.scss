@@ -6,11 +6,11 @@
     min-height: 100vh;
   }
 
-  #invoice-POS h1, 
-  #invoice-POS h2,  
-  #invoice-POS h3, 
-  #invoice-POS h4, 
-  #invoice-POS h5, 
+  #invoice-POS h1,
+  #invoice-POS h2,
+  #invoice-POS h3,
+  #invoice-POS h4,
+  #invoice-POS h5,
   #invoice-POS h6{
     color: #05070b;
     font-weight: bolder;
@@ -35,7 +35,7 @@
   #pos .card-order .main-header{
     position: relative;
   }
-  
+
   #pos .grandtotal{
     text-align: center;
     height: 40px;
@@ -100,44 +100,43 @@
     font-size: 14px;
     line-height: 20px;
     font-family: sans-serif;
-    text-transform: capitalize;
 
     max-width: 400px;
   }
 
-  
-  @media print { 
-  
+
+  @media print {
+
     body{
       visibility: hidden;
     }
     #invoice-POS{
       visibility: visible;
-      font-size: 12px;
-      line-height: 20px;   
+      font-size: 14px;
+      line-height: 20px;
     }
 
     @page {
       margin: 0;
       }
 }
-  
+
   #total tr{
     background-color:#ddd;
   }
-    
-  
+
+
   #top .logo{
       height: 100px;
       width: 100px;
       background-size: 100px 100px;
   }
-  
+
 
   .title{
     float: right;
   }
-  .title p{text-align: right;} 
+  .title p{text-align: right;}
   table{
     width: 100%;
     border-collapse: collapse;
@@ -145,7 +144,7 @@
   #invoice-POS table tr{
     border-bottom: 3px dotted #ddd!important;
   }
-  
+
   .tabletitle{
     font-size: .5em;
     background: #EEE;
@@ -163,13 +162,13 @@
   .quantity {
     max-width: 95px;
     width: 95px;
-  }  
-  
+  }
+
   .quantity input {
     text-align: center;
         border: none;
   }
-  
+
   .quantity .form-control:focus {
       color: #374151;
       background-color:unset;
@@ -177,7 +176,7 @@
       outline: 0;
       box-shadow: unset;
   }
-  
+
   .quantity span {
     padding: 8px;
   }

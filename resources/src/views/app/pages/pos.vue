@@ -757,22 +757,27 @@
                 <div id="invoice-POS" class="mx-auto">
                     <div style="max-width:300px;margin:0 auto">
                         <div class="info" >
-                            <h2 class="text-center">{{invoice_pos.setting.CompanyName}}</h2>
-                            <div style="font-size: 80%;">
-                                <p style="margin: 0 0 1px 0; text-align: center;">{{invoice_pos.setting.CompanyAdress}}</p>
-                                <p style="margin: 0 0 1px 0; text-align: center;">
+                            <h2 class="text-center" style="margin: 0; font-size: 2rem;">{{invoice_pos.setting.CompanyName}}</h2>
+                            <div style="text-align: center;">
+                                <p style="margin: 0 0 1px 0;">{{invoice_pos.setting.CompanyAdress}}</p>
+                                <p style="margin: 0 0 1px 0;">
                                     <span v-show="pos_settings.show_email">{{$t('Email')}}: {{invoice_pos.setting.email}}</span>
                                 </p>
-                                <p style="margin: 0 0 1px 0; text-align: center;">
+                                <p style="margin: 0 0 1px 0;">
                                     <span v-show="pos_settings.show_phone">{{$t('Phone')}}: {{invoice_pos.setting.CompanyPhone}}</span>
                                 </p>
+                                <p style="margin: .5rem 0 1px 0">
+                                    <span>{{$t('date')}} : {{invoice_pos.sale.date}} &nbsp;&nbsp; {{$t('Time')}}: {{invoice_pos.sale.time}}</span>
+                                </p>
+                                <p style="margin: 0 0 0 0;"><strong>{{$t('Invoice')}}: {{invoice_pos.sale.Ref}}</strong></p>
+                                <p style="margin: 0 0 0 0;"><strong>{{$t('Payment Status')}}: {{invoice_pos.sale.payment_status}}</strong></p>
+                                <p style="margin: 0 0 0 0;"><strong>{{$t('Served By')}}</strong>: {{invoice_pos.sale.served_by}}</p>
                             </div>
-                            <div style="clear:both; display: table; margin-top: 8px;">
-                                <span>{{$t('date')}} : {{invoice_pos.sale.date}} &nbsp;&nbsp; {{$t('Time')}}: {{invoice_pos.sale.time}} <br></span>
-                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Customer Name')}}</strong>: <small>{{invoice_pos.sale.client_name}}</small></p>
-                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Customer Email')}}</strong>: <small>{{invoice_pos.sale.client_email}}</small></p>
-                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Customer Phone')}}</strong>: <small>{{invoice_pos.sale.client_phone}}</small></p>
-                                <p style="margin:0;"><strong>{{$t('Served By')}}</strong>: <small>{{invoice_pos.sale.served_by}}</small></p>
+                            <div style="clear:both; display: table; margin-top: 8px; margin-bottom: 10px;">
+                                <strong style="font-size: 14px;">Recipient</strong>
+                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Name')}}</strong>: <small>{{invoice_pos.sale.client_name}}</small></p>
+                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Email')}}</strong>: <small>{{invoice_pos.sale.client_email}}</small></p>
+                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Phone')}}</strong>: <small>{{invoice_pos.sale.client_phone}}</small></p>
                             </div>
                         </div>
 
@@ -785,13 +790,13 @@
 
 
                             <tr style="margin-top:10px">
-                                <td colspan="3" class="total">{{$t('Shipping')}}</td>
-                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.shipping ,2)}}</td>
+                                <td colspan="3" class="total">{{$t('OrderTax')}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}}</td>
                             </tr>
 
                             <tr style="margin-top:10px">
-                                <td colspan="3" class="total">{{$t('OrderTax')}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
-                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}}</td>
+                                <td colspan="3" class="total">{{$t('Shipping')}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.shipping ,2)}}</td>
                             </tr>
 
                             <tr style="margin-top:10px">
@@ -799,7 +804,7 @@
                                 <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.discount ,2)}}</td>
                             </tr>
 
-                            <tr style="margin-top:10px">
+                            <tr style="margin-top:10px; background: #eee;">
                                 <td colspan="3" class="total">{{$t('Total')}}</td>
                                 <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
                             </tr>

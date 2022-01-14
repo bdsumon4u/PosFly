@@ -15,7 +15,7 @@ export default {
     footer:'footer',
     Received_Amount:'Received Amount',
     Paying_Amount:'Paying Amount',
-    Change:'Change',
+    Change:'Due',
     Paying_amount_is_greater_than_Received_amount:'Paying amount is greater than received amount',
     Paying_amount_is_greater_than_Grand_Total:'Paying amount is greater than Grand Total',
     code_must_be_not_exist_already:'code must be not exist already',

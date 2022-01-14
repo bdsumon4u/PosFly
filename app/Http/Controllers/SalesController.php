@@ -757,6 +757,8 @@ class SalesController extends BaseController
         $item['taxe'] =     number_format($sale->TaxNet, 2, '.', '');
         $item['tax_rate'] = $sale->tax_rate;
         $item['client_name'] = $sale['client']->name;
+        $item['client_email'] = $sale['client']->email;
+        $item['client_phone'] = $sale['client']->phone;
         $item['GrandTotal'] = number_format($sale->GrandTotal, 2, '.', '');
         $item['paid_amount'] = number_format($sale->paid_amount, 2, '.', '');
 

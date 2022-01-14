@@ -128,7 +128,7 @@ class SalesReturnController extends BaseController
             $data[] = $item;
         }
 
-        $customers = client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $customers = client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
 
         return response()->json([
@@ -742,7 +742,7 @@ class SalesReturnController extends BaseController
         $this->authorizeForUser($request->user('api'), 'create', SaleReturn::class);
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'clients' => $clients,
@@ -975,7 +975,7 @@ class SalesReturnController extends BaseController
         }
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'details' => $details,

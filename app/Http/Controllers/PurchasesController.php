@@ -128,7 +128,7 @@ class PurchasesController extends BaseController
             $data[] = $item;
         }
 
-        $suppliers = provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = provider::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
 
         return response()->json([
@@ -846,7 +846,7 @@ class PurchasesController extends BaseController
         $this->authorizeForUser($request->user('api'), 'create', Purchase::class);
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'warehouses' => $warehouses,
@@ -992,7 +992,7 @@ class PurchasesController extends BaseController
         }
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'details' => $details,

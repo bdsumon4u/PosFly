@@ -127,7 +127,7 @@ class PurchasesReturnController extends BaseController
             $data[] = $item;
         }
 
-        $suppliers = provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = provider::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
 
         return response()->json([
@@ -586,7 +586,7 @@ class PurchasesReturnController extends BaseController
         $this->authorizeForUser($request->user('api'), 'create', PurchaseReturn::class);
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'suppliers' => $suppliers,
@@ -991,7 +991,7 @@ class PurchasesReturnController extends BaseController
         }
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'details' => $details,

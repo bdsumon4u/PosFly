@@ -37,10 +37,19 @@
                         :class="{'is-invalid': !!errors.length}"
                         :state="errors[0] ? false : (valid ? true : null)"
                         v-model="sale_return.client_id"
-                        :reduce="label => label.value"
+                        label="name"
+                        :reduce="label => label.id"
                         :placeholder="$t('Choose_Customer')"
-                        :options="clients.map(clients => ({label: clients.name, value: clients.id}))"
-                      />
+                        class="w-100"
+                        :options="clients"
+                        :filter="clientSearch"
+                      >
+                          <template #option="{ name, phone }">
+                              {{ name }}
+                              <br />
+                              <cite>{{ phone }}</cite>
+                          </template>
+                      </v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
@@ -451,6 +460,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import NProgress from "nprogress";
+import Fuse from "fuse.js";
 
 export default {
   metaInfo: {
@@ -517,7 +527,21 @@ export default {
   },
 
   methods: {
-
+      clientSearch(options, search) {
+          const keyword = search.toLowerCase();
+          return options.filter(option => {
+              return option['name'].toLowerCase().includes(keyword)
+                  || option['phone'].includes(keyword)
+                  || option['email'].includes(keyword);
+          })
+          const fuse = new Fuse(options, {
+              keys: ['name', 'phone', 'email', 'id'],
+              shouldSort: true,
+          })
+          return search.length
+              ? fuse.search(search).map(({ item }) => item)
+              : fuse.list
+      },
      handleFocus() {
       this.focused = true
     },

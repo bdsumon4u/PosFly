@@ -115,7 +115,7 @@ class QuotationsController extends BaseController
         }
 
         $customers = client::where('deleted_at', '=', null)->get();
-        $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+        $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'totalRows' => $totalRows,
@@ -550,7 +550,7 @@ class QuotationsController extends BaseController
         $this->authorizeForUser($request->user('api'), 'create', Quotation::class);
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'clients' => $clients,
@@ -702,7 +702,7 @@ class QuotationsController extends BaseController
         }
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'details' => $details,

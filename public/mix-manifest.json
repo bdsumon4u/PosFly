@@ -89,5 +89,10 @@
     "/js/bundle/vendors~largeSidebar.js": "/js/bundle/vendors~largeSidebar.js",
     "/js/bundle/vendors~largeSidebar~pos.js": "/js/bundle/vendors~largeSidebar~pos.js",
     "/js/bundle/vendors~vue-perfect-scrollbar.js": "/js/bundle/vendors~vue-perfect-scrollbar.js",
-    "/js/bundle/warehouse_report.js": "/js/bundle/warehouse_report.js"
+    "/js/bundle/warehouse_report.js": "/js/bundle/warehouse_report.js",
+    "/js/bundle/vendors~edit_sale~pos~store_sale~store_sale_return.js": "/js/bundle/vendors~edit_sale~pos~store_sale~store_sale_return.js",
+    "/js/bundle/vendors~edit_sale~edit_sale_return~pos~store_sale~store_sale_return.js": "/js/bundle/vendors~edit_sale~edit_sale_return~pos~store_sale~store_sale_return.js",
+    "/js/bundle/vendors~edit_sale~edit_sale_return~pos~store_quotation~store_sale~store_sale_return.js": "/js/bundle/vendors~edit_sale~edit_sale_return~pos~store_quotation~store_sale~store_sale_return.js",
+    "/js/bundle/vendors~edit_quotation~edit_sale~edit_sale_return~pos~store_quotation~store_sale~store_sale_return.js": "/js/bundle/vendors~edit_quotation~edit_sale~edit_sale_return~pos~store_quotation~store_sale~store_sale_return.js",
+    "/js/bundle/vendors~edit_purchase~edit_purchase_return~edit_quotation~edit_sale~edit_sale_return~pos~store_purch~11cb8345.js": "/js/bundle/vendors~edit_purchase~edit_purchase_return~edit_quotation~edit_sale~edit_sale_return~pos~store_purch~11cb8345.js"
 }

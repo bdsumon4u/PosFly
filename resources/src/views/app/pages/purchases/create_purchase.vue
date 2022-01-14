@@ -34,13 +34,22 @@
                   <validation-provider name="Supplier" :rules="{ required: true}">
                     <b-form-group slot-scope="{ valid, errors }" :label="$t('Supplier')">
                       <v-select
-                        :class="{'is-invalid': !!errors.length}"
-                        :state="errors[0] ? false : (valid ? true : null)"
-                        v-model="purchase.supplier_id"
-                        :reduce="label => label.value"
-                        :placeholder="$t('Choose_Supplier')"
-                        :options="suppliers.map(suppliers => ({label: suppliers.name, value: suppliers.id}))"
-                      />
+                          :class="{'is-invalid': !!errors.length}"
+                          :state="errors[0] ? false : (valid ? true : null)"
+                          v-model="purchase.supplier_id"
+                          label="name"
+                          :reduce="label => label.id"
+                          :placeholder="$t('Choose_Supplier')"
+                          class="w-100"
+                          :options="suppliers"
+                          :filter="clientSearch"
+                      >
+                          <template #option="{ name, phone }">
+                              {{ name }}
+                              <br />
+                              <cite>{{ phone }}</cite>
+                          </template>
+                      </v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
@@ -454,6 +463,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import NProgress from "nprogress";
+import Fuse from "fuse.js";
 
 export default {
   metaInfo: {
@@ -527,7 +537,21 @@ export default {
   },
 
   methods: {
-
+      clientSearch(options, search) {
+          const keyword = search.toLowerCase();
+          return options.filter(option => {
+              return option['name'].toLowerCase().includes(keyword)
+                  || option['phone'].includes(keyword)
+                  || option['email'].includes(keyword);
+          })
+          const fuse = new Fuse(options, {
+              keys: ['name', 'phone', 'email', 'id'],
+              shouldSort: true,
+          })
+          return search.length
+              ? fuse.search(search).map(({ item }) => item)
+              : fuse.list
+      },
     //--- Submit Validate Create Purchase
     Submit_Purchase() {
       this.$refs.create_purchase.validate().then(success => {

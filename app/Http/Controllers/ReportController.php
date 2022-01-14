@@ -648,6 +648,9 @@ class ReportController extends BaseController
 
         $client = Client::where('deleted_at', '=', null)->findOrFail($id);
 
+        $data['name'] = $client->name;
+        $data['email'] = $client->email;
+        $data['phone'] = $client->phone;
         $data['total_sales'] = DB::table('sales')->where('deleted_at', '=', null)->where('client_id', $id)->count();
 
         $data['total_amount'] = DB::table('sales')->where('deleted_at', '=', null)->where('client_id', $id)
@@ -726,6 +729,7 @@ class ReportController extends BaseController
         $data = [];
         foreach ($sales as $sale) {
             $item['date'] = $sale->date;
+            $item['id'] = $sale->id;
             $item['Ref'] = $sale->Ref;
             $item['statut'] = $sale->statut;
             $item['GrandTotal'] = $sale->GrandTotal;
@@ -860,6 +864,7 @@ class ReportController extends BaseController
             ->get();
 
         foreach ($SaleReturn as $Sale_Return) {
+            $item['id'] = $Sale_Return->id;
             $item['Ref'] = $Sale_Return->Ref;
             $item['statut'] = $Sale_Return->statut;
             $item['client_name'] = $Sale_Return['client']->name;

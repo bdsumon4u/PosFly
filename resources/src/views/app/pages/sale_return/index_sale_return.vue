@@ -63,6 +63,12 @@
                     {{props.row.Ref}}
                 </router-link>
             </span>
+            <span v-else-if="props.column.field == 'client_name'">
+                <router-link title="Show" :to="'/app/reports/detail_customer/'+props.row.client_id">
+                    <i class="nav-icon i-Eye font-weight-bold mr-2"></i>
+                    {{props.row.client_name}}
+                </router-link>
+            </span>
             <span v-else-if="props.column.field == 'actions'">
             <div>
               <b-dropdown

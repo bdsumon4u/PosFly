@@ -5,7 +5,12 @@
 
     <b-row v-if="!isLoading">
       <!-- ICON BG -->
-
+      <b-col sm="12">
+          <span><strong>Name:</strong> {{ client.name }}</span><br>
+          <span><strong>Email:</strong> {{ client.email }}</span><br>
+          <span><strong>Phone:</strong> {{ client.phone }}</span><br>
+          <span><br></span>
+      </b-col>
       <b-col lg="3" md="6" sm="12">
         <b-card class="card-icon-bg card-icon-bg-primary o-hidden mb-30 text-center">
           <i class="i-Full-Cart"></i>
@@ -101,7 +106,13 @@
                 styleClass="tableOne table-hover vgt-table"
               >
                 <template slot="table-row" slot-scope="props">
-                  <div v-if="props.column.field == 'statut'">
+                    <div v-if="props.column.field == 'Ref'">
+                        <router-link title="Show" :to="'/app/sales/detail/'+props.row.id">
+                            <i class="nav-icon i-Eye font-weight-bold mr-2"></i>
+                            {{props.row.Ref}}
+                        </router-link>
+                    </div>
+                  <div v-else-if="props.column.field == 'statut'">
                     <span
                       v-if="props.row.statut == 'completed'"
                       class="badge badge-outline-success"
@@ -145,7 +156,13 @@
                 styleClass="tableOne table-hover vgt-table"
               >
                 <template slot="table-row" slot-scope="props">
-                  <div v-if="props.column.field == 'statut'">
+                    <div v-if="props.column.field == 'Ref'">
+                        <router-link title="Show" :to="'/app/sale_return/detail/'+props.row.id">
+                            <i class="nav-icon i-Eye font-weight-bold mr-2"></i>
+                            {{props.row.Ref}}
+                        </router-link>
+                    </div>
+                  <div v-else-if="props.column.field == 'statut'">
                     <span
                       v-if="props.row.statut == 'received'"
                       class="badge badge-outline-success"

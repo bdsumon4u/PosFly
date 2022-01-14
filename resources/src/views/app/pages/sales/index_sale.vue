@@ -62,6 +62,12 @@
                     {{props.row.Ref}}
                 </router-link>
             </span>
+            <span v-else-if="props.column.field == 'client_name'">
+                <router-link title="Show" :to="'/app/reports/detail_customer/'+props.row.client_id">
+                    <i class="nav-icon i-Eye font-weight-bold mr-2"></i>
+                    {{props.row.client_name}}
+                </router-link>
+            </span>
           <span v-else-if="props.column.field == 'actions'">
             <div>
               <b-dropdown
@@ -508,19 +514,18 @@
             </div>
             <div style="clear:both; display: table; margin-top: 8px; margin-bottom: 10px;">
                 <strong style="font-size: 14px;">Recipient</strong>
-                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Name')}}</strong>: <small>{{invoice_pos.sale.client_name}}</small></p>
-                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Email')}}</strong>: <small>{{invoice_pos.sale.client_email}}</small></p>
-                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Phone')}}</strong>: <small>{{invoice_pos.sale.client_phone}}</small></p>
+                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Name')}}</strong>: {{invoice_pos.sale.client_name}}</p>
+                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Email')}}</strong>: {{invoice_pos.sale.client_email}}</p>
+                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Phone')}}</strong>: {{invoice_pos.sale.client_phone}}</p>
             </div>
           </div>
 
           <table>
             <tbody>
               <tr v-for="detail_invoice in invoice_pos.details">
-                <td colspan="3" class="text-small"><span>{{detail_invoice.name}} <br> {{formatNumber(detail_invoice.quantity,2)}} {{detail_invoice.unit_sale}} x {{formatNumber(detail_invoice.total/detail_invoice.quantity,2)}}</span></td>
-                <td style="text-align:right;vertical-align:bottom" class="text-small">{{formatNumber(detail_invoice.total,2)}}</td>
+                <td colspan="3" class="text--small"><span>{{detail_invoice.name}} <br> {{formatNumber(detail_invoice.quantity,2)}} {{detail_invoice.unit_sale}} x {{formatNumber(detail_invoice.total/detail_invoice.quantity,2)}}</span></td>
+                <td style="text-align:right;vertical-align:bottom" class="text--small">{{formatNumber(detail_invoice.total,2)}}</td>
               </tr>
-
 
               <tr style="margin-top:10px">
                   <td colspan="3" class="total">{{$t('OrderTax')}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
@@ -555,7 +560,6 @@
 
            <table
                 class="change mt-3"
-                style=" font-size: 10px;"
                 v-show="invoice_pos.sale.paid_amount > 0"
               >
                 <thead>
@@ -582,7 +586,7 @@
               </table>
 
           <div id="legalcopy" class="ml-2">
-              <div v-if="invoice_pos.sale.note"><strong>Note:&nbsp;</strong> <small>{{invoice_pos.sale.note}}</small></div>
+              <div v-if="invoice_pos.sale.note"><strong>Note:&nbsp;</strong> {{invoice_pos.sale.note}}</div>
             <p class="legal" v-show="pos_settings.show_note">
                <strong>{{pos_settings.note_customer}}</strong>
             </p>
@@ -1670,7 +1674,7 @@ export default {
 <style>
   .total{
     font-weight: bold;
-    font-size: 12px;
+    /*font-size: 12px;*/
     /* text-transform: uppercase;
     height: 50px; */
   }

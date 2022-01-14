@@ -745,13 +745,16 @@ class SalesController extends BaseController
         $helpers = new helpers();
         $details = array();
 
-        $sale = Sale::with('details.product.unitSale')
+        $sale = Sale::with('user', 'details.product.unitSale')
             ->where('deleted_at', '=', null)
             ->findOrFail($id);
 
         $item['id'] = $sale->id;
         $item['Ref'] = $sale->Ref;
-        $item['date'] = $sale->date;
+        $item['note'] = $sale->notes;
+        $item['date'] = $sale->created_at->format('d-M-Y');
+        $item['time'] = $sale->created_at->format('h:i A');
+        $item['served_by'] = $sale->user->firstname . ' ' . $sale->user->lastname;
         $item['discount'] = number_format($sale->discount, 2, '.', '');
         $item['shipping'] = number_format($sale->shipping, 2, '.', '');
         $item['taxe'] =     number_format($sale->TaxNet, 2, '.', '');
@@ -761,6 +764,7 @@ class SalesController extends BaseController
         $item['client_phone'] = $sale['client']->phone;
         $item['GrandTotal'] = number_format($sale->GrandTotal, 2, '.', '');
         $item['paid_amount'] = number_format($sale->paid_amount, 2, '.', '');
+        $item['due'] = number_format($sale->GrandTotal - $sale->paid_amount, 2, '.', '');
 
         foreach ($sale['details'] as $detail) {
 
@@ -871,7 +875,7 @@ class SalesController extends BaseController
         $helpers = new helpers();
         $sale_data = Sale::query()
             ->withSum('details', 'total')
-            ->with('details.product.unitSale')
+            ->with('user', 'details.product.unitSale')
             ->where('deleted_at', '=', null)
             ->findOrFail($id);
 
@@ -879,13 +883,16 @@ class SalesController extends BaseController
         $sale['client_phone'] = $sale_data['client']->phone;
         $sale['client_adr'] = $sale_data['client']->adresse;
         $sale['client_email'] = $sale_data['client']->email;
-        $sale['subtotal'] = $sale_data->details_sum_total;
+        $sale['subtotal'] = number_format($sale_data->details_sum_total, 2, '.', '');
         $sale['TaxNet'] = number_format($sale_data->TaxNet, 2, '.', '');
         $sale['discount'] = number_format($sale_data->discount, 2, '.', '');
         $sale['shipping'] = number_format($sale_data->shipping, 2, '.', '');
         $sale['statut'] = $sale_data->statut;
         $sale['Ref'] = $sale_data->Ref;
-        $sale['date'] = $sale_data->date;
+        $sale['note'] = $sale_data->notes;
+        $sale['date'] = $sale_data->created_at->format('d-M-Y');
+        $sale['time'] = $sale_data->created_at->format('h:i A');
+        $sale['served_by'] = $sale_data->user->firstname . ' ' . $sale_data->user->lastname;
         $sale['GrandTotal'] = number_format($sale_data->GrandTotal, 2, '.', '');
         $sale['PaidAmount'] = number_format($sale_data->paid_amount, 2, '.', '');
         $sale['due'] = number_format($sale_data->GrandTotal - $sale_data->paid_amount, 2, '.', '');
@@ -944,6 +951,12 @@ class SalesController extends BaseController
         $settings = Setting::where('deleted_at', '=', null)->first();
         $symbol = $helpers->Get_Currency_Code();
 
+//        return view('pdf.sale_pdf', [
+//            'symbol' => $symbol,
+//            'setting' => $settings,
+//            'sale' => $sale,
+//            'details' => $details,
+//        ]);
         $pdf = \PDF::loadView('pdf.sale_pdf', [
             'symbol' => $symbol,
             'setting' => $settings,
@@ -951,7 +964,7 @@ class SalesController extends BaseController
             'details' => $details,
         ]);
 
-        return $pdf->download('Sale.pdf');
+        return $pdf->stream('Sale.pdf');
 
     }
 

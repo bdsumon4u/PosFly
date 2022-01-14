@@ -5,16 +5,16 @@
   content: "";
   display: table;
   clear: both;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 a {
-  color: #5D6975;
-  text-decoration: underline;
+  color: #001028;
+  text-decoration: none;
 }
 
 body {
-  padding: 10px 25px 0 25px;
+  padding: .8in 0 100px 0;
   position: relative;
   margin: 0 auto;
   color: #001028;
@@ -24,18 +24,20 @@ body {
 }
 
 header {
-  padding: 10px 0;
+  padding: 10px .8in;
+}
+
+main {
+  padding: 0 .8in;
 }
 
 h1 {
-  border-top: 1px solid  #5D6975;
-  border-bottom: 1px solid  #5D6975;
   color: #5D6975;
-  font-size: 2.4em;
+  font-size: 2.2em;
   line-height: 1.4em;
-  font-weight: normal;
+  font-weight: bold;
   text-align: center;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 }
 
 table {
@@ -76,7 +78,18 @@ table td.grand {
   border-top: 1px solid #5D6975;;
 }
 
+tbody.meta td {
+  font-size: 0.8em;
+}
+
 #notices .notice {
   color: #5D6975;
   font-size: 1em;
+}
+
+footer {
+  position: absolute;
+  bottom: .8in;
+  text-align: center;
+  padding: 0 .8in;
 }

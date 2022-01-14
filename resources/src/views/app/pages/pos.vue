@@ -754,37 +754,44 @@
 
             <!-- Modal Show Invoice POS-->
             <b-modal hide-footer size="sm" scrollable id="Show_invoice" :title="$t('Invoice_POS')">
-                <div id="invoice-POS">
-                    <div style="max-width:400px;margin:0px auto">
-                        <div class="info">
+                <div id="invoice-POS" class="mx-auto">
+                    <div style="max-width:300px;margin:0 auto">
+                        <div class="info" >
                             <h2 class="text-center">{{invoice_pos.setting.CompanyName}}</h2>
-                            <p>
-                                <span>{{$t('date')}} : {{invoice_pos.sale.date}} <br></span>
-                                <span v-show="pos_settings.show_address">{{$t('Adress')}} : {{invoice_pos.setting.CompanyAdress}} <br></span>
-                                <span v-show="pos_settings.show_email">{{$t('Email')}} : {{invoice_pos.setting.email}} <br></span>
-                                <span v-show="pos_settings.show_phone">{{$t('Phone')}} : {{invoice_pos.setting.CompanyPhone}} <br></span>
-                                <span v-show="pos_settings.show_customer">{{$t('Customer')}} : {{invoice_pos.sale.client_name}} <br></span>
-                            </p>
+                            <div style="font-size: 80%;">
+                                <p style="margin: 0 0 1px 0; text-align: center;">{{invoice_pos.setting.CompanyAdress}}</p>
+                                <p style="margin: 0 0 1px 0; text-align: center;">
+                                    <span v-show="pos_settings.show_email">{{$t('Email')}}: {{invoice_pos.setting.email}}</span>
+                                </p>
+                                <p style="margin: 0 0 1px 0; text-align: center;">
+                                    <span v-show="pos_settings.show_phone">{{$t('Phone')}}: {{invoice_pos.setting.CompanyPhone}}</span>
+                                </p>
+                            </div>
+                            <div style="clear:both; display: table; margin-top: 8px;">
+                                <span>{{$t('date')}} : {{invoice_pos.sale.date}} &nbsp;&nbsp; {{$t('Time')}}: {{invoice_pos.sale.time}} <br></span>
+                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Customer Name')}}</strong>: <small>{{invoice_pos.sale.client_name}}</small></p>
+                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Customer Email')}}</strong>: <small>{{invoice_pos.sale.client_email}}</small></p>
+                                <p style="margin:0;" v-show="pos_settings.show_customer"><strong>{{$t('Customer Phone')}}</strong>: <small>{{invoice_pos.sale.client_phone}}</small></p>
+                                <p style="margin:0;"><strong>{{$t('Served By')}}</strong>: <small>{{invoice_pos.sale.served_by}}</small></p>
+                            </div>
                         </div>
 
-                        <table class="table_data">
+                        <table>
                             <tbody>
                             <tr v-for="detail_invoice in invoice_pos.details">
-                                <td colspan="3">
-                      <span>
-                        {{detail_invoice.name}}
-                        <br>
-                        {{formatNumber(detail_invoice.quantity,2)}} {{detail_invoice.unit_sale}} x {{formatNumber(detail_invoice.total/detail_invoice.quantity,2)}}
-                      </span>
-                                </td>
-                                <td
-                                    style="text-align:right;vertical-align:bottom"
-                                >{{formatNumber(detail_invoice.total,2)}}</td>
+                                <td colspan="3" class="text-small"><span>{{detail_invoice.name}} <br> {{formatNumber(detail_invoice.quantity,2)}} {{detail_invoice.unit_sale}} x {{formatNumber(detail_invoice.total/detail_invoice.quantity,2)}}</span></td>
+                                <td style="text-align:right;vertical-align:bottom" class="text-small">{{formatNumber(detail_invoice.total,2)}}</td>
+                            </tr>
+
+
+                            <tr style="margin-top:10px">
+                                <td colspan="3" class="total">{{$t('Shipping')}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.shipping ,2)}}</td>
                             </tr>
 
                             <tr style="margin-top:10px">
-                                <td colspan="3" class="total">{{$t('OrderTax')}}</td>
-                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
+                                <td colspan="3" class="total">{{$t('OrderTax')}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}}</td>
                             </tr>
 
                             <tr style="margin-top:10px">
@@ -794,26 +801,16 @@
 
                             <tr style="margin-top:10px">
                                 <td colspan="3" class="total">{{$t('Total')}}</td>
-                                <td
-                                    style="text-align:right;"
-                                    class="total"
-                                >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
                             </tr>
 
-                            <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
+                            <tr style="margin-top:10px">
                                 <td colspan="3" class="total">{{$t('Paid')}}</td>
-                                <td
-                                    style="text-align:right;"
-                                    class="total"
-                                >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.paid_amount ,2)}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.paid_amount ,2)}}</td>
                             </tr>
-
-                            <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
+                            <tr style="margin-top:10px">
                                 <td colspan="3" class="total">{{$t('Due')}}</td>
-                                <td
-                                    style="text-align:right;"
-                                    class="total"
-                                >{{invoice_pos.symbol}} {{parseFloat(invoice_pos.sale.GrandTotal - invoice_pos.sale.paid_amount).toFixed(2)}}</td>
+                                <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.due ,2)}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -847,6 +844,7 @@
                         </table>
 
                         <div id="legalcopy" class="ml-2">
+                            <div v-if="invoice_pos.sale.note"><strong>Note:&nbsp;</strong> <small>{{invoice_pos.sale.note}}</small></div>
                             <p class="legal" v-show="pos_settings.show_note">
                                 <strong>{{pos_settings.note_customer}}</strong>
                             </p>
@@ -857,9 +855,9 @@
                                     :value="invoice_pos.sale.Ref"
                                     textmargin="0"
                                     fontoptions="bold"
-                                    fontSize="15"
-                                    height="25"
-                                    width="1"
+                                    fontSize= "15"
+                                    height= "25"
+                                    width= "1"
                                 ></barcode>
                             </div>
                         </div>
@@ -1252,6 +1250,7 @@ export default {
           tax_rate: "",
           shipping: "",
           GrandTotal: "",
+          due: "",
           paid_amount: ""
         },
 

@@ -963,7 +963,7 @@ class SalesController extends BaseController
         $this->authorizeForUser($request->user('api'), 'create', Sale::class);
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
         $stripe_key = config('app.STRIPE_KEY');
 
         return response()->json([
@@ -1119,7 +1119,7 @@ class SalesController extends BaseController
           }
 
           $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-          $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+          $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
           return response()->json([
               'details' => $details,
@@ -1280,7 +1280,7 @@ class SalesController extends BaseController
         }
 
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name', 'email', 'phone']);
 
         return response()->json([
             'details' => $details,

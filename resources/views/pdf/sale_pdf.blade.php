@@ -32,6 +32,7 @@
             <div><strong>Time: </strong>{{$sale['time']}}</div>
             <div><strong>Invoice: </strong>{{$sale['Ref']}}</div>
             <div><strong>Payment Status: </strong><span style="text-transform: uppercase;">{{$sale['payment_status']}}</span></div>
+            <div><strong>Served by: </strong>{{$sale['served_by']}}</div>
         </div>
     </div>
 </header>

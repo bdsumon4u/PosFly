@@ -57,6 +57,7 @@ class PosController extends BaseController
             $order->shipping = $request->shipping;
             $order->GrandTotal = $request->GrandTotal;
             $order->statut = 'completed';
+            $order->payment_statut = 'unpaid';
             $order->user_id = Auth::user()->id;
 
             $order->save();

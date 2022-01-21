@@ -40,17 +40,17 @@
                 <div class="triangle"></div>
             </li>
             <li
-                v-show="currentUserPermissions && (currentUserPermissions.includes('Sale_Returns_view')
-                        || currentUserPermissions.includes('Sale_Returns_add'))"
+                v-show="currentUserPermissions && (currentUserPermissions.includes('Purchases_view')
+                        || currentUserPermissions.includes('Purchases_add'))"
                 @mouseenter="toggleSubMenu"
                 class="nav-item"
-                :class="{ active: selectedParentMenu == 'sale_return' }"
-                data-item="sale_return"
+                :class="{ active: selectedParentMenu == 'purchases' }"
+                data-item="purchases"
                 :data-submenu="true"
             >
                 <a class="nav-item-hold" href="#">
-                    <i class="nav-icon i-Right"></i>
-                    <span class="nav-text">{{$t('SalesReturn')}}</span>
+                    <i class="nav-icon i-Receipt"></i>
+                    <span class="nav-text">{{$t('Purchases')}}</span>
                 </a>
                 <div class="triangle"></div>
             </li>
@@ -70,17 +70,17 @@
                 <div class="triangle"></div>
             </li>
             <li
-                v-show="currentUserPermissions && (currentUserPermissions.includes('Purchases_view')
-                        || currentUserPermissions.includes('Purchases_add'))"
+                v-show="currentUserPermissions && (currentUserPermissions.includes('Sale_Returns_view')
+                        || currentUserPermissions.includes('Sale_Returns_add'))"
                 @mouseenter="toggleSubMenu"
                 class="nav-item"
-                :class="{ active: selectedParentMenu == 'purchases' }"
-                data-item="purchases"
+                :class="{ active: selectedParentMenu == 'sale_return' }"
+                data-item="sale_return"
                 :data-submenu="true"
             >
                 <a class="nav-item-hold" href="#">
-                    <i class="nav-icon i-Receipt"></i>
-                    <span class="nav-text">{{$t('Purchases')}}</span>
+                    <i class="nav-icon i-Right"></i>
+                    <span class="nav-text">{{$t('SalesReturn')}}</span>
                 </a>
                 <div class="triangle"></div>
             </li>

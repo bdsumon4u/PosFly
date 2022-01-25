@@ -847,7 +847,7 @@
                         </table>
 
                         <div id="legalcopy" class="ml-2">
-                            <div v-if="invoice_pos.sale.note"><strong>Note:&nbsp;</strong> {{invoice_pos.sale.note}}</div>
+                            <div v-if="invoice_pos.sale.note"><strong>Note:&nbsp;</strong> <span style="white-space: pre-line;">{{invoice_pos.sale.note}}</span></div>
                             <p class="legal" v-show="pos_settings.show_note">
                                 <strong>{{pos_settings.note_customer}}</strong>
                             </p>

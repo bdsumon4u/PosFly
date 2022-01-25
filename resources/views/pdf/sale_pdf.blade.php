@@ -94,7 +94,7 @@
     </table>
     @if($sale['note'])
     <div id="notices">
-        <div class="notice"><strong>NOTE:</strong>&nbsp;{{ $sale['note'] }}</div>
+        <div class="notice"><strong>NOTE:</strong>&nbsp;<span style="white-space: pre-line">{{ $sale['note'] }}</span></div>
     </div>
     @endif
 </main>

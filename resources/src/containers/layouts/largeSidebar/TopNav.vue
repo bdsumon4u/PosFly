@@ -11,7 +11,7 @@
 
       <div class="logo">
        <router-link to="/app/dashboard">
-        <img :src="currentUser.logo" alt width="60" height="60">
+        <img :src="currentUser.logo" style="min-height: 30px;">
        </router-link>
     </div>
 

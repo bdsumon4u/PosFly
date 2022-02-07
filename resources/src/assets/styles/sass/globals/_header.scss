@@ -51,10 +51,10 @@
     }
   }
   .logo {
-    width: $sidebar-left-width;
+    //width: $sidebar-left-width;
     img {
-      width: 60px;
-      height: 60px;
+      //width: 60px;
+      height: 50px;
       margin: 0 auto;
       display: block;
     }
@@ -152,6 +152,9 @@
     padding: 0 1.5rem;
     .logo {
       width: 60px;
+      img {
+          height: auto !important;
+      }
     }
     .search-bar {
       display: none;

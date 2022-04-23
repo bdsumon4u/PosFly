@@ -163,7 +163,7 @@
                           </td>
                           <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
                           <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity , 2)}}</td>
-                          <td>{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
+                          <td>{{currentUser.currency}} {{parseInt(detail.subtotal).toFixed(2)}}</td>
                           <td  v-show="detail.no_unit !== 0">
                             <a
                               @click="delete_Product_Detail(detail.detail_id)"
@@ -185,16 +185,16 @@
                       <tr>
                         <td class="bold">{{$t('OrderTax')}}</td>
                         <td>
-                          <span>{{currentUser.currency}} {{sale.TaxNet.toFixed(2)}} ({{formatNumber(sale.tax_rate ,2)}} %)</span>
+                          <span>{{currentUser.currency}} {{parseInt(sale.TaxNet).toFixed(2)}} ({{formatNumber(sale.tax_rate ,2)}} %)</span>
                         </td>
                       </tr>
                       <tr>
                         <td class="bold">{{$t('Discount')}}</td>
-                        <td>{{currentUser.currency}} {{sale.discount.toFixed(2)}}</td>
+                        <td>{{currentUser.currency}} {{parseInt(sale.discount).toFixed(2)}}</td>
                       </tr>
                       <tr>
                         <td class="bold">{{$t('Shipping')}}</td>
-                        <td>{{currentUser.currency}} {{sale.shipping.toFixed(2)}}</td>
+                        <td>{{currentUser.currency}} {{parseInt(sale.shipping).toFixed(2)}}</td>
                       </tr>
                       <tr>
                         <td>
@@ -203,7 +203,7 @@
                         <td>
                           <span
                             class="font-weight-bold"
-                          >{{currentUser.currency}} {{GrandTotal.toFixed(2)}}</span>
+                          >{{currentUser.currency}} {{parseInt(GrandTotal).toFixed(2)}}</span>
                         </td>
                       </tr>
                     </tbody>
@@ -897,7 +897,7 @@ export default {
         total_without_discount + this.sale.TaxNet + this.sale.shipping
       );
 
-      var grand_total =  this.GrandTotal.toFixed(2);
+      var grand_total =  parseInt(this.GrandTotal).toFixed(2);
       this.GrandTotal = parseFloat(grand_total);
     },
 
